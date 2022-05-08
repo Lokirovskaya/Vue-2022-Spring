@@ -2,8 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
-const Login = () => import("../views/Login.vue")
-const register = () => import("../views/Register.vue")
+const Login = () => import("../views/LoginView.vue")
+const register = () => import("../views/RegisterView.vue")
 
 Vue.use(VueRouter)
 
@@ -30,6 +30,11 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: register
+  },
+  {
+    path: '/usermanager',
+    name: 'usermanager',
+    component: () => import(/* 用户管理界面 */'../views/UserManager.vue')
   }
 ]
 
