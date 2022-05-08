@@ -1,8 +1,8 @@
 <template>
   <div class="home">
-    <div v-if = "this.$store.state.login_state == 2"><font size = "5">已登陆为管理员！</font></div>
-    <div v-else-if = "this.$store.state.login_state == 1"><font size = "5">已登陆为登陆用户！</font></div>
-    <div v-else><font size = "5">未登录！请前往登陆</font></div>
+    <div v-if = "this.$store.state.login_state == 2"><font size = "5">已登录为管理员！</font></div>
+    <div v-else-if = "this.$store.state.login_state == 1"><font size = "5">已登录为登录用户！</font></div>
+    <div v-else><font size = "5">未登录！请前往登录</font></div>
     <p>
     <div v-if = "this.$store.state.login_state == 0"><el-button v-on:click = "goto_login" round type="success">login</el-button></div>
     <div v-else><el-button v-on:click = "goto_logout" round type="success">logout</el-button></div>

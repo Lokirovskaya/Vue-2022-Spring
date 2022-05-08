@@ -6,7 +6,7 @@
     <p>
     <el-input placeholder="输入密码" v-model="input_password" clearable style = "width:300px" show-password></el-input>
     <p>
-    <div><el-button v-on:click = "login" round>登陆</el-button>
+    <div><el-button v-on:click = "login" round>登录</el-button>
     <el-button v-on:click = "goto_register" round>注册</el-button></div>
   </div>
   <div v-else><font size = "5">您已登录！</font></div>
