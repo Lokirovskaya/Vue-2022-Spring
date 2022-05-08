@@ -6,8 +6,6 @@
     <p>
     <div v-if = "this.$store.state.login_state == 0"><el-button v-on:click = "goto_login" round type="success">login</el-button></div>
     <div v-else><el-button v-on:click = "goto_logout" round type="success">logout</el-button></div>
-
-
   </div>
 </template>
 
