@@ -2,7 +2,7 @@
   <el-container>
     <el-aside width="200px">
       <p>{{ User_name }}</p>
-      <img alt="Head Photo" style="width: 160px;height: 160px;" src="../assets/el-icon-defaultPhoto.png">
+      <img alt="Head Photo" style="width: 160px;height: 160px;" v-bind:src="User_Pho">
       <p >{{ Level }}</p>
     </el-aside>
     <el-container>
@@ -31,13 +31,13 @@ export default {
   data(){
     return{
       User_name:'李田所',
-      User_Pho:'../assets/el-icon-defaultPhoto.png',
+      User_Pho:'https://s2.loli.net/2022/05/08/1mkNYLO9siHrMud.png',
       Level:'lv5',
       Title: '24岁，是学生',
       Content: '你是一个一个一个美食家',
       like:false,
       likeNum:114514,
-      Time:'2022-04-15 14:36   '
+      Time:'2022-04-15 14:36'
     }
   },
   methods:{
