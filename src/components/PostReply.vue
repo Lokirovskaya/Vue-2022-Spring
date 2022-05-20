@@ -19,24 +19,26 @@
         {{Time}}
         {{likeNum}}
         <el-tooltip class="item" effect="light" content="点赞" placement="bottom">
-          <img style="width: 20px;height: 20px;" alt="clicked_like" src="../assets/el-icon-clicked_like.png" v-if="like"
+          <img style="width: 20px;height: 20px;position: relative; bottom: -2px" alt="clicked_like" src="../assets/el-icon-clicked_like.png" v-if="like"
                @click="LIKE">
-          <img style="width: 20px;height: 20px;" alt="like" src="../assets/el-icon-like.png" v-else
+          <img style="width: 20px;height: 20px;position: relative; bottom: -2px" alt="like" src="../assets/el-icon-like.png" v-else
                @click="LIKE">
         </el-tooltip>
 
         <el-tooltip class="item" effect="light" content="评论" placement="bottom">
-          <img style="width: 20px;height: 20px;position: relative; left: 15px" alt="comment" src="../assets/comment.png"
+          <img style="width: 20px;height: 20px;position: relative; left: 7px;bottom: -2px" alt="comment" src="../assets/comment.png"
                @click="see_Comment">
         </el-tooltip>
-        &nbsp;&nbsp;&nbsp;&nbsp;评论数({{Re_Num}})
+        &nbsp;评论数({{Re_Num}})
       </el-footer>
       <transition>
-        <div v-show="SEE" >
-          <Reply_reply></Reply_reply>
-          <Reply_reply></Reply_reply>
-          <Reply_reply></Reply_reply>
-        </div>
+        <el-collapse-transition>   <!--折叠动画效果-->
+          <div v-show="SEE" >
+            <Reply_reply></Reply_reply>
+            <Reply_reply></Reply_reply>
+            <Reply_reply></Reply_reply>
+          </div>
+        </el-collapse-transition>
         <!--在循环外加一个分页
         <div v-show="SEE">
           <el-pagination
@@ -141,14 +143,14 @@ export default {
   box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
 }
 
-@keyframes reply_out {
+/*@keyframes reply_out {
   from{
     transform: translateX(100%) ;
   }
   to{
     transform: translateX(0px);
   }
-}
+}*/
 .v-enter-active{
   animation: reply_out 1s;
 }
@@ -157,5 +159,6 @@ export default {
 }
 body > .el-container {
   margin-bottom: 40px;
+
 }
 </style>

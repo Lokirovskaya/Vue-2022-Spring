@@ -16,14 +16,14 @@
           {{Time}}
           {{likeNum}}
         <el-tooltip class="item" effect="light" content="点赞" placement="bottom">
-          <img style="width: 20px;height: 20px;" alt="clicked_like" src="../assets/el-icon-clicked_like.png" v-if="like"
+          <img style="width: 20px;height: 20px;position: relative; bottom: -2px" alt="clicked_like" src="../assets/el-icon-clicked_like.png" v-if="like"
                @click="LIKE">
-          <img style="width: 20px;height: 20px;" alt="like" src="../assets/el-icon-like.png" v-else
+          <img style="width: 20px;height: 20px;position: relative; bottom: -2px" alt="like" src="../assets/el-icon-like.png" v-else
                @click="LIKE">
         </el-tooltip>
 
         <el-tooltip class="item" effect="light" content="回复" placement="bottom">
-          <img style="width: 20px;height: 20px;position: relative; left: 15px" alt="comment" src="../assets/comment.png">
+          <img style="width: 20px;height: 20px;position: relative; left: 7px;bottom: -2px" alt="comment" src="../assets/comment.png">
         </el-tooltip>
 
       </el-footer>

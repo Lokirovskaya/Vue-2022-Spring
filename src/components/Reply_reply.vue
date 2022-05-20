@@ -9,11 +9,11 @@
       <el-footer height="25px"><!--这是回复的回复的点赞评论板块-->
         {{Time}}
         {{likeNum}}
-        <img style="width: 20px;height: 20px" alt="clicked_like" src="../assets/el-icon-clicked_like.png" v-if="like"
+        <img style="width: 20px;height: 20px;position: relative; bottom: -2px" alt="clicked_like" src="../assets/el-icon-clicked_like.png" v-if="like"
              @click="LIKE">
-        <img style="width: 20px;height: 20px" alt="like" src="../assets/el-icon-like.png" v-else
+        <img style="width: 20px;height: 20px;position: relative; bottom: -2px" alt="like" src="../assets/el-icon-like.png" v-else
              @click="LIKE">
-        <img style="width: 20px;height: 20px;position: relative; left: 15px" alt="comment" src="../assets/comment.png">
+        <img style="width: 20px;height: 20px;position: relative; left: 7px;bottom: -2px" alt="comment" src="../assets/comment.png">
     </el-footer>
   </el-container>
 </template>
