@@ -1,5 +1,6 @@
 <template>
   <border border-radius="10px">
+    <el-button @click="routetest()" type="info" size="small">test</el-button>
     <el-table :data="users" stripe border align="center">
       <el-table-column prop="uid" label="UID" width="150"></el-table-column>
       <el-table-column prop="username" label="用户名" width="150"></el-table-column>
@@ -55,6 +56,10 @@
     },
 
     methods: {
+      routetest() {
+        this.$router.push({ path: '/login', query: { userid: "2" } });
+      },
+
       get_user_status_string(user) {
         if (user.is_admin) {
           user.is_banned = false;
