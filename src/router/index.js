@@ -43,7 +43,22 @@ const routes = [
     path: '/module-b',
     name: 'module-b',
     component: () => import('../views/ModuleView.vue')
-  }
+  },
+  {
+    path: '/personcenter',
+    name: 'personcenter',
+    component: () => import('../views/PersonCenter.vue')
+  },
+  {
+    path: '/viewifo',
+    name: 'viewifo',
+    component: () => import('../views/ViewIfo.vue')
+  },
+  {
+    path: '/modifyifo',
+    name: 'modifyifo',
+    component: () => import('../views/ModifyIfo.vue')
+  },
 ]
 
 const router = new VueRouter({
