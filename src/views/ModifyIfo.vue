@@ -49,7 +49,9 @@
         <el-input placeholder="输入新地址" v-model="input_address" clearable style="width:150px"></el-input>
         <el-button size="small" style="position: relative;left:20px;" v-on:click="modify_address">修改</el-button>
         </el-descriptions-item>
-    
+        
+    <el-descriptions-item label="经验值">{{this.$store.state.exp_now}}/{{this.$store.state.exp_next_lv}}</el-descriptions-item>
+
     <el-descriptions-item label="用户状态">{{this.$store.state.user_status}}</el-descriptions-item>
 
 </el-descriptions>
