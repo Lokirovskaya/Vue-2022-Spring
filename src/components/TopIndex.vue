@@ -6,11 +6,11 @@
           <el-menu-item index="/">首页</el-menu-item>
           <el-submenu index="2">
             <template slot="title">论坛分区</template>
-            <el-menu-item index="/sector/discussion"><i class="el-icon-position"></i>讨论区</el-menu-item>
-            <el-menu-item index="/sector/recommendation"><i class="el-icon-collection"></i>课程推荐</el-menu-item>
-            <el-menu-item index="/sector/exercise"><i class="el-icon-medal"></i>刷题板块</el-menu-item>
-            <el-menu-item index="/sector/campus"><i class="el-icon-present"></i>校园周边</el-menu-item>
-            <el-menu-item index="/sector/resourse"><i class="el-icon-download"></i>资源共享</el-menu-item>
+            <el-menu-item @click="goto_sector('discussion')"><i class="el-icon-position"></i>讨论区</el-menu-item>
+            <el-menu-item @click="goto_sector('recommendation')"><i class="el-icon-collection"></i>课程推荐</el-menu-item>
+            <el-menu-item @click="goto_sector('exercise')"><i class="el-icon-medal"></i>刷题板块</el-menu-item>
+            <el-menu-item @click="goto_sector('campus')"><i class="el-icon-present"></i>校园周边</el-menu-item>
+            <el-menu-item @click="goto_sector('resource')"><i class="el-icon-download"></i>资源共享</el-menu-item>
           </el-submenu>
         </el-menu>
       </div>
@@ -62,6 +62,9 @@
       }
     },
     methods: {
+      goto_sector(sector_name) {
+        this.$router.push({ path: '/sector', query: { name: sector_name } });
+      },
       goto_login() {
         this.$router.replace('/login');
       },
