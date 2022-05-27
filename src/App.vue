@@ -2,7 +2,7 @@
   <div id="app">
     <nav>
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
+      <router-link to="/posting">帖子</router-link> |
       <router-link to="/login">Login</router-link> |
       <router-link to="/usermanager">Manager</router-link> |
       <router-link to="/personcenter">个人中心</router-link>

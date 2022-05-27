@@ -1,5 +1,6 @@
 <template>
   <el-container>
+    <TopIndex />
     <el-header id="title">
       这个板块的名称是 {{ sector_info[this.$route.query.name].name }},
       传给后端的板块 id 是 {{ sector_info[this.$route.query.name].id }}
@@ -8,9 +9,15 @@
     <el-main>
       <el-table :data="res.data" stripe="true" align="left">
 
-        <el-table-column label="标题" min-width="55%">
+        <el-table-column min-width="5%"></el-table-column>
+
+        <el-table-column label="标题" min-width="50%">
           <template slot-scope="scope">
-            <div id="art-title"><u>{{scope.row.posting_title}}</u></div>
+            <router-link :to="{path:'posting', query:{id:scope.row.posting_id}}">
+              <el-link id="art-title">
+                {{scope.row.posting_title}}
+              </el-link>
+            </router-link>
             <div id="art-summary">TODO：摘要</div>
           </template>
         </el-table-column>
@@ -48,8 +55,10 @@
 
 
 <script>
+  import TopIndex from "@/components/TopIndex";
   export default {
     name: 'ModuleView',
+    components: { TopIndex },
     data() {
       return {
         sector_info: {
@@ -81,58 +90,10 @@
             },
           ]
         },
-        intro_content: '板块的介绍<br/><b>支持HTML代码</b><br/><i>界面颜色好丑啊之后再统一吧</i>',
-        articles: [
-          {
-            id: 1,
-            title: '本来不存希望，',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 2,
-            title: '心事化作春泥。',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 3,
-            title: '谁人巧言令色，',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 4,
-            title: '使我意马难收？',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 5,
-            title: '谁说时光最能疗创，',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 6,
-            title: '谁说旧仇转眼遗忘。',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 7,
-            title: '旧事笑声泪影，',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 8,
-            title: '历历在我心上。',
-            author: 'George Orwell',
-            date: '1984-01-01',
-          },
-        ]
       }
+    },
+    methods: {
+
     }
   }
 </script>

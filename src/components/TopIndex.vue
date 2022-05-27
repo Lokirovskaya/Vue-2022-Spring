@@ -2,15 +2,27 @@
   <el-row>
     <el-col :span="8">
       <div class="grid-content">
-        <el-menu :default-active="1" class="el-menu-demo" mode="horizontal" router="true">
-          <el-menu-item index="/">首页</el-menu-item>
+        <el-menu :default-active="1" class="el-menu-demo" mode="horizontal">
+          <el-menu-item>
+            <router-link :to="{path: '/'}">首页</router-link>
+          </el-menu-item>
           <el-submenu index="2">
             <template slot="title">论坛分区</template>
-            <el-menu-item @click="goto_sector('discussion')"><i class="el-icon-position"></i>讨论区</el-menu-item>
-            <el-menu-item @click="goto_sector('recommendation')"><i class="el-icon-collection"></i>课程推荐</el-menu-item>
-            <el-menu-item @click="goto_sector('exercise')"><i class="el-icon-medal"></i>刷题板块</el-menu-item>
-            <el-menu-item @click="goto_sector('campus')"><i class="el-icon-present"></i>校园周边</el-menu-item>
-            <el-menu-item @click="goto_sector('resource')"><i class="el-icon-download"></i>资源共享</el-menu-item>
+            <router-link :to="{path:'sector', query:{name:'discussion'}}">
+              <el-menu-item><i class="el-icon-position"></i>讨论区</el-menu-item>
+            </router-link>
+            <router-link :to="{path:'sector', query:{name:'recommendation'}}">
+              <el-menu-item><i class="el-icon-collection"></i>课程推荐</el-menu-item>
+            </router-link>
+            <router-link :to="{path:'sector', query:{name:'exercise'}}">
+              <el-menu-item><i class="el-icon-medal"></i>刷题板块</el-menu-item>
+            </router-link>
+            <router-link :to="{path:'sector', query:{name:'campus'}}">
+              <el-menu-item><i class="el-icon-present"></i>校园周边</el-menu-item>
+            </router-link>
+            <router-link :to="{path:'sector', query:{name:'resource'}}">
+              <el-menu-item><i class="el-icon-download"></i>资源共享</el-menu-item>
+            </router-link>
           </el-submenu>
         </el-menu>
       </div>
@@ -62,9 +74,6 @@
       }
     },
     methods: {
-      goto_sector(sector_name) {
-        this.$router.push({ path: '/sector', query: { name: sector_name } });
-      },
       goto_login() {
         this.$router.replace('/login');
       },
@@ -113,5 +122,13 @@
   .row-bg {
     padding: 10px 0;
     background-color: #f9fafc;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .router-link-active {
+    text-decoration: none;
   }
 </style>

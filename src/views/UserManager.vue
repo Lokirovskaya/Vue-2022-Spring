@@ -1,5 +1,6 @@
 <template>
   <border border-radius="10px">
+    <TopIndex />
     <el-table :data="users" stripe border align="center">
       <el-table-column prop="uid" label="UID" width="150"></el-table-column>
       <el-table-column prop="username" label="用户名" width="150"></el-table-column>
@@ -21,18 +22,15 @@
         </template>
       </el-table-column>
     </el-table>
-    <!-- <MarkdownEditor /> -->
   </border>
 </template>
 
 
 <script>
-  // import MarkdownEditor from "@/components/MarkdownEditor";
+  import TopIndex from "@/components/TopIndex";
   export default {
     name: 'UserManager',
-    // components: {
-    //   MarkdownEditor,
-    // },
+    components: { TopIndex },
     data() {
       return {
         users: [{
