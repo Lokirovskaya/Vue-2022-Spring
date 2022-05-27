@@ -35,16 +35,6 @@ const routes = [
     component: () => import('../views/UserManager.vue')
   },
   {
-    path: '/module-a',
-    name: 'module-a',
-    component: () => import('../views/ModuleView.vue')
-  },
-  {
-    path: '/module-b',
-    name: 'module-b',
-    component: () => import('../views/ModuleView.vue')
-  },
-  {
     path: '/personcenter',
     name: 'personcenter',
     component: () => import('../views/PersonCenter.vue')
@@ -59,10 +49,15 @@ const routes = [
     name: 'modifyifo',
     component: () => import('../views/ModifyIfo.vue')
   },
+  {
+    path: '/sector',
+    name: 'sector',
+    component: () => import('../views/SectorView.vue'),
+  }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes
 })

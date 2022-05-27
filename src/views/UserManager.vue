@@ -1,6 +1,5 @@
 <template>
   <border border-radius="10px">
-    <el-button @click="routetest()" type="info" size="small">test</el-button>
     <el-table :data="users" stripe border align="center">
       <el-table-column prop="uid" label="UID" width="150"></el-table-column>
       <el-table-column prop="username" label="用户名" width="150"></el-table-column>
@@ -22,14 +21,18 @@
         </template>
       </el-table-column>
     </el-table>
+    <!-- <MarkdownEditor /> -->
   </border>
 </template>
 
 
 <script>
+  // import MarkdownEditor from "@/components/MarkdownEditor";
   export default {
     name: 'UserManager',
-
+    // components: {
+    //   MarkdownEditor,
+    // },
     data() {
       return {
         users: [{
@@ -56,10 +59,6 @@
     },
 
     methods: {
-      routetest() {
-        this.$router.push({ path: '/login', query: { userid: "2" } });
-      },
-
       get_user_status_string(user) {
         if (user.is_admin) {
           user.is_banned = false;
@@ -72,7 +71,6 @@
       },
 
       ban_user(user, days) {
-        // TODO, 时间设置
         user.is_banned = true;
         let date = new Date();
         date.setTime(date.getTime() + days * 24 * 3600 * 1000);
