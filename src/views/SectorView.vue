@@ -12,7 +12,7 @@
 
         <el-table-column label="标题" min-width="50%">
           <template slot-scope="scope">
-            <router-link :to="{path:'posting', query:{id:scope.row.posting_id}}">
+            <router-link :to="{path:'post', query:{id:scope.row.posting_id}}">
               <el-link id="art-title">
                 {{scope.row.posting_title}}
               </el-link>
