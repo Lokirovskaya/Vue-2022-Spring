@@ -1,39 +1,40 @@
 <template>
   <el-row>
-    <el-col :span="8"><div class="grid-content" >
-      <el-menu :default-active="1" class="el-menu-demo" mode="horizontal" router="true">
-        <el-menu-item index="/">首页</el-menu-item>
-        <el-submenu index="2">
-          <template slot="title">论坛分区</template>
-          <el-menu-item index="/module-a" ><i class="el-icon-position"></i>讨论区</el-menu-item>
-          <el-menu-item index="/module-b"><i class="el-icon-collection"></i>课程推荐</el-menu-item>
-          <el-menu-item index="/module-a"><i class="el-icon-medal"></i>刷题板块</el-menu-item>
-          <el-menu-item index="/module-a"><i class="el-icon-present"></i>校园周边</el-menu-item>
-          <el-menu-item index="/module-a"><i class="el-icon-download"></i>资源共享</el-menu-item>
-        </el-submenu>
-        <el-menu-item index="/usermanager">管理员界面</el-menu-item>
-      </el-menu>
-    </div></el-col><!--导航栏-->
+    <el-col :span="8">
+      <div class="grid-content">
+        <el-menu :default-active="1" class="el-menu-demo" mode="horizontal" router="true">
+          <el-menu-item index="/">首页</el-menu-item>
+          <el-submenu index="2">
+            <template slot="title">论坛分区</template>
+            <el-menu-item @click="goto_sector('discussion')"><i class="el-icon-position"></i>讨论区</el-menu-item>
+            <el-menu-item @click="goto_sector('recommendation')"><i class="el-icon-collection"></i>课程推荐</el-menu-item>
+            <el-menu-item @click="goto_sector('exercise')"><i class="el-icon-medal"></i>刷题板块</el-menu-item>
+            <el-menu-item @click="goto_sector('campus')"><i class="el-icon-present"></i>校园周边</el-menu-item>
+            <el-menu-item @click="goto_sector('resource')"><i class="el-icon-download"></i>资源共享</el-menu-item>
+          </el-submenu>
+        </el-menu>
+      </div>
+    </el-col>
+    <!--导航栏-->
     <el-col :span="8">
       <div class="grid-content" style="position: relative;bottom: -10.5px">
-        <el-input
-            placeholder="请输入关键词"
-            prefix-icon="el-icon-search"
-            size="middle"
-            v-model="search">
+        <el-input placeholder="请输入关键词" prefix-icon="el-icon-search" size="middle" v-model="search">
           <el-button slot="append" icon="el-icon-search"></el-button>
         </el-input>
       </div>
-    </el-col ><!--搜索栏-->
+    </el-col>
+    <!--搜索栏-->
     <el-col :span="8">
       <div class="grid-content" style="text-align: right">
-        <div v-if = "this.$store.state.login_state == 0">
-          <el-link :underline="false" style="position: relative;bottom:-19px" @click="goto_login">登录/注册</el-link>&nbsp;&nbsp;
+        <div v-if="this.$store.state.login_state == 0">
+          <el-link :underline="false" style="position: relative;bottom:-19px" @click="goto_login">登录/注册</el-link>
+          &nbsp;&nbsp;
         </div>
         <div v-else>
-          <el-dropdown  @command="User_Command">
+          <el-dropdown @command="User_Command">
             <div>
-              <el-avatar style="position: relative;bottom: -13.5px" shape="square" :size="35" v-bind:src="User.pho" ></el-avatar>
+              <el-avatar style="position: relative;bottom: -13.5px" shape="square" :size="35" v-bind:src="User.pho">
+              </el-avatar>
               <span style="position: relative;bottom: -3px">&nbsp;{{ User.name }}&nbsp;&nbsp;</span>
             </div>
             <el-dropdown-menu slot="dropdown">
@@ -43,70 +44,74 @@
           </el-dropdown>
         </div>
       </div>
-    </el-col><!--用户栏-->
+    </el-col>
+    <!--用户栏-->
   </el-row>
 </template>
 
 <script>
-export default {
-  name: "TopIndex",
-  data(){
-    return{
-      search:"",
-      User:{
-        name:"团长你就是歌姬",
-        pho:"https://s2.loli.net/2022/05/06/f2Jx6BkcSLEnRtU.jpg",
+  export default {
+    name: "TopIndex",
+    data() {
+      return {
+        search: "",
+        User: {
+          name: "团长你就是歌姬",
+          pho: "https://s2.loli.net/2022/05/06/f2Jx6BkcSLEnRtU.jpg",
+        }
       }
+    },
+    methods: {
+      goto_sector(sector_name) {
+        this.$router.push({ path: '/sector', query: { name: sector_name } });
+      },
+      goto_login() {
+        this.$router.replace('/login');
+      },
+      goto_logout() {
+        this.$confirm('此操作将退出登录, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '退出登录'
+          });
+          this.$store.commit('change_state0'); //切换到游客状态
+          this.$router.replace('/');
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });
+        });
+      },
+      User_Command(command) {
+        if (command === 'a') {
+          this.$router.replace('/personcenter');
+        } else if (command === 'b') {
+          this.goto_logout();
+        }
+      },
     }
-  },
-  methods:{
-    goto_login(){
-      this.$router.replace('/login');
-    },
-    goto_logout() {
-      this.$confirm('此操作将退出登录, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.$message({
-          type: 'success',
-          message: '退出登录'
-        });
-        this.$store.commit('change_state0'); //切换到游客状态
-        this.$router.replace('/');
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消'
-        });
-      });
-    },
-    User_Command(command){
-      if(command === 'a')
-      {
-        this.$router.replace('/personcenter');
-      }else if(command === 'b')
-      {
-        this.goto_logout();
-      }
-    },
   }
-}
 </script>
 
 <style scoped>
-.el-row {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
-  height: 61px;
-  margin-bottom: 5px;
-}
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-}
-.row-bg {
-  padding: 10px 0;
-  background-color: #f9fafc;
-}
+  .el-row {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+    height: 61px;
+    margin-bottom: 5px;
+  }
+
+  .grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+  }
+
+  .row-bg {
+    padding: 10px 0;
+    background-color: #f9fafc;
+  }
 </style>

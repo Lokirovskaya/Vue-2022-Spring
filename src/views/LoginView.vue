@@ -1,6 +1,5 @@
 <template>
   <div v-if="this.$store.state.login_state == 0" class="login">
-    <div>{{this.$route.query.userid}}</div>
     <h1>请登录</h1>
 
     <el-input placeholder="输入账号" v-model="input_id" clearable style="width:300px"></el-input>
