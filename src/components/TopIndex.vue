@@ -11,6 +11,7 @@
           <el-menu-item index="/module-a"><i class="el-icon-present"></i>校园周边</el-menu-item>
           <el-menu-item index="/module-a"><i class="el-icon-download"></i>资源共享</el-menu-item>
         </el-submenu>
+        <el-menu-item index="/usermanager">管理员界面</el-menu-item>
       </el-menu>
     </div></el-col><!--导航栏-->
     <el-col :span="8">
@@ -36,7 +37,7 @@
               <span style="position: relative;bottom: -3px">&nbsp;{{ User.name }}&nbsp;&nbsp;</span>
             </div>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="a">个人中心</el-dropdown-item>
+              <el-dropdown-item command="a"><el_link @click="goto_personCenter">个人中心</el_link></el-dropdown-item>
               <el-dropdown-item command="b">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -84,7 +85,7 @@ export default {
     User_Command(command){
       if(command === 'a')
       {
-        this.$message('进入个人中心');
+        this.$router.replace('/personcenter');
       }else if(command === 'b')
       {
         this.goto_logout();
