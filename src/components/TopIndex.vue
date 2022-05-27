@@ -50,7 +50,7 @@
               <span style="position: relative;bottom: -3px">&nbsp;{{ User.name }}&nbsp;&nbsp;</span>
             </div>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="a">个人中心</el-dropdown-item>
+              <el-dropdown-item command="a"><el_link @click="goto_personCenter">个人中心</el_link></el-dropdown-item>
               <el-dropdown-item command="b">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -98,7 +98,7 @@
       },
       User_Command(command) {
         if (command === 'a') {
-          this.$message('进入个人中心');
+          this.$router.replace('/personcenter');
         } else if (command === 'b') {
           this.goto_logout();
         }

@@ -1,6 +1,5 @@
 <template>
   <el-container>
-    <TopIndex />
     <el-header id="title">
       这个板块的名称是 {{ sector_info[this.$route.query.name].name }},
       传给后端的板块 id 是 {{ sector_info[this.$route.query.name].id }}
@@ -55,10 +54,8 @@
 
 
 <script>
-  import TopIndex from "@/components/TopIndex";
   export default {
     name: 'ModuleView',
-    components: { TopIndex },
     data() {
       return {
         sector_info: {

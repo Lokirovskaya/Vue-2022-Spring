@@ -1,7 +1,5 @@
 <template>
   <div class="home">
-    <TopIndex />
-    <!--已经使用TopIndex组件代替-->
 
     <el-container>
       <el-header class="title">随便弄点儿</el-header>
@@ -135,10 +133,8 @@
 
 <script>
   // @ is an alias to /src
-  import TopIndex from "@/components/TopIndex";
   export default {
     name: 'HomeView',
-    components: { TopIndex },
     data() {
       return {
         search: "",

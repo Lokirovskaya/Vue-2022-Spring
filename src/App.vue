@@ -2,15 +2,21 @@
   <div id="app">
     <nav>
       <router-link to="/">Home</router-link> |
-      <router-link to="/posting">帖子</router-link> |
+      <router-link to="/post">帖子</router-link> |
       <router-link to="/login">Login</router-link> |
       <router-link to="/usermanager">Manager</router-link> |
       <router-link to="/personcenter">个人中心</router-link>
     </nav>
+    <TopIndex></TopIndex>
     <router-view />
   </div>
 </template>
-
+<script>
+  import TopIndex from "@/components/TopIndex";
+  export default {
+    components: { TopIndex }
+  }
+</script>
 <style>
   #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
