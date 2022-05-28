@@ -3,13 +3,13 @@
       <el-main>
         <div>
           <el-avatar shape="square" :size="40" v-bind:src="User_Pho"></el-avatar>
-          <el-link :underline="false" v-bind:href="User_Page"><i>{{ User_name }}</i></el-link> :&nbsp; {{comment1}}
+          <el-link :underline="false" v-bind:href="User_Page">&nbsp;<i>{{ username }}</i></el-link>&nbsp;<span v-if="judge===3">回复&nbsp;{{reply_to}}</span> :&nbsp; {{content}}
         </div>
       </el-main>
       <el-footer height="25px"><!--这是回复的回复的点赞评论板块-->
-        {{Time}}
+        {{time}}
         {{likeNum}}
-        <img style="width: 20px;height: 20px;position: relative; bottom: -2px" alt="clicked_like" src="../assets/el-icon-clicked_like.png" v-if="like"
+        <img style="width: 20px;height: 20px;position: relative; bottom: -2px" alt="clicked_like" src="../assets/el-icon-clicked_like.png" v-if="like1"
              @click="LIKE">
         <img style="width: 20px;height: 20px;position: relative; bottom: -2px" alt="like" src="../assets/el-icon-like.png" v-else
              @click="LIKE">
@@ -23,26 +23,35 @@ export default {
   name: "Reply_reply",
   data(){
     return{
-      User_name:'李田所',
       User_Pho:'https://s2.loli.net/2022/05/08/1mkNYLO9siHrMud.png',
       User_Page:'www.baidu.com',
-      comment:'114514',
-      comment1:'由于先入为主的概念，我很喜欢动漫里奈的外表设定。刻意的想把里奈线放在最后去攻略，就像是佳肴放到最后去品尝一样。我的攻略顺序是1.小学妹（她的线特别容易进入，我不明不白就误入了hh）2.美咲（学姐线意外的挺虐，面临友情爱情的双重背叛，不过最终修成正果还是很美满的。）3.里奈（在单推由绮的时候，不小心进入了里奈线，也就认了命走到了头。不多谈了就是很符合我的预期，“完美”两个字大概可以概括这个角色。）第4个才进入了由绮TE线（吐槽一下，这条线是真的挺难的。基本上其他异性都不能有太多来往，“！事件”最好别碰，否则不注意就误入其他线。尤其是和里奈聊天一定要注意次数和分寸...）',
-      like:false,
-      likeNum:114514,
-      Time:'2022-04-15 14:56',
+      like1: this.like,
+      likeNum: this.like_count,
     }
   },
+
+  props:{
+    reply_id:{type: Number},// 回复的ID
+    user_id:{type: Number},//  回复的用户ID
+    username:{type: String, required: true},// 用户名
+    content:{type: String, required: true},// 回复的内容
+    like_count:{type: Number, required: true},// 回复的点赞数
+    time:{type: Date, required: true},// 回复时间
+    like:{type: Boolean, default: false},// 用户是否给该回复点赞（布尔型）
+    judge:{type: Number, default: 0},// 回复类型（2-对楼层的回复 3-对楼层中回复的回复）
+    reply_to:{type: String, required: true} // 只有judge=3有此字段，为其所回复的回复的用户名
+  },
+
   methods:{
     LIKE(){
-      if(this.like === true)
+      if(this.like1 === true)
       {
         this.likeNum--;// eslint-disable-line no-unused-vars
-        this.like=false;
+        this.like1=false;
       }else
       {
         this.likeNum++;// eslint-disable-line no-unused-vars
-        this.like=true;
+        this.like1=true;
       }
     },
   }

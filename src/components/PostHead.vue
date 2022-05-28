@@ -2,24 +2,24 @@
   <el-container>
     <el-aside style="width: 200px">
       <p>
-        <el-link :underline="false" v-bind:href="User_Page"><i>{{ User_name }}</i></el-link>
+        <el-link :underline="false" v-bind:href="User_Page"><i>{{ username }}</i></el-link>
       </p>
       <el-avatar shape="square" :size="160" v-bind:src="User_Pho"></el-avatar>
-      <p>{{ Level }}</p>
+      <p>LV{{ Level }}</p>
     </el-aside>
     <el-container>
       <el-header height="40px">
-        <b>{{Title}}</b>
+        <b>{{posting_title}}</b>
       </el-header>
       <el-main>
-        {{Content}}
+        {{content}}
       </el-main>
       <el-footer height="25px">
         {{Time}}
         {{likeNum}}
         <el-tooltip class="item" effect="light" content="点赞" placement="bottom">
           <img style="width: 20px;height: 20px;position: relative; bottom: -2px" alt="clicked_like"
-            src="../assets/el-icon-clicked_like.png" v-if="like" @click="LIKE">
+            src="../assets/el-icon-clicked_like.png" v-if="like1" @click="LIKE">
           <img style="width: 20px;height: 20px;position: relative; bottom: -2px" alt="like"
             src="../assets/el-icon-like.png" v-else @click="LIKE">
         </el-tooltip>
@@ -39,25 +39,33 @@
     name: "PostHead",
     data() {
       return {
-        User_name: '李田所',    //用户姓名
         User_Pho: 'https://s2.loli.net/2022/05/08/1mkNYLO9siHrMud.png',    //用户头像
         User_Page: 'www.baidu.com',     //用户个人主页链接
-        Level: 'lv5',                  //用户等级
-        Title: '24岁，是学生',         //帖子标题
-        Content: '你是一个一个一个美食家',//帖子内容
-        like: false,                   //是否点赞
-        likeNum: 114514,               //点赞数量
-        Time: '2022-04-15 14:36'       //发布时间
+        Level: 5,                  //用户等级
+        like1: this.like,                   //是否点赞
+        likeNum: this.like_count,               //点赞数量
+        Time: this.Time       //发布时间
       }
+    },
+    props:{
+      posting_title:{type: String, required: true},
+      posting_time:{type: Date, required: true},
+      user_id:{type: Number, required: true},
+      username:{type: String, required: true},
+      content:{type: String, required: true},
+      like_count:{type: Number, default: 0},
+      authority:{type: Number, default: 0},
+      resource:{type: String},
+      like:{type: Boolean, default: false}
     },
     methods: {
       LIKE() {
-        if (this.like === true) {
+        if (this.like1 === true) {
           this.likeNum--;
-          this.like = false;
+          this.like1 = false;
         } else {
           this.likeNum++;
-          this.like = true;
+          this.like1 = true;
         }
       },
       comment() {

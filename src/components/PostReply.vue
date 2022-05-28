@@ -3,23 +3,23 @@
 
     <!--这是回复人的信息框，目前尚未添加的有-->
     <el-aside width="200px">
-      <p><el-link :underline="false" v-bind:href="User_Page"><i>{{ User_name }}</i></el-link></p>
+      <p><el-link :underline="false" v-bind:href="User_Page"><i>{{ username }}</i></el-link></p>
       <el-avatar shape="square" :size="160" v-bind:src="User_Pho"></el-avatar>
-      <p style="line-height: 4px">{{ Level }}</p>
+      <p style="line-height: 4px">LV{{ User_Level }}</p>
     </el-aside>
     <el-container>
 
       <!--这是回复的主要内容-->
       <el-main>
-        {{Content1}}
+        {{content}}
 
       </el-main>
       <!--这是评论的点赞评论部分-->
       <el-footer height="25px" style="position: relative;margin-bottom: 5px">
-        {{Time}}
+        {{time}}
         {{likeNum}}
         <el-tooltip class="item" effect="light" content="点赞" placement="bottom">
-          <img style="width: 20px;height: 20px;position: relative; bottom: -2px" alt="clicked_like" src="../assets/el-icon-clicked_like.png" v-if="like"
+          <img style="width: 20px;height: 20px;position: relative; bottom: -2px" alt="clicked_like" src="../assets/el-icon-clicked_like.png" v-if="like1"
                @click="LIKE">
           <img style="width: 20px;height: 20px;position: relative; bottom: -2px" alt="like" src="../assets/el-icon-like.png" v-else
                @click="LIKE">
@@ -34,9 +34,15 @@
       <transition>
         <el-collapse-transition>   <!--折叠动画效果-->
           <div v-show="SEE" >
-            <Reply_reply></Reply_reply>
-            <Reply_reply></Reply_reply>
-            <Reply_reply></Reply_reply>
+            <Reply_reply v-for="item in replys1"
+                         :key="item.reply_id"
+                         :username="item.username"
+                         :content="item.content"
+                         :like_count="item.like_count"
+                         :time="item.time"
+                         :judge="item.judge"
+                         :like="item.like"
+                         :reply_to="item.reply_to"></Reply_reply>
           </div>
         </el-collapse-transition>
         <!--在循环外加一个分页
@@ -73,30 +79,40 @@ export default {
   components:{Reply_reply},
   data(){
     return{
-      User_name:'李田所',  //用户姓名
-      Level:'lv5',        //用户等级
       User_Pho:'https://s2.loli.net/2022/05/08/1mkNYLO9siHrMud.png', //用户头像
       User_Page:'www.baidu.com',      //用户个人主页链接
-      Content: '你是一个一个一个美食家',   //用户评论内容
-      Content1:'其实说起WA1，这部作品在我心目中地位一直挺高的。自己上高中那会有幸看过动漫，只知道这部作品不那么简单，它所传递的不仅仅只是一对情侣感情上的纷扰。它像传递的东西更多，更加丰富。生活？事业？感情？甚至动漫在艺术上的探讨都很深（配合每次酒吧里的分镜...我都觉得再看哲学番2333）不过那会一直没心思去玩玩游戏，直到进入了社会才突然想起这部作品。最近更是花时间去通了游戏，下面浅显的和大家聊聊吧~~\n由于先入为主的概念，我很喜欢动漫里奈的外表设定。刻意的想把里奈线放在最后去攻略，就像是佳肴放到最后去品尝一样。我的攻略顺序是1.小学妹（她的线特别容易进入，我不明不白就误入了hh）2.美咲（学姐线意外的挺虐，面临友情爱情的双重背叛，不过最终修成正果还是很美满的。）3.里奈（在单推由绮的时候，不小心进入了里奈线，也就认了命走到了头。不多谈了就是很符合我的预期，“完美”两个字大概可以概括这个角色。）第4个才进入了由绮TE线（吐槽一下，这条线是真的挺难的。基本上其他异性都不能有太多来往，“！事件”最好别碰，否则不注意就误入其他线。尤其是和里奈聊天一定要注意次数和分寸...）',
-      like:false,                     //该评论是否点赞
+      User_Level: 5, //用户等级
+      like1:this.like,                     //该评论是否点赞
       SEE:false,                      //该评论是否可见
-      likeNum:114514,                 //该评论点赞数量
-      Time:'2022-04-15 14:56',        //该评论发布时间
-      Re_Num: 3,                      //评论回复数
-      textarea:''
+      likeNum:this.like_count,                 //该评论点赞数量
+      Re_Num: this.reply_count,                      //评论回复数
+      replys1: this.replys
     }
   },
+
+  props:{
+    reply_id:{type: Number},// 楼层ID
+    user_id:{type: Number},// 楼层用户的ID
+    username:{type: String, required: true},// 用户名
+    //userlevel:{type: Number, required: true},
+    content:{type: String, required: true},// 楼层的内容
+    like_count:{type: Number, default: 0},// 回复的点赞数
+    reply_count:{type: Number, default: 0},// 楼层的回复数
+    time:{type: Date , required: true},// 回复时间
+    like:{type: Boolean, default: false},// 该用户是否给该回复点赞
+    replys:{type: Array, required: true}// 楼层中的所有回复
+  },
+
   methods:{
     LIKE(){
-      if(this.like === true)
+      if(this.like1 === true)
       {
        this.likeNum--;// eslint-disable-line no-unused-vars
-        this.like=false;
+        this.like1=false;
       }else
       {
         this.likeNum++;// eslint-disable-line no-unused-vars
-        this.like=true;
+        this.like1=true;
       }
     },
 
