@@ -6,6 +6,11 @@
     </el-header>
     <el-header id="intro" v-html="intro_content"></el-header>
     <el-main>
+
+      <router-link :to="{path:'/sector/newpost', query:{name: this.$route.query.name}}">
+        <el-button type="primary">发新帖</el-button>
+      </router-link>
+
       <el-table :data="res.data" stripe="true" align="left">
 
         <el-table-column min-width="5%"></el-table-column>
@@ -55,7 +60,7 @@
 
 <script>
   export default {
-    name: 'ModuleView',
+    name: 'SectorView',
     data() {
       return {
         sector_info: {

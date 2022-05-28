@@ -49,8 +49,13 @@ const routes = [
   {
     path: '/sector',
     name: 'sector',
-    component: () => import('../views/SectorView.vue'),
-  }
+    component: () => import('../views/SectorView.vue')
+  },
+  {
+    path: '/sector/newpost',
+    name: 'newpost',
+    component: () => import('../views/NewPostView.vue'),
+  },
 ]
 
 const router = new VueRouter({

@@ -2,7 +2,7 @@
   <div>
     <mavon-editor v-model="content" ref="md" @change="change" style="min-height: 600px" />
 
-    <button @click="submit">提交</button>
+
   </div>
 </template>
 
@@ -31,7 +31,6 @@
       },
       // 提交
       submit() {
-        console.log(this.content);
         console.log(this.html);
       }
     },
