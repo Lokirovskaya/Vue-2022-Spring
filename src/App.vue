@@ -12,10 +12,10 @@
   </div>
 </template>
 <script>
-import TopIndex from "@/components/TopIndex";
-export default {
-  components:{TopIndex}
-}
+  import TopIndex from "@/components/TopIndex";
+  export default {
+    components: { TopIndex }
+  }
 </script>
 <style>
   #app {

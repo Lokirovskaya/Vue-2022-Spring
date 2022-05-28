@@ -1,16 +1,27 @@
 <template>
   <div class="home">
-    <!--TopIndex-->
+
     <el-container>
       <el-header class="title">随便弄点儿</el-header>
       <el-header class="intro">hello world</el-header>
 
       <el-row>
-        <el-button @click="goto_sector('discussion')" icon="el-icon-position">讨论区</el-button>
-        <el-button @click="goto_sector('recommendation')" icon="el-icon-collection">课程推荐</el-button>
-        <el-button @click="goto_sector('exercise')" icon="el-icon-medal">刷题板块</el-button>
-        <el-button @click="goto_sector('campus')" icon="el-icon-present">校园周边</el-button>
-        <el-button @click="goto_sector('resource')" icon="el-icon-download">资源共享</el-button>
+        <router-link :to="{path:'sector', query:{name:'discussion'}}" class="sector-button">
+          <el-button icon="el-icon-position">讨论区</el-button>
+        </router-link>
+        <router-link :to="{path:'sector', query:{name:'recommendation'}}" class="sector-button">
+          <el-button icon="el-icon-collection">课程推荐</el-button>
+        </router-link>
+        <router-link :to="{path:'sector', query:{name:'exercise'}}" class="sector-button">
+          <el-button icon="el-icon-medal">刷题板块</el-button>
+        </router-link>
+        <router-link :to="{path:'sector', query:{name:'campus'}}" class="sector-button">
+          <el-button icon="el-icon-present">校园周边</el-button>
+        </router-link>
+        <router-link :to="{path:'sector', query:{name:'resource'}}" class="sector-button">
+          <el-button icon="el-icon-download">资源共享</el-button>
+        </router-link>
+
       </el-row>
 
       <el-collapse v-model="activeNames" @change="handleChange">
@@ -122,10 +133,8 @@
 
 <script>
   // @ is an alias to /src
-
   export default {
     name: 'HomeView',
-    components: {},
     data() {
       return {
         search: "",
@@ -513,5 +522,9 @@
   .row-bg {
     padding: 10px 0;
     background-color: #f9fafc;
+  }
+
+  .sector-button {
+    margin: 5px;
   }
 </style>

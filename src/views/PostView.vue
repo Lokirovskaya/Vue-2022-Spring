@@ -9,6 +9,7 @@
               :authority="authority"
               :resource="resource"
               :like="like"></PostHead>
+    <h2>这个帖子的 id 是 {{this.$route.query.id}}</h2>
     <br>
     <div v-for="item in O_replys" :key="item.reply_id">
     <PostReply

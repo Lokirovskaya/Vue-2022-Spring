@@ -21,18 +21,13 @@
         </template>
       </el-table-column>
     </el-table>
-    <!-- <MarkdownEditor /> -->
   </border>
 </template>
 
 
 <script>
-  // import MarkdownEditor from "@/components/MarkdownEditor";
   export default {
     name: 'UserManager',
-    // components: {
-    //   MarkdownEditor,
-    // },
     data() {
       return {
         users: [{
