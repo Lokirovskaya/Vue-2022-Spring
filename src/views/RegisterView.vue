@@ -8,7 +8,7 @@
       <el-input placeholder="确认密码" v-model="input_password2" clearable style="width:300px" show-password></el-input>
     <div>
       <el-button @click="register()" round>注册</el-button>
-      <router-link to="/login">
+      <router-link to="/login" style="margin: 5px;">
         <el-button round>去登录</el-button>
       </router-link>
     </div>
@@ -27,9 +27,17 @@
     },
     methods: {
       register() {
-        if (this.$data.input_password != this.$data.input_password2) {
+        if (this.input_id === '') {
+          this.$message.error('用户名不能为空！');
+        }
+        else if (this.input_password === '') {
+          this.$message.error('密码不能为空！');
+        }
+        else if (this.input_password2 === '') {
+          this.$message.error('请再次输入密码！');
+        }
+        else if (this.input_password !== this.input_password2) {
           this.$message.error('两次输入的密码不一致！');
-          return;
         }
         else {
           this.$axios.post('/user/register', qs.stringify(this.$data))  // this.$data 是将 data 段全部打包成一个字典，如果想只发送某个数据，用 this.input_id 之类的就好了
