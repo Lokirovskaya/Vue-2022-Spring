@@ -61,7 +61,7 @@
         sector_info: {
           'discussion': { name: '讨论区', id: 1 },
           'recommendation': { name: '课程推荐', id: 2 },
-          'exercise': { name: '刷题板块', id: 3 },
+           'exercise': { name: '刷题板块', id: 3 },
           'campus': { name: '校园周边', id: 4 },
           'resource': { name: '资源共享', id: 5 },
         },
