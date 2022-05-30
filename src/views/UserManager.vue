@@ -11,13 +11,24 @@
           <div>{{get_user_status_string(scope.row)}}</div>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="200">
+
+      <el-table-column width="80">
         <template slot-scope="scope">
           <el-button v-if="scope.row.is_admin" type="info" size="small">禁言</el-button>
-          <el-button v-if="!scope.row.is_banned" @click="alert_ban_user(scope.row)" type="danger" size="small">禁言
+          <el-button v-if="!scope.row.is_banned" @click="alert_ban_user(scope.row)" type="danger" size="small">
+            禁言
           </el-button>
-          <el-button v-else @click="alert_unban_user(scope.row)" type="warning" size="small">解禁</el-button>
-          <!-- <el-button type="primary" size="small">设为管理员</el-button> -->
+          <el-button v-else @click="alert_unban_user(scope.row)" type="warning" size="small">
+            解禁
+          </el-button>
+        </template>
+      </el-table-column>
+
+      <el-table-column width="120">
+        <template slot-scope="scope">
+          <el-button type="primary" size="small" @click="alert_set_admin(scope.row)">
+            设为管理员
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -65,6 +76,40 @@
         else return '用户'
       },
 
+      alert_ban_user(user) {
+        this.$prompt('请输入禁言天数', '禁言用户 ' + user.username, {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          inputPattern: /^\s*\d+\s*$/,
+          inputErrorMessage: '禁言天数不正确'
+        }).then(({ value }) => {
+          this.ban_user(user, parseInt(value))
+          // this.$message.success('成功禁言 ' + user.username + '，时长 ' + value + ' 天');
+        });
+      },
+
+      alert_unban_user(user) {
+        this.$confirm('确认解禁用户 ' + user.username + ' 吗？', '解除禁言', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.unban_user(user)
+          this.$message.success('成功解禁 ' + user.username);
+        });
+      },
+
+      alert_set_admin(user) {
+        this.$confirm('确认设置用户 ' + user.username + ' 为管理员吗？', '设置管理员', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.set_admin(user)
+          this.$message.success('成功设置管理员 ' + user.username);
+        });
+      },
+
       ban_user(user, days) {
         user.is_banned = true;
         let date = new Date();
@@ -76,35 +121,8 @@
         user.is_banned = false;
       },
 
-      alert_ban_user(user) {
-        this.$prompt('请输入禁言天数', '禁言用户 ' + user.username, {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          inputPattern: /^\s*\d+\s*$/,
-          inputErrorMessage: '禁言天数不正确'
-        }).then(({ value }) => {
-          this.ban_user(user, parseInt(value))
-          this.$notify({
-            title: '设置禁言成功',
-            message: '成功禁言 ' + user.username + '，时长 ' + value + ' 天',
-            type: 'success'
-          });
-        });
-      },
-
-      alert_unban_user(user) {
-        this.$confirm('确认解禁用户 ' + user.username + ' 吗？', '解除禁言', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.unban_user(user)
-          this.$notify({
-            title: '解除禁言成功',
-            message: '成功解禁 ' + user.username,
-            type: 'success'
-          });
-        });
+      set_admin(user) {
+        return user;
       },
 
       date_to_string(date) {  // 为什么日期格式化的功能都要我写啊js是现代语言吗？？？

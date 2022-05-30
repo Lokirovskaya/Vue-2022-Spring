@@ -46,8 +46,16 @@
         this.$axios.post('/user/login', qs.stringify(this.$data))
           .then(res => {
             if (res.data.errno === 0) {
+              if (res.data.data.is_admin)
+                this.$store.commit('set_userstate_to_admin');
+              else if (res.data.data.is_banned)
+                this.$store.commit('set_userstate_to_banned');
+              else
+                this.$store.commit('set_userstate_to_normal');
+              this.$store.commit('set_token', res.data.data.token);
+              this.$store.commit('set_userid', res.data.data.userid);
+              this.$store.commit('set_username', res.data.data.username);
               this.$message.success(res.data.data.input_id + ' 登录成功！');
-              this.$message.success('token: ' + res.data.data.authorization);
             }
             else {
               this.$message.error(res.data.msg);
