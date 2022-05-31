@@ -36,16 +36,16 @@ const routes = [
     name: 'personcenter',
     component: () => import('../views/PersonCenter.vue')
   },
-  {
-    path: '/viewifo',
-    name: 'viewifo',
-    component: () => import('../views/ViewIfo.vue')
-  },
-  {
-    path: '/modifyifo',
-    name: 'modifyifo',
-    component: () => import('../views/ModifyIfo.vue')
-  },
+  // {
+  //   path: '/viewifo',
+  //   name: 'viewifo',
+  //   component: () => import('../views/ViewIfo.vue')
+  // },
+  // {
+  //   path: '/modifyifo',
+  //   name: 'modifyifo',
+  //   component: () => import('../views/ModifyIfo.vue')
+  // },
   {
     path: '/sector',
     name: 'sector',
