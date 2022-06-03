@@ -11,7 +11,7 @@
               :like="like"></PostHead>
     <h2>这个帖子的 id 是 {{this.$route.query.id}}</h2>
     <br>
-    <div v-for="item in O_replys" :key="item.reply_id">
+    <div v-for="item in replys" :key="item.reply_id">
     <PostReply
         :username="item.username"
         :content="item.content"
@@ -45,7 +45,7 @@ export default {
       resource: '学习资料', // 帖子资源名称
       reply_count: 3, // 总楼层数
       like: false, // 用户是否给该帖子点赞（布尔型）
-      O_replys:[
+      replys:[
         {
           reply_id: 1, // 楼层的ID
           user_id: 2, // 楼层的用户ID

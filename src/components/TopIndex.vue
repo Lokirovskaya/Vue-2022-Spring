@@ -38,7 +38,7 @@
     <!--搜索栏-->
     <el-col :span="8">
       <div class="grid-content" style="text-align: right">
-        <div v-if="this.$store.state.login_state == 0">
+        <div v-if="this.$store.state.login_state === 0">
           <el-link :underline="false" style="position: relative;bottom:-19px" @click="goto_login">登录/注册</el-link>
           &nbsp;&nbsp;
         </div>
@@ -50,7 +50,9 @@
               <span style="position: relative;bottom: -3px">&nbsp;{{ User.name }}&nbsp;&nbsp;</span>
             </div>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="a"><el_link @click="goto_personCenter">个人中心</el_link></el-dropdown-item>
+              <router-link :to="{path:'/personcenter'}">
+                <el-dropdown-item command="a">个人中心</el-dropdown-item>
+              </router-link>
               <el-dropdown-item command="b">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -62,13 +64,14 @@
 </template>
 
 <script>
+  //import qs from "qs";
   export default {
     name: "TopIndex",
     data() {
       return {
         search: "",
         User: {
-          name: "团长你就是歌姬",
+          name: this.$store.commit.name,
           pho: "https://s2.loli.net/2022/05/06/f2Jx6BkcSLEnRtU.jpg",
         }
       }
@@ -87,7 +90,7 @@
             type: 'success',
             message: '退出登录'
           });
-          this.$store.commit('change_state0'); //切换到游客状态
+          this.$store.commit('set_userstate_to_unlogged'); //切换到游客状态
           this.$router.replace('/');
         }).catch(() => {
           this.$message({
@@ -97,9 +100,7 @@
         });
       },
       User_Command(command) {
-        if (command === 'a') {
-          this.$router.replace('/personcenter');
-        } else if (command === 'b') {
+        if (command === 'b') {
           this.goto_logout();
         }
       },
