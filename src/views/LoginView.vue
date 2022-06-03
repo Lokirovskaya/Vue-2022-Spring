@@ -30,19 +30,6 @@
     },
     methods: {
       login() {
-        // // if(data.input == 123) this.$store.commit('change_state');
-        // if (this.input_id == 10001 && this.input_password == 123) //10001：用户测试账号，密码为123
-        // {
-        //   this.$store.commit('change_state1');
-        //   this.$router.replace('/');
-        // }
-        // else if (this.input_id == 10002 && this.input_password == 123) //10002：管理员测试账号，密码为123
-        // {
-        //   this.$store.commit('change_state2');
-        //   this.$router.replace('/');
-        // }
-        // else this.$store.commit('change_state');
-
         this.$axios.post('/user/login', qs.stringify(this.$data))
           .then(res => {
             if (res.data.errno === 0) {
@@ -52,10 +39,11 @@
                 this.$store.commit('set_userstate_to_banned');
               else
                 this.$store.commit('set_userstate_to_normal');
-              this.$store.commit('set_token', res.data.data.token);
+              this.$store.commit('set_token', res.data.data.authorization);
               this.$store.commit('set_userid', res.data.data.userid);
               this.$store.commit('set_username', res.data.data.username);
-              this.$message.success(res.data.data.input_id + ' 登录成功！');
+              console.log(res);
+              this.$message.success(res.data.data.username + ' 登录成功！');
             }
             else {
               this.$message.error(res.data.msg);

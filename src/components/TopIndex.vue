@@ -47,7 +47,7 @@
             <div>
               <el-avatar style="position: relative;bottom: -13.5px" shape="square" :size="35" v-bind:src="User.pho">
               </el-avatar>
-              <span style="position: relative;bottom: -3px">&nbsp;{{ User.name }}&nbsp;&nbsp;</span>
+              <span style="position: relative;bottom: -3px">&nbsp;{{ this.$store.state.username }}&nbsp;&nbsp;</span>
             </div>
             <el-dropdown-menu slot="dropdown">
               <router-link :to="{path:'/personcenter'}">
