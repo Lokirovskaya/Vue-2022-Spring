@@ -62,34 +62,13 @@
     name: 'SectorView',
     data() {
       return {
+        sector_data: {},
         sector_chinese_name: {
           'discussion': '讨论区',
           'recommendation': '课程推荐',
           'exercise': '刷题板块',
           'campus': '校园周边',
           'resource': '资源共享',
-        },
-        res: {
-          sector_name: '其实没什么用的字段', // 板块名称
-          sector_introduction: '<b>介绍！</b>', // 板块介绍
-          data: [
-            {
-              posting_id: 1,
-              posting_title: '标题1', // 帖子标题
-              username: 'xxx', // 发布用户名
-              posting_time: '2002-05-06', // 发布时间
-              like_count: 10, // 点赞数量
-              comment_count: 20 // 评论数
-            },
-            {
-              posting_id: 2,
-              posting_title: '标题2', // 帖子标题
-              username: 'yyy', // 发布用户名
-              posting_time: '1999-05-06', // 发布时间
-              like_count: 0, // 点赞数量
-              comment_count: 1000 // 评论数
-            },
-          ]
         },
       }
     },
