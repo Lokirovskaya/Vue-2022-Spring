@@ -47,10 +47,12 @@
             <div>
               <el-avatar style="position: relative;bottom: -13.5px" shape="square" :size="35" v-bind:src="User.pho">
               </el-avatar>
-              <span style="position: relative;bottom: -3px">&nbsp;{{ User.name }}&nbsp;&nbsp;</span>
+              <span style="position: relative;bottom: -3px">&nbsp;{{ this.$store.state.username }}&nbsp;&nbsp;</span>
             </div>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="a"><el_link @click="goto_personCenter">个人中心</el_link></el-dropdown-item>
+              <el-dropdown-item command="a">
+                <el_link @click="goto_personCenter">个人中心</el_link>
+              </el-dropdown-item>
               <el-dropdown-item command="b">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>

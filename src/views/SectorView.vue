@@ -1,8 +1,7 @@
 <template>
   <el-container>
     <el-header id="title">
-      这个板块的名称是 {{ sector_info[this.$route.query.name].name }},
-      传给后端的板块 id 是 {{ sector_info[this.$route.query.name].id }}
+      这个板块的名称是 {{ sector_chinese_name[this.$route.query.name]}},
     </el-header>
     <el-header id="intro" v-html="intro_content"></el-header>
     <el-main>
@@ -63,12 +62,12 @@
     name: 'SectorView',
     data() {
       return {
-        sector_info: {
-          'discussion': { name: '讨论区', id: 1 },
-          'recommendation': { name: '课程推荐', id: 2 },
-          'exercise': { name: '刷题板块', id: 3 },
-          'campus': { name: '校园周边', id: 4 },
-          'resource': { name: '资源共享', id: 5 },
+        sector_chinese_name: {
+          'discussion': '讨论区',
+          'recommendation': '课程推荐',
+          'exercise': '刷题板块',
+          'campus': '校园周边',
+          'resource': '资源共享',
         },
         res: {
           sector_name: '其实没什么用的字段', // 板块名称
