@@ -26,7 +26,7 @@
 
       <el-collapse v-model="activeNames" @change="handleChange">
         <el-collapse-item title="讨论区" name="1">
-          <el-table :data="articles1" stripe="true" align="left">
+          <el-table :data="articles1" stripe align="left">
             <el-table-column label="标题" min-width="70%">
               <template slot-scope="scope">
                 <div class="art-title"><u>{{scope.row.title}}</u></div>
@@ -46,7 +46,7 @@
           </el-table>
         </el-collapse-item>
         <el-collapse-item title=" 课程推荐" name="2">
-          <el-table :data="articles2" stripe="true" align="left">
+          <el-table :data="articles2" stripe align="left">
             <el-table-column label="标题" min-width="70%">
               <template slot-scope="scope">
                 <div class="art-title"><u>{{scope.row.title}}</u></div>
@@ -66,7 +66,7 @@
           </el-table>
         </el-collapse-item>
         <el-collapse-item title=" 刷题板块" name="3">
-          <el-table :data="articles3" stripe="true" align="left">
+          <el-table :data="articles3" stripe align="left">
             <el-table-column label="标题" min-width="70%">
               <template slot-scope="scope">
                 <div class="art-title"><u>{{scope.row.title}}</u></div>
@@ -86,7 +86,7 @@
           </el-table>
         </el-collapse-item>
         <el-collapse-item title=" 校园周边" name="4">
-          <el-table :data="articles4" stripe="true" align="left">
+          <el-table :data="articles4" stripe align="left">
             <el-table-column label="标题" min-width="70%">
               <template slot-scope="scope">
                 <div class="art-title"><u>{{scope.row.title}}</u></div>
@@ -106,7 +106,7 @@
           </el-table>
         </el-collapse-item>
         <el-collapse-item title=" 资源下载" name="5">
-          <el-table :data="articles5" stripe="true" align="left">
+          <el-table :data="articles5" stripe align="left">
             <el-table-column label="标题" min-width="70%">
               <template slot-scope="scope">
                 <div id="art-title"><u>{{scope.row.title}}</u></div>
