@@ -52,7 +52,6 @@
           .catch(err => {
             this.$message.error(err);
           });
-
       }
     }
   }

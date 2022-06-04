@@ -86,7 +86,8 @@ export default {
       SEE:false,                      //该评论是否可见
       likeNum:this.like_count,                 //该评论点赞数量
       Re_Num: this.reply_count,                      //评论回复数
-      replys1: this.replys
+      replys1: this.replys, //回复的回复
+      textarea:'' //楼中楼输入框的内容
     }
   },
 
