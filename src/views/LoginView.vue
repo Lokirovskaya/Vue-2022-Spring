@@ -25,7 +25,8 @@
     data() {
       return {
         input_id: "",
-        input_password: ""
+        input_password: "",
+        route_from: "",
       }
     },
     methods: {
@@ -42,8 +43,10 @@
               this.$store.commit('set_token', res.data.data.authorization);
               this.$store.commit('set_userid', res.data.data.userid);
               this.$store.commit('set_username', res.data.data.username);
-              console.log(res.data);
               this.$message.success(res.data.data.username + ' 登录成功！');
+              setTimeout(() => {
+                this.$router.push(this.route_from);
+              }, 1000);
             }
             else {
               this.$message.error(res.data.msg);
@@ -53,6 +56,9 @@
             this.$message.error(err);
           });
       }
+    },
+    beforeRouteEnter(to, from, next) {
+      next(vm => { vm.route_from = from.fullPath; });
     }
   }
 </script>
