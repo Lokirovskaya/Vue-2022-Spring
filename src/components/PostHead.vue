@@ -29,12 +29,19 @@
             src="../assets/comment.png">
         </el-tooltip>
 
+        <el-tooltip class="item" effect="light" content="资源下载" placement="bottom">
+          <img style="width: 20px;height: 20px;position: relative; left: 14px;bottom: -2px" alt="comment"
+               src="../assets/download.png" @click="download">
+        </el-tooltip>
+
       </el-footer>
     </el-container>
   </el-container>
 </template>
 
 <script>
+  import qs from "qs";
+
   export default {
     name: "PostHead",
     data() {
@@ -60,15 +67,43 @@
     },
     methods: {
       LIKE() {
-        if (this.like1 === true) {
-          this.likeNum--;
-          this.like1 = false;
-        } else {
-          this.likeNum++;
-          this.like1 = true;
-        }
-      },
+        let like_data = {
+          judge:1,
+          reply_id:this.reply_id,
+        };//数据打包
+        console.log(like_data);//测试一下like_data里面的数据是否正确
+        this.$axios.post('/posting/like',qs.stringify(like_data),{
+          headers: {
+            username: this.$store.state.username,
+            token: this.$store.state.token,
+          }//数据头喵
+        })
+            .then(res =>{
+              if(res.data.errno === 0)
+              {
+                this.$message.success(res.data.msg);
+                if( this.like1 ) {
+                  this.like1 = false;
+                  this.likeNum--;
+                }
+                else{
+                  this.like1 = true;
+                  this.likeNum++;
+                }
+                //手动更新喵
+              }else
+              {
+                this.$message.error(res.data.msg);
+              }
+            })
+            .catch(err => {
+              this.$message.error(err);
+            });
+      },//可能需要修改
       comment() {
+
+      },
+      download(){
 
       }
     }
