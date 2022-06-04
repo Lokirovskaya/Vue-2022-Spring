@@ -7,7 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     // 0:游客 1:普通用户 2:管理员 3:封禁用户
-    // 建议不要用 this.$store.state.login_state 直接读这个字段，而是用下面的 this.$store.getters.islogged 之类的方法
+    // 建议不要用 this.$store.state.login_state 直接读这个字段，而是用下面的 this.$store.getters.is_logged 之类的方法
     login_state: 0,
     userid: 0,
     username: '',

@@ -6,9 +6,16 @@
     <el-header id="intro" v-html="sector_intro"></el-header>
     <el-main>
 
-      <router-link :to="{path:'/sector/newpost', query:{name: this.$route.query.name}}">
-        <el-button type="primary">发新帖</el-button>
-      </router-link>
+      <div v-if="this.$store.getters.is_logged">
+        <router-link :to="{path:'/sector/newpost', query:{name: this.$route.query.name}}">
+          <el-button type="primary">发新帖</el-button>
+        </router-link>
+      </div>
+      <div v-else>
+        <router-link to="/login">
+          <el-button type="primary">去登录才能发帖</el-button>
+        </router-link>
+      </div>
 
       <el-table :data="posting_data" stripe align="left">
 
@@ -77,27 +84,38 @@
     },
 
     methods: {
-
+      get_sector_info() {
+        this.$axios.post('/posting/getSectorPostingList',
+          qs.stringify({ sector_name: this.$route.query.name })
+        )
+          .then(res => {
+            if (res.data.errno === 0) {
+              this.sector_intro = res.data.sector_introduction;
+              this.posting_data = res.data.data;
+            }
+            else {
+              this.posting_data = [];
+              this.$message.error(res.data.msg);
+            }
+          })
+          .catch(err => {
+            this.$message.error(err);
+          });
+      }
     },
 
     mounted() {
-      this.$axios.post('/posting/getSectorPostingList',
-        qs.stringify({ sector_name: this.$route.query.name })
-      )
-        .then(res => {
-          if (res.data.errno === 0) {
-            this.sector_intro = res.data.sector_introduction;
-            this.posting_data = res.data.data;
-            this.$message.success('信息加载成功');
-          }
-          else {
-            this.$message.error(res.data.msg);
-          }
-        })
-        .catch(err => {
-          this.$message.error(err);
-        });
-    }
+      this.get_sector_info();
+    },
+
+    watch: {
+      $route(to, from) {
+        if (to.query.name != from.query.name) {
+          this.name = to.query.name;
+          this.get_sector_info();
+        }
+      },
+    },
   }
 </script>
 
