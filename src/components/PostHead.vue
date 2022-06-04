@@ -12,14 +12,14 @@
         <b>{{posting_title}}</b>
       </el-header>
       <el-main>
-        {{content}}
+        <span v-html="content"></span>
       </el-main>
       <el-footer height="25px">
-        {{Time}}
-        {{likeNum}}
+        {{posting_time}}
+        {{like_count}}
         <el-tooltip class="item" effect="light" content="点赞" placement="bottom">
           <img style="width: 20px;height: 20px;position: relative; bottom: -2px" alt="clicked_like"
-            src="../assets/el-icon-clicked_like.png" v-if="like1" @click="LIKE">
+            src="../assets/el-icon-clicked_like.png" v-if="like" @click="LIKE">
           <img style="width: 20px;height: 20px;position: relative; bottom: -2px" alt="like"
             src="../assets/el-icon-like.png" v-else @click="LIKE">
         </el-tooltip>
@@ -40,71 +40,36 @@
 </template>
 
 <script>
-  import qs from "qs";
 
   export default {
     name: "PostHead",
+    props:{
+      posting_title:{type: String, required: true},
+      posting_time:{},
+      user_id:{},
+      username:{type: String, required: true},
+      content:{type: String, required: true},
+      like_count:{type: Number, default: 0},
+      authority:{},
+      resource:{type: String},
+      like:{type: Boolean, default: false}
+    },
     data() {
       return {
         User_Pho: 'https://s2.loli.net/2022/05/08/1mkNYLO9siHrMud.png',    //用户头像
         User_Page: 'www.baidu.com',     //用户个人主页链接
         Level: 5,                  //用户等级
-        like1: this.like,                   //是否点赞
-        likeNum: this.like_count,               //点赞数量
-        Time: this.Time       //发布时间
       }
-    },
-    props:{
-      posting_title:{type: String, required: true},
-      posting_time:{type: Date, required: true},
-      user_id:{type: Number, required: true},
-      username:{type: String, required: true},
-      content:{type: String, required: true},
-      like_count:{type: Number, default: 0},
-      authority:{type: Number, default: 0},
-      resource:{type: String},
-      like:{type: Boolean, default: false}
     },
     methods: {
       LIKE() {
-        let like_data = {
-          judge:1,
-          reply_id:this.reply_id,
-        };//数据打包
-        console.log(like_data);//测试一下like_data里面的数据是否正确
-        this.$axios.post('/posting/like',qs.stringify(like_data),{
-          headers: {
-            username: this.$store.state.username,
-            token: this.$store.state.token,
-          }//数据头喵
-        })
-            .then(res =>{
-              if(res.data.errno === 0)
-              {
-                this.$message.success(res.data.msg);
-                if( this.like1 ) {
-                  this.like1 = false;
-                  this.likeNum--;
-                }
-                else{
-                  this.like1 = true;
-                  this.likeNum++;
-                }
-                //手动更新喵
-              }else
-              {
-                this.$message.error(res.data.msg);
-              }
-            })
-            .catch(err => {
-              this.$message.error(err);
-            });
+        this.$emit('Like');//点赞
       },//可能需要修改
-      comment() {
+      comment() {//等老哥解决后再加
 
       },
       download(){
-
+        this.$emit('Download');//下载
       }
     }
   }

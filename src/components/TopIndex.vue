@@ -2,26 +2,26 @@
   <el-row>
     <el-col :span="8">
       <div class="grid-content">
-        <el-menu :default-active="1" class="el-menu-demo" mode="horizontal">
-          <el-menu-item>
+        <el-menu :default-active="active_index" class="el-menu-demo" mode="horizontal">
+          <el-menu-item index="1">
             <router-link :to="{path: '/'}">首页</router-link>
           </el-menu-item>
           <el-submenu index="2">
             <template slot="title">论坛分区</template>
             <router-link :to="{path:'sector', query:{name:'discussion'}}">
-              <el-menu-item><i class="el-icon-position"></i>讨论区</el-menu-item>
+              <el-menu-item index="2-1"><i class="el-icon-position"></i>讨论区</el-menu-item>
             </router-link>
             <router-link :to="{path:'sector', query:{name:'recommendation'}}">
-              <el-menu-item><i class="el-icon-collection"></i>课程推荐</el-menu-item>
+              <el-menu-item index="2-2"><i class="el-icon-collection"></i>课程推荐</el-menu-item>
             </router-link>
             <router-link :to="{path:'sector', query:{name:'exercise'}}">
-              <el-menu-item><i class="el-icon-medal"></i>刷题板块</el-menu-item>
+              <el-menu-item index="2-3"><i class="el-icon-medal"></i>刷题板块</el-menu-item>
             </router-link>
             <router-link :to="{path:'sector', query:{name:'campus'}}">
-              <el-menu-item><i class="el-icon-present"></i>校园周边</el-menu-item>
+              <el-menu-item index="2-4"><i class="el-icon-present"></i>校园周边</el-menu-item>
             </router-link>
             <router-link :to="{path:'sector', query:{name:'resource'}}">
-              <el-menu-item><i class="el-icon-download"></i>资源共享</el-menu-item>
+              <el-menu-item index="2-5"><i class="el-icon-download"></i>资源共享</el-menu-item>
             </router-link>
           </el-submenu>
         </el-menu>
@@ -70,6 +70,7 @@
     data() {
       return {
         search: "",
+        active_index: "1",
         User: {
           name: this.$store.commit.name,
           pho: "https://s2.loli.net/2022/05/06/f2Jx6BkcSLEnRtU.jpg",
