@@ -42,7 +42,7 @@
               this.$store.commit('set_token', res.data.data.authorization);
               this.$store.commit('set_userid', res.data.data.userid);
               this.$store.commit('set_username', res.data.data.username);
-              console.log(res);
+              console.log(res.data);
               this.$message.success(res.data.data.username + ' 登录成功！');
             }
             else {
