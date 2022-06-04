@@ -1,16 +1,16 @@
 <template>
   <el-container>
     <el-header id="title">
-      这个板块的名称是 {{ sector_chinese_name[this.$route.query.name]}},
+      这个板块的名称是 {{ sector_chinese_name[this.$route.query.name]}}
     </el-header>
-    <el-header id="intro" v-html="intro_content"></el-header>
+    <el-header id="intro" v-html="sector_intro"></el-header>
     <el-main>
 
       <router-link :to="{path:'/sector/newpost', query:{name: this.$route.query.name}}">
         <el-button type="primary">发新帖</el-button>
       </router-link>
 
-      <el-table :data="res.data" stripe="true" align="left">
+      <el-table :data="posting_data" stripe align="left">
 
         <el-table-column min-width="5%"></el-table-column>
 
@@ -58,11 +58,14 @@
 
 
 <script>
+  import qs from 'qs';
   export default {
     name: 'SectorView',
+
     data() {
       return {
-        sector_data: {},
+        sector_intro: '',
+        posting_data: [],
         sector_chinese_name: {
           'discussion': '讨论区',
           'recommendation': '课程推荐',
@@ -72,8 +75,28 @@
         },
       }
     },
+
     methods: {
 
+    },
+
+    mounted() {
+      this.$axios.post('/posting/getSectorPostingList',
+        qs.stringify({ sector_name: this.$route.query.name })
+      )
+        .then(res => {
+          if (res.data.errno === 0) {
+            this.sector_intro = res.data.sector_introduction;
+            this.posting_data = res.data.data;
+            this.$message.success('信息加载成功');
+          }
+          else {
+            this.$message.error(res.data.msg);
+          }
+        })
+        .catch(err => {
+          this.$message.error(err);
+        });
     }
   }
 </script>
