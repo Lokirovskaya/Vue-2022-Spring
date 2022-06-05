@@ -14,8 +14,9 @@
         <span v-html="content"></span>
       </el-main>
       <!--这是评论的点赞评论部分-->
-      <el-footer height="25px" style="position: relative;margin-bottom: 5px">
-        {{time}}
+      <el-footer height="25px">
+        {{reply_id}}楼
+        {{time}}&nbsp;
         {{likeNum}}
         <el-tooltip class="item" effect="light" content="点赞" placement="bottom">
           <img style="width: 20px;height: 20px;position: relative; bottom: -2px" alt="clicked_like" src="../assets/el-icon-clicked_like.png" v-if="like1"
@@ -44,6 +45,22 @@
                          :like="item.like"
                          :reply_to="item.reply_to"
                          @Comment="Comment"></Reply_reply>
+            <div style="background-color: white" >
+              <el-input
+                  ref="COMMENT"
+                  type="textarea"
+                  style="margin-top: 10px;"
+                  placeholder="请输入内容"
+                  v-model="textarea"
+                  maxlength="140"
+                  show-word-limit
+                  :disabled="this.$store.getters.is_banned"
+              >
+              </el-input>
+              <div style=" text-align: right ;margin-top: 5px">
+                <el-button size="mini" @click="f_Comment">发表</el-button>
+              </div>
+            </div>
           </div>
         </el-collapse-transition>
         <!--在循环外加一个分页
@@ -54,23 +71,6 @@
           </el-pagination>-->
       </transition>
       <!--在循环外加一个评论框-->
-      <div style="background-color: whitesmoke">
-        <el-input
-            ref="COMMENT"
-            type="textarea"
-            style="margin-top: 10px"
-            placeholder="请输入内容"
-            v-model="textarea"
-            maxlength="140"
-            show-word-limit
-            v-show="SEE"
-            :disabled="this.$store.getters.is_banned"
-        >
-        </el-input>
-        <div style="margin-top: 5px; text-align: right">
-          <el-button v-show="SEE" @click="f_Comment">发表</el-button>
-        </div>
-      </div>
     </el-container>
   </el-container>
 </template>
@@ -216,50 +216,34 @@ export default {
 
 <style scoped>
 .el-header {
-  background-color: #B3C0D1;
+  background-color: white;
   color: #333;
   text-align: center;
 }
 
 .el-footer{
-  background-color: #B3C0D1;
-  margin-top: 5px;
+  background-color: white;
   color: #333;
   text-align: left;
   height: auto;
-  border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
 }
 
 .el-aside {
-  background-color: #D3DCE6;
+  background-color: #f4f5f6;
   color: #333;
   text-align: center;
-}
-
-.el-main {
-  background-color: whitesmoke;
-  color: #333;
-  text-align: left;
-  line-height: 1.3;
-  border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
 }
 
-/*@keyframes reply_out {
-  from{
-    transform: translateX(100%) ;
-  }
-  to{
-    transform: translateX(0px);
-  }
-}*/
-.v-enter-active{
-  animation: reply_out 1s;
+.el-main {
+  background-color: white;
+  color: #333;
+  text-align: left;
+  line-height: 1.3;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
 }
-.v-leave-active {
-  animation: reply_out 1.2s reverse;
-}
+
 body > .el-container {
   margin-bottom: 40px;
 

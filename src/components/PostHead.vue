@@ -15,7 +15,7 @@
         <span v-html="content"></span>
       </el-main>
       <el-footer height="25px">
-        {{posting_time}}
+        {{posting_time}}&nbsp;
         {{like_count}}
         <el-tooltip class="item" effect="light" content="点赞" placement="bottom">
           <img style="width: 20px;height: 20px;position: relative; bottom: -2px" alt="clicked_like"
@@ -77,35 +77,31 @@
 
 <style scoped>
   .el-header {
-    background-color: ghostwhite;
+    background-color: white;
     color: #333;
     text-align: left;
     line-height: 40px;
-    border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
   }
 
   .el-footer {
-    background-color: #B3C0D1;
+    background-color: white;
     text-align: left;
     width: auto;
-    border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
   }
 
   .el-aside {
-    background-color: #D3DCE6;
+    background-color: #f4f5f6;
     color: #333;
     text-align: center;
-    border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
   }
 
   .el-main {
-    background-color: whitesmoke;
+    background-color: white;
     color: #333;
     text-align: left;
-    border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
   }
 
