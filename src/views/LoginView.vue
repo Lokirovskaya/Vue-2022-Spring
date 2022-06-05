@@ -37,7 +37,7 @@
               if (res.data.data.is_admin)
                 this.$store.commit('set_userstate_to_admin');
               else if (res.data.data.is_banned)
-                this.$store.commit('set_userstate_to_banned');
+                this.$store.commit('set_utserstae_to_banned');
               else
                 this.$store.commit('set_userstate_to_normal');
               this.$store.commit('set_token', res.data.data.authorization);
