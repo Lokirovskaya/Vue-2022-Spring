@@ -9,7 +9,6 @@
     <p>
     <div>
       <el-button @click="login" round>登录</el-button>
-      <!-- <el-button @click="test1" round>ceshi</el-button> -->
       <router-link to="/register" style="margin: 5px;">
         <el-button round>去注册</el-button>
       </router-link>
@@ -31,11 +30,7 @@
       }
     },
     methods: {
-    //       test1(){
-    //   alert('1234');
-    // },
       login() {
-        alert('1244');
         this.$axios.post('/user/login', qs.stringify(this.$data))
           .then(res => {
             if (res.data.errno === 0) {

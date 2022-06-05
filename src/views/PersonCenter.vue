@@ -61,7 +61,7 @@
             <!-- <el-descriptions-item label="学校">{{school}}</el-descriptions-item> -->
             <!-- <el-descriptions-item label="居住地">{{city}}</el-descriptions-item> -->
             <!-- <el-descriptions-item label="联系地址">{{address}}</el-descriptions-item> -->
-            <el-descriptions-item label="等级">lv4({{exp_now}}/{{exp_next_lv}})</el-descriptions-item>
+            <el-descriptions-item label="等级">lv{{level}} ( {{exp_now}}/{{exp_next_lv}} )</el-descriptions-item>
             <!-- <el-descriptions-item label="用户状态">{{user_status}}</el-descriptions-item> -->
         </el-descriptions>
         <br/>
@@ -72,39 +72,19 @@
               <el-descriptions title="用户信息" :column="3" :size="size" border style="position: relative;">
         
         <template slot="extra">
-            <el-button size="small" style="position: relative;left:-1170px;">上传头像</el-button>
+                  <!-- 上传并预览头像 -->
+    <div class="alert-box-item" style="position: relative;left:-1270px;top:15px;"> 
+		<div class="bigImg-div" @click="toGetImg">
+			<img class="bigImg" :src=valueUrl v-if="valueUrl">
+      <div v-else style="position: relative;top:19px;">上传头像</div>
+		</div>
+	</div>
+
+            <!-- <el-button size="small" style="position: relative;left:-1070px;top:-25px;">上传头像</el-button> -->
       <!-- <el-button size="small"><router-link to="/viewifo">修改完成</router-link></el-button> -->
 
-      <el-button size="small" 
-      @click="
-      //modify_state = 0;
-      //username = input_username;
-      //sex = input_sex; 
-      //phone_num = input_phone_num;
-      //email = input_email;
-      //school = input_school;
-      //city = input_city;
-      //address = input_address;
-      this.$axios.post('/user/modify_user', qs.stringify(this.$data),{
-        headers: {
-          username: this.$store.state.username,
-          token: this.$store.state.token,
-        }
-      })
-            .then(res => {
-              if (res.data.errno === 0) {
-                username = input_username;
-                this.$message.success(res.data.msg);
-                modify_state = 0;
-              }
-              else {
-                this.$message.error(res.data.msg);
-              }
-            })
-            .catch(err => { 
-              this.$message.error(err);
-            });
-      ">
+      <el-button size="small" style="position: relative;left:-20px;top:-28px;"
+      @click="goto_modify">
       提交
       </el-button>
 
@@ -153,12 +133,12 @@
 </el-descriptions>
 
 <br/>
-<div style="position: relative;left:-510px;">
+<div style="position: relative;left:-460px;">
     修改密码：
 <el-input placeholder="输入新密码" v-model="input_password" clearable style="width:150px; position: relative;left:0px;" show-password></el-input>
 <!-- <br/><br/> -->
 <el-input placeholder="确认密码" v-model="input_password2" clearable style="width:150px; position: relative;left:20px;" show-password></el-input>
-<!-- <el-button size="small" style="position: relative;left:40px;">修改密码</el-button> -->
+<el-button size="small" style="position: relative;left:40px;" @click="modify_pwd">修改密码</el-button>
 </div>
 <br/>
             </div>
@@ -236,34 +216,24 @@
             
         </el-menu>
 </div>
-   <el-button @click="test1()" round>测试</el-button>
+   <!-- <el-button @click="test1()" round>测试</el-button> -->
 
   </div>
         
         <!-- <post-head/> -->
         
+
+
     </div>
     
+  
 </template>
 
 <script>
-
-// goto_modify = function(){
-//       this.modify_state = 1;
-//                     this.nput_username = this.username;
-//                     this.input_sex = this.sex;
-//                     this.input_phone_num = this.phone_num;
-//                     this.input_email = this.email;
-//                     this.input_school = this.school;
-//                     this.input_city = this.city;
-//                     this.input_address = this.address;
-//                     this.input_password = '';
-//                     this.input_password2 = '';
-//     }
-
 // import PostHead from "@/components/PostHead";
 // import PostReply from "@/components/PostReply";
-// import qs from "qs";
+let inputElement = null
+import qs from "qs";
 export default {
   name: 'PersonCenter',
 //   components:{PostHead,PostReply},
@@ -301,6 +271,7 @@ data(){
         // user_status: "禁言中",
         exp_now: 120, //当前经验值
         exp_next_lv: 200, //下一等级经验值
+        level:4,
 
         input_username:"",
         // input_sex:"",
@@ -310,32 +281,137 @@ data(){
         // input_city:"",
         // input_address:"",
         input_password:"",
-        input_password2:""
+        input_password2:"",
 
+        valueUrl: ''
     }
 },
-method:
+methods:
 {
-    test1(){
-      alert('1234');
-    },
-    goto_view_ifo(){
-        this.$router.replace('/viewifo');
-    },
+    // test1(){
+    //   alert('1234');
+    // },
+    // goto_view_ifo(){
+    //     this.$router.replace('/viewifo');
+    // },
     
     
-    // goto_modify(){
-    //   this.modify_state = 1;
-    //                 this.nput_username = this.username;
-    //                 this.input_sex = this.sex;
-    //                 this.input_phone_num = this.phone_num;
-    //                 this.input_email = this.email;
-    //                 this.input_school = this.school;
-    //                 this.input_city = this.city;
-    //                 this.input_address = this.address;
-    //                 this.input_password = '';
-    //                 this.input_password2 = '';
-    // }
+    goto_modify(){
+    let user_ifo = {
+        username:this.input_username,
+        // reply_id:this.reply_id,
+        photo:this.valueUrl
+      };//数据打包
+      // console.log(user_ifo);
+    this.$axios.post('/user/modify_user', qs.stringify(user_ifo),{
+        headers: {
+          username: this.$store.state.username,
+          token: this.$store.state.token,
+        }
+      })
+            .then(res => {
+              if (res.data.errno === 0) {
+                this.username = this.input_username;
+                this.$store.state.username = this.username;
+                this.$message.success(res.data.msg);
+                this.modify_state = 0;
+              }
+              else {
+                this.$message.error(res.data.msg);
+              }
+            })
+            .catch(err => { 
+              this.$message.error(err);
+            });
+    },
+
+    modify_pwd(){
+        if (this.input_password === '') {
+          this.$message.error('密码不能为空！');
+        }
+        else if (this.input_password2 === '') {
+          this.$message.error('请再次输入密码！');
+        }
+        else if (this.input_password !== this.input_password2) {
+          this.$message.error('两次输入的密码不一致！');
+        }
+        else {
+          // alert('success');
+          this.$axios.post('/user/modify_password', qs.stringify(this.input_password))
+            .then(res => {
+              if (res.data.errno === 0) {
+                this.$message.success(res.data.msg);
+                this.modify_state = 0;
+              }
+              else {
+                this.$message.error(res.data.msg);
+              }
+            })
+            .catch(err => { 
+              this.$message.error(err);
+            });
+        }
+    },
+
+    toGetImg() {
+				if (inputElement === null) {
+				// 生成文件上传的控件
+					inputElement = document.createElement('input')
+					inputElement.setAttribute('type', 'file')
+					inputElement.style.display = 'none'
+
+					if (window.addEventListener) {
+						inputElement.addEventListener('change', this.uploadFile, false)
+					} else {
+						inputElement.attachEvent('onchange', this.uploadFile)
+					}
+
+					document.body.appendChild(inputElement)
+				}
+				inputElement.click()
+			},
+			uploadFile(el) {
+				if (el && el.target && el.target.files && el.target.files.length > 0) {
+					console.log(el)
+					const files = el.target.files[0]
+					const isLt2M = files.size / 1024 / 1024 < 2
+					const size = files.size / 1024 / 1024
+					console.log(size)
+          // console.log('here')
+					// 判断上传文件的大小
+					if (!isLt2M) {
+						this.$message.error('上传头像图片大小不能超过 2MB!')
+					} else if (files.type.indexOf('image') === -1) { //如果不是图片格式
+						// this.$dialog.toast({ mes: '请选择图片文件' });
+						this.$message.error('请选择图片文件');
+					} else {
+						const that = this;
+						const reader = new FileReader(); // 创建读取文件对象
+						reader.readAsDataURL(el.target.files[0]); // 发起异步请求，读取文件
+						reader.onload = function() { // 文件读取完成后
+							// 读取完成后，将结果赋值给img的src
+							that.valueUrl = this.result;
+							console.log(this.result);
+							// 数据传到后台
+						//const formData = new FormData()
+						//formData.append('file', files); // 可以传到后台的数据
+						};
+					}
+				}
+			},
+
+		beforeDestroy() {
+          if (inputElement) {
+          if (window.addEventListener) {
+            inputElement.removeEventListener('change', this.onGetLocalFile, false)
+            } else {
+            inputElement.detachEvent('onchange', this.onGetLocalFile)
+            }
+            document.body.removeChild(inputElement)
+            inputElement = null
+            console.log('========inputelement destroy')
+          }
+        }
 
     // input_init(){
     //   this.input_username = this.username;
@@ -349,7 +425,7 @@ method:
     // change_modify_state(){
     //   this.modify_state = 1;
     // }
-},
+    },
 };
 </script>
 
@@ -368,4 +444,23 @@ method:
 .router-link-active {
   text-decoration: none;
 }
+
+	.alert-box-item {
+		overflow: hidden;
+	}
+
+	.bigImg-div {
+		width: 60px;
+		height: 60px;
+		border-radius: 20%;
+		overflow: hidden;
+		border: 1px solid #ddd;
+	}
+
+	.bigImg {
+		display: block;
+		width: 60px;
+		height: 60px;
+		border-radius: 20%;
+	}
 </style>
