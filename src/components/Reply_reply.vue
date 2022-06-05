@@ -88,19 +88,17 @@ export default {
 
 <style scoped>
 .el-main {
-  background-color: whitesmoke;
+  background-color: white;
   color: #333;
   text-align: left;
-  border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
 }
 
 .el-footer{
-  background-color: ghostwhite;
+  background-color: white;
   color: #333;
   text-align: left;
   height: auto;
-  border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
 }
 </style>

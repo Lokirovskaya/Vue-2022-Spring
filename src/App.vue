@@ -8,9 +8,25 @@
       <router-link to="/personcenter">个人中心</router-link>
     </nav>
     <TopIndex></TopIndex>
+    <el-backtop target="" :bottom="100">
+      <div
+          style="{
+        height: 100%;
+        width: 100%;
+        background-color: #f2f5f6;
+        box-shadow: 0 0 6px rgba(0,0,0, .12);
+        text-align: center;
+        line-height: 40px;
+        color: #1989fa;
+      }"
+      >
+        ↑
+      </div>
+    </el-backtop>
     <router-view />
   </div>
 </template>
+
 <script>
   import TopIndex from "@/components/TopIndex";
   export default {

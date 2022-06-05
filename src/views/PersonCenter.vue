@@ -34,31 +34,32 @@
               
                 <!-- <el-button size="small" v-on="this.commit('change_modify_state')"> -->
                   <!-- <el-button size="small" @click="change_modify_state()"> -->
-                    <el-button size="small" 
+                    <el-button size="small"
                     @click="
-                    modify_state = 1;
-                    input_username = username;
-                    input_sex = sex;
-                    input_phone_num = phone_num;
-                    input_email = email;
-                    input_school = school;
-                    input_city = city;
-                    input_address = address;
-                    input_password = '';
-                    input_password2 = ''; ">
+                           modify_state = 1;
+                      input_username = username; 
+                     //input_sex = sex;
+                     //input_phone_num = phone_num;
+                     //input_email = email;
+                     //input_school = school;
+                     //input_city = city;
+                     //input_address = address;
+                     //input_password = '';
+                     //input_password2 = '';
+                    ">
                     修改信息
                     </el-button>
 
             </template>
             <el-descriptions-item label="用户名">{{username}}</el-descriptions-item>
-            <el-descriptions-item label="性别">{{sex}}</el-descriptions-item>
-            <el-descriptions-item label="手机号">{{phone_num}}</el-descriptions-item>
-            <el-descriptions-item label="邮箱">{{email}}</el-descriptions-item>
-            <el-descriptions-item label="学校">{{school}}</el-descriptions-item>
-            <el-descriptions-item label="居住地">{{city}}</el-descriptions-item>
-            <el-descriptions-item label="联系地址">{{address}}</el-descriptions-item>
+            <!-- <el-descriptions-item label="性别">{{sex}}</el-descriptions-item> -->
+            <!-- <el-descriptions-item label="手机号">{{phone_num}}</el-descriptions-item> -->
+            <!-- <el-descriptions-item label="邮箱">{{email}}</el-descriptions-item> -->
+            <!-- <el-descriptions-item label="学校">{{school}}</el-descriptions-item> -->
+            <!-- <el-descriptions-item label="居住地">{{city}}</el-descriptions-item> -->
+            <!-- <el-descriptions-item label="联系地址">{{address}}</el-descriptions-item> -->
             <el-descriptions-item label="等级">lv4({{exp_now}}/{{exp_next_lv}})</el-descriptions-item>
-            <el-descriptions-item label="用户状态">{{user_status}}</el-descriptions-item>
+            <!-- <el-descriptions-item label="用户状态">{{user_status}}</el-descriptions-item> -->
         </el-descriptions>
         <br/>
             </div>
@@ -92,35 +93,35 @@
         <!-- <el-button size="small" style="position: relative;left:20px;" v-on:click="username = input_username" >修改</el-button> -->
     </el-descriptions-item>
 
-    <el-descriptions-item label="性别">
-        <el-input placeholder="输入新性别" v-model="input_sex" clearable style="width:150px"></el-input>
+    <!-- <el-descriptions-item label="性别"> -->
+        <!-- <el-input placeholder="输入新性别" v-model="input_sex" clearable style="width:150px"></el-input> -->
         <!-- <el-button size="small" style="position: relative;left:20px;" v-on:click="sex = input_sex" >修改</el-button> -->
-        </el-descriptions-item>
+        <!-- </el-descriptions-item> -->
     
-    <el-descriptions-item label="手机号">
-        <el-input placeholder="输入新手机号" v-model="input_phone_num" clearable style="width:150px"></el-input>
+    <!-- <el-descriptions-item label="手机号"> -->
+        <!-- <el-input placeholder="输入新手机号" v-model="input_phone_num" clearable style="width:150px"></el-input> -->
         <!-- <el-button size="small" style="position: relative;left:20px;" v-on:click="phone_num = input_phone_num">修改</el-button> -->
-        </el-descriptions-item>
+        <!-- </el-descriptions-item> -->
     
-    <el-descriptions-item label="邮箱">
-        <el-input placeholder="输入新邮箱" v-model="input_email" clearable style="width:250px"></el-input>
+    <!-- <el-descriptions-item label="邮箱"> -->
+        <!-- <el-input placeholder="输入新邮箱" v-model="input_email" clearable style="width:250px"></el-input> -->
         <!-- <el-button size="small" style="position: relative;left:20px;" v-on:click="email = input_email">修改</el-button> -->
-        </el-descriptions-item>
+        <!-- </el-descriptions-item> -->
     
-    <el-descriptions-item label="学校">
-        <el-input placeholder="输入新学校" v-model="input_school" clearable style="width:250px"></el-input>
+    <!-- <el-descriptions-item label="学校"> -->
+        <!-- <el-input placeholder="输入新学校" v-model="input_school" clearable style="width:250px"></el-input> -->
         <!-- <el-button size="small" style="position: relative;left:20px;" v-on:click="school = input_school">修改</el-button> -->
-        </el-descriptions-item>
+        <!-- </el-descriptions-item> -->
     
-    <el-descriptions-item label="居住地">
-        <el-input placeholder="输入新居住地" v-model="input_city" clearable style="width:150px"></el-input>
+    <!-- <el-descriptions-item label="居住地"> -->
+        <!-- <el-input placeholder="输入新居住地" v-model="input_city" clearable style="width:150px"></el-input> -->
         <!-- <el-button size="small" style="position: relative;left:20px;" v-on:click="city = input_city">修改</el-button> -->
-        </el-descriptions-item>
+        <!-- </el-descriptions-item> -->
     
-    <el-descriptions-item label="联系地址">
-        <el-input placeholder="输入新地址" v-model="input_address" clearable style="width:250px"></el-input>
+    <!-- <el-descriptions-item label="联系地址"> -->
+        <!-- <el-input placeholder="输入新地址" v-model="input_address" clearable style="width:250px"></el-input> -->
         <!-- <el-button size="small" style="position: relative;left:20px;" v-on:click="address = input_address">修改</el-button> -->
-        </el-descriptions-item>
+        <!-- </el-descriptions-item> -->
         
     <!-- <el-descriptions-item label="等级">lv4({{exp_now}}/{{exp_next_lv}})</el-descriptions-item> -->
 
@@ -220,6 +221,20 @@
 </template>
 
 <script>
+
+// goto_modify = function(){
+//       this.modify_state = 1;
+//                     this.nput_username = this.username;
+//                     this.input_sex = this.sex;
+//                     this.input_phone_num = this.phone_num;
+//                     this.input_email = this.email;
+//                     this.input_school = this.school;
+//                     this.input_city = this.city;
+//                     this.input_address = this.address;
+//                     this.input_password = '';
+//                     this.input_password2 = '';
+//     }
+
 // import PostHead from "@/components/PostHead";
 // import PostReply from "@/components/PostReply";
 // import qs from "qs";
@@ -251,23 +266,23 @@ data(){
         ],
         modify_state:0,
         username:"ilinks",
-        sex: "OTHER",
-        phone_num: "18000000000",
-        email: "19374252@buaa.edu.cn",
-        school: "北京航空航天大学",
-        city: "北京市",
-        address: "北京市海淀区学院路37号",
-        user_status: "禁言中",
-        exp_now: 120, //当前经验值
-        exp_next_lv: 200, //下一等级经验值
+        // sex: "OTHER",
+        // phone_num: "18000000000",
+        // email: "19374252@buaa.edu.cn",
+        // school: "北京航空航天大学",
+        // city: "北京市",
+        // address: "北京市海淀区学院路37号",
+        // user_status: "禁言中",
+        // exp_now: 120, //当前经验值
+        // exp_next_lv: 200, //下一等级经验值
 
         input_username:"",
-        input_sex:"",
-        input_phone_num:"",
-        input_email:"",
-        input_school:"",
-        input_city:"",
-        input_address:"",
+        // input_sex:"",
+        // input_phone_num:"",
+        // input_email:"",
+        // input_school:"",
+        // input_city:"",
+        // input_address:"",
         input_password:"",
         input_password2:""
 
@@ -278,6 +293,20 @@ method:
     goto_view_ifo(){
         this.$router.replace('/viewifo');
     },
+
+    // goto_modify(){
+    //   this.modify_state = 1;
+    //                 this.nput_username = this.username;
+    //                 this.input_sex = this.sex;
+    //                 this.input_phone_num = this.phone_num;
+    //                 this.input_email = this.email;
+    //                 this.input_school = this.school;
+    //                 this.input_city = this.city;
+    //                 this.input_address = this.address;
+    //                 this.input_password = '';
+    //                 this.input_password2 = '';
+    // }
+
     // input_init(){
     //   this.input_username = this.username;
     // }

@@ -27,7 +27,7 @@
       <br>
     </div>
     <MarkdownEditor ref="MarkdownEditor"></MarkdownEditor>
-    <el-button type="primary" @click="comment">发帖</el-button> <br />
+    <el-button type="primary" @click="comment">回复</el-button> <br />
   </div>
 </template>
 <script>
@@ -156,6 +156,7 @@ export default {
           .then(res => {
             if (res.data.errno === 0) {
               this.toNew();
+              this.input_html = '';
             }
             else {
               this.$message.error(res.data.msg);

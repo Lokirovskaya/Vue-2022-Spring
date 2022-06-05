@@ -24,6 +24,9 @@
               <el-menu-item index="2-5"><i class="el-icon-download"></i>资源共享</el-menu-item>
             </router-link>
           </el-submenu>
+          <el-menu-item index="3" v-show="this.$store.getters.is_admin">
+            <router-link :to="{path: '/usermanager'}">管理员界面</router-link>
+          </el-menu-item>
         </el-menu>
       </div>
     </el-col>
