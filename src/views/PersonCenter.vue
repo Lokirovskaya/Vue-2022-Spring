@@ -36,16 +36,19 @@
                   <!-- <el-button size="small" @click="change_modify_state()"> -->
                     <el-button size="small"
                     @click="
+                    //alert('123');
+                    //console.log('123'); 
                            modify_state = 1;
-                      input_username = username; 
+                           //console.log('123'); 
+                      input_username = username;
                      //input_sex = sex;
                      //input_phone_num = phone_num;
                      //input_email = email;
                      //input_school = school;
                      //input_city = city;
                      //input_address = address;
-                     //input_password = '';
-                     //input_password2 = '';
+                     input_password = '';
+                     input_password2 = '';
                     ">
                     修改信息
                     </el-button>
@@ -74,14 +77,34 @@
 
       <el-button size="small" 
       @click="
-      modify_state = 0;
-      username = input_username;
-      sex = input_sex;
-      phone_num = input_phone_num;
-      email = input_email;
-      school = input_school;
-      city = input_city;
-      address = input_address;">
+      //modify_state = 0;
+      //username = input_username;
+      //sex = input_sex; 
+      //phone_num = input_phone_num;
+      //email = input_email;
+      //school = input_school;
+      //city = input_city;
+      //address = input_address;
+      this.$axios.post('/user/modify_user', qs.stringify(this.$data),{
+        headers: {
+          username: this.$store.state.username,
+          token: this.$store.state.token,
+        }
+      })
+            .then(res => {
+              if (res.data.errno === 0) {
+                username = input_username;
+                this.$message.success(res.data.msg);
+                modify_state = 0;
+              }
+              else {
+                this.$message.error(res.data.msg);
+              }
+            })
+            .catch(err => { 
+              this.$message.error(err);
+            });
+      ">
       提交
       </el-button>
 
@@ -213,9 +236,12 @@
             
         </el-menu>
 </div>
+   <el-button @click="test1()" round>测试</el-button>
+
   </div>
         
         <!-- <post-head/> -->
+        
     </div>
     
 </template>
@@ -239,7 +265,7 @@
 // import PostReply from "@/components/PostReply";
 // import qs from "qs";
 export default {
-//   name: 'PersonCenter',
+  name: 'PersonCenter',
 //   components:{PostHead,PostReply},
 // components:{PostHead},
 data(){
@@ -265,7 +291,7 @@ data(){
         },
         ],
         modify_state:0,
-        username:"ilinks",
+        username:this.$store.state.username,
         // sex: "OTHER",
         // phone_num: "18000000000",
         // email: "19374252@buaa.edu.cn",
@@ -273,8 +299,8 @@ data(){
         // city: "北京市",
         // address: "北京市海淀区学院路37号",
         // user_status: "禁言中",
-        // exp_now: 120, //当前经验值
-        // exp_next_lv: 200, //下一等级经验值
+        exp_now: 120, //当前经验值
+        exp_next_lv: 200, //下一等级经验值
 
         input_username:"",
         // input_sex:"",
@@ -290,10 +316,14 @@ data(){
 },
 method:
 {
+    test1(){
+      alert('1234');
+    },
     goto_view_ifo(){
         this.$router.replace('/viewifo');
     },
-
+    
+    
     // goto_modify(){
     //   this.modify_state = 1;
     //                 this.nput_username = this.username;
@@ -320,7 +350,7 @@ method:
     //   this.modify_state = 1;
     // }
 },
-}
+};
 </script>
 
 <style>
