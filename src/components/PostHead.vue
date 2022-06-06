@@ -2,7 +2,7 @@
   <el-container>
     <el-aside style="width: 200px">
       <p>
-        <el-link :underline="false" v-bind:href="User_Page"><i>{{ username }}</i></el-link>
+        <i>{{ username }}</i>
       </p>
       <el-avatar shape="square" :size="160" v-bind:src="User_Pho"></el-avatar>
       <p>LV{{ Level }}</p>
@@ -26,12 +26,17 @@
 
         <el-tooltip class="item" effect="light" content="回复" placement="bottom">
           <img style="width: 20px;height: 20px;position: relative; left: 7px;bottom: -2px" alt="comment"
-            src="../assets/comment.png">
+            src="../assets/comment.png" @click="Comment">
         </el-tooltip>
 
         <el-tooltip class="item" effect="light" content="资源下载" placement="bottom">
-          <img style="width: 20px;height: 20px;position: relative; left: 14px;bottom: -2px" alt="comment"
+          <img style="width: 20px;height: 20px;position: relative; left: 14px;bottom: -2px" alt="download"
                src="../assets/download.png" @click="download">
+        </el-tooltip>
+
+        <el-tooltip class="item" effect="light" content="删除本贴" placement="bottom">
+          <img style="width: 20px;height: 20px;position: relative; left: 20px;bottom: -3px" alt="delete"
+               src="../assets/delete.png" @click="delPost" v-show="this.$store.getters.is_admin">
         </el-tooltip>
 
       </el-footer>
@@ -66,11 +71,14 @@
         this.$emit('Like');//点赞
       },//可能需要修改
       comment() {//等老哥解决后再加
-
+        this.$emit('ToComment');
       },
       download(){
         this.$emit('Download');//下载
-      }
+      },
+      delPost(){
+        this.$emit('DelPost');//删除帖子
+      },
     }
   }
 </script>
