@@ -37,7 +37,7 @@ export default new Vuex.Store({
   },
   plugins: [
     createPersistedState({
-      storage: window.cookies,
+      storage: window.localStorage,
       key: 'store',
     })
   ]

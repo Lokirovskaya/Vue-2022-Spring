@@ -1,10 +1,13 @@
-<!-- TODO: 准备做一个统一管理界面宽度的东西……
 <template>
-  <slot></slot>
+  <div style="width: 100%; height: 100%; display: flex; justify-content: center;">
+    <div style="width: 80%;">
+      <slot></slot>
+    </div>
+  </div>
 </template>
 
 <script>
   export default {
-    name: 'forum-border'
+    name: 'ForumBorder'
   }
-</script> -->
+</script>

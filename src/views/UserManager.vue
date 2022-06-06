@@ -1,5 +1,5 @@
 <template>
-  <border border-radius="10px">
+  <ForumBorder>
     <el-table :data="users" stripe border align="center">
       <el-table-column prop="uid" label="UID" width="150"></el-table-column>
       <el-table-column prop="username" label="用户名" width="150"></el-table-column>
@@ -23,22 +23,17 @@
           </el-button>
         </template>
       </el-table-column>
-
-      <el-table-column width="120">
-        <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="alert_set_admin(scope.row)">
-            设为管理员
-          </el-button>
-        </template>
-      </el-table-column>
     </el-table>
-  </border>
+  </ForumBorder>
 </template>
 
 
 <script>
+  import qs from 'qs';
+  import ForumBorder from "@/components/ForumBorder";
   export default {
     name: 'UserManager',
+    components: { ForumBorder },
     data() {
       return {
         users: [{
@@ -73,7 +68,7 @@
         else if (user.is_banned) {
           return '禁言中，直到 ' + user.bannned_until;
         }
-        else return '用户'
+        else return '用户';
       },
 
       alert_ban_user(user) {
@@ -84,7 +79,6 @@
           inputErrorMessage: '禁言天数不正确'
         }).then(({ value }) => {
           this.ban_user(user, parseInt(value))
-          // this.$message.success('成功禁言 ' + user.username + '，时长 ' + value + ' 天');
         });
       },
 
@@ -99,40 +93,40 @@
         });
       },
 
-      alert_set_admin(user) {
-        this.$confirm('确认设置用户 ' + user.username + ' 为管理员吗？', '设置管理员', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.set_admin(user)
-          this.$message.success('成功设置管理员 ' + user.username);
-        });
-      },
 
       ban_user(user, days) {
         user.is_banned = true;
         let date = new Date();
         date.setTime(date.getTime() + days * 24 * 3600 * 1000);
-        user.bannned_until = this.date_to_string(date);
+        user.bannned_until = date.toLocaleString();
+
+        let post_data = {
+          ban_time: date.toLocaleString(),
+          banned_username: user.username
+        };
+
+        this.$axios.post('/user/ban_user', qs.stringify(post_data), {
+          headers: {
+            username: this.$store.state.username,
+            token: this.$store.state.token,
+          }
+        })
+          .then(res => {
+            if (res.data.errno === 0) {
+              this.$message.success('成功禁言 ' + user.username + '，时长 ' + days + ' 天');
+            }
+            else {
+              this.$message.error(res.data.msg);
+            }
+          })
+          .catch(err => {
+            this.$message.error(err);
+          });
       },
 
       unban_user(user) {
         user.is_banned = false;
       },
-
-      set_admin(user) {
-        return user;
-      },
-
-      date_to_string(date) {  // 为什么日期格式化的功能都要我写啊js是现代语言吗？？？
-        let year = date.getFullYear();
-        let month = date.getMonth() + 1;
-        let day = date.getDate();
-        if (month < 10) month = '0' + month;
-        if (day < 10) day = '0' + day;
-        return year + '-' + month + '-' + day;
-      }
     }
   }
 </script>
