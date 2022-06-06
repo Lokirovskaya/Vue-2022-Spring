@@ -3,7 +3,7 @@
       <el-main>
         <div>
           <el-avatar shape="square" :size="40" v-bind:src="User_Pho"></el-avatar>
-          &nbsp;<i>{{ username }}</i><span v-if="judge===3">回复&nbsp;{{reply_to}}</span> :&nbsp; {{content}}
+          &nbsp;<i>{{ username }}</i>&nbsp;<span v-if="judge===3">回复&nbsp;{{reply_to}}</span> :&nbsp; {{content}}
         </div>
       </el-main>
       <el-footer height="25px"><!--这是回复的回复的点赞评论板块-->
@@ -23,7 +23,7 @@
 
         <el-tooltip class="item" effect="light" content="删除本回复" placement="bottom">
           <img style="width: 20px;height: 20px;position: relative; left: 12px;bottom: -2px" alt="delete"
-               src="../assets/delete.png" @click="delPost" v-show="this.$store.getters.is_admin">
+               src="../assets/delete.png" @click="delPostRReply" v-show="this.$store.getters.is_admin">
         </el-tooltip>
 
     </el-footer>
@@ -94,8 +94,8 @@ export default {
       let arr = [this.username,this.reply_id];
       this.$emit('Comment',arr);
     },
-    delPost(){//等待填满喵
-
+    delPostRReply(){//等待填满喵
+      console.log("delPostRReply");
     },
   }
 }

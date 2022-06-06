@@ -70,7 +70,7 @@
       LIKE() {
         this.$emit('Like');//点赞
       },//可能需要修改
-      comment() {//等老哥解决后再加
+      Comment() {//等老哥解决后再加
         this.$emit('ToComment');
       },
       download(){

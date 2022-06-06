@@ -3,11 +3,11 @@
 
     <!--这是回复人的信息框，目前尚未添加的有-->
     <el-aside width="200px">
-      <i>{{ username }}</i>
+      <p><i>{{ username }}</i></p>
       <el-avatar shape="square" :size="160" v-bind:src="User_Pho"></el-avatar>
       <p style="line-height: 4px">LV{{ User_Level }}</p>
     </el-aside>
-    <el-container>
+    <el-container style="box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)">
 
       <!--这是回复的主要内容-->
       <el-main>
@@ -32,7 +32,7 @@
 
         <el-tooltip class="item" effect="light" content="删除本回复" placement="bottom">
           <img style="width: 20px;height: 20px;position: relative; bottom: -3px" alt="delete"
-               src="../assets/delete.png" @click="delPost" v-show="this.$store.getters.is_admin">
+               src="../assets/delete.png" @click="delPostReply" v-show="this.$store.getters.is_admin">
         </el-tooltip>
 
       </el-footer>
@@ -50,7 +50,7 @@
                          :like="item.like"
                          :reply_to="item.reply_to"
                          @Comment="Comment"></Reply_reply>
-            <div style="background-color: white" >
+            <div style="background-color: white ;margin-top: 5px;margin-left: 30px;margin-right: 30px; ">
               <el-input
                   ref="COMMENT"
                   type="textarea"
@@ -62,8 +62,8 @@
                   :disabled="this.$store.getters.is_banned"
               >
               </el-input>
-              <div style=" text-align: right ;margin-top: 5px">
-                <el-button size="mini" @click="f_Comment">发表</el-button>
+              <div style=" text-align: right ;margin-top: 10px">
+                <el-button size="mini" @click="f_Comment" style="position: relative;bottom: 5px">发表</el-button>
               </div>
             </div>
           </div>
@@ -215,8 +215,8 @@ export default {
       this.reply_id1 = arr[1];
       this.textarea = arr[0] + ':';
     },
-    delPost(){//待填满喵
-
+    delPostReply(){//待填满喵
+      console.log("delPostReply");
     },
   }
 }

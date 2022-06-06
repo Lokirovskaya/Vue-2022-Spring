@@ -1,407 +1,81 @@
 <template>
-  <div class="home">
+  <el-carousel height="700px" :autoplay="false" arrow="always">
+    <el-carousel-item v-for="item in 2" :key="item" >
+      <div v-if="item === 2">
+        <ForumBorder>
+          <el-container>
+            <el-table :data="posting_data" stripe align="left">
 
-    <el-container>
-      <el-header class="title">随便弄点儿</el-header>
-      <el-header class="intro">hello world</el-header>
+              <el-table-column min-width="5%"></el-table-column>
 
-      <el-row>
-        <router-link :to="{path:'sector', query:{name:'discussion'}}" class="sector-button">
-          <el-button icon="el-icon-position">讨论区</el-button>
-        </router-link>
-        <router-link :to="{path:'sector', query:{name:'recommendation'}}" class="sector-button">
-          <el-button icon="el-icon-collection">课程推荐</el-button>
-        </router-link>
-        <router-link :to="{path:'sector', query:{name:'exercise'}}" class="sector-button">
-          <el-button icon="el-icon-medal">刷题板块</el-button>
-        </router-link>
-        <router-link :to="{path:'sector', query:{name:'campus'}}" class="sector-button">
-          <el-button icon="el-icon-present">校园周边</el-button>
-        </router-link>
-        <router-link :to="{path:'sector', query:{name:'resource'}}" class="sector-button">
-          <el-button icon="el-icon-download">资源共享</el-button>
-        </router-link>
+              <el-table-column label="标题" min-width="50%">
+                <template slot-scope="scope">
+                  <router-link :to="{path:'post', query:{id:scope.row.posting_id}}">
+                    <el-link id="art-title">
+                      {{scope.row.posting_title}}
+                    </el-link>
+                  </router-link>
+                  <div id="art-summary">TODO：摘要</div>
+                </template>
+              </el-table-column>
 
-      </el-row>
+              <el-table-column min-width="5%">
+                <template slot-scope="scope">
+                  <img src="../assets/el-icon-like.png" style="width: 15px; height: 15px" />
+                  {{scope.row.like_count}}
+                </template>
+              </el-table-column>
 
-      <el-collapse v-model="activeNames" @change="handleChange">
-        <el-collapse-item title="讨论区" name="1">
-          <el-table :data="articles1" stripe align="left">
-            <el-table-column label="标题" min-width="70%">
-              <template slot-scope="scope">
-                <div class="art-title"><u>{{scope.row.title}}</u></div>
-                <div class="art-summary">这里或许可以放一些摘要？</div>
-              </template>
-            </el-table-column>
-            <el-table-column label="作者" min-width="15%">
-              <template slot-scope="scope">
-                <div class="art-author"><u>{{scope.row.author}}</u></div>
-              </template>
-            </el-table-column>
-            <el-table-column label="发表日期" min-width="15%">
-              <template slot-scope="scope">
-                <div class="art-date">{{scope.row.date}}</div>
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-collapse-item>
-        <el-collapse-item title=" 课程推荐" name="2">
-          <el-table :data="articles2" stripe align="left">
-            <el-table-column label="标题" min-width="70%">
-              <template slot-scope="scope">
-                <div class="art-title"><u>{{scope.row.title}}</u></div>
-                <div class="art-summary">这里或许可以放一些摘要？</div>
-              </template>
-            </el-table-column>
-            <el-table-column label="作者" min-width="15%">
-              <template slot-scope="scope">
-                <div class="art-author"><u>{{scope.row.author}}</u></div>
-              </template>
-            </el-table-column>
-            <el-table-column label="发表日期" min-width="15%">
-              <template slot-scope="scope">
-                <div class="art-date">{{scope.row.date}}</div>
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-collapse-item>
-        <el-collapse-item title=" 刷题板块" name="3">
-          <el-table :data="articles3" stripe align="left">
-            <el-table-column label="标题" min-width="70%">
-              <template slot-scope="scope">
-                <div class="art-title"><u>{{scope.row.title}}</u></div>
-                <div class="art-summary">这里或许可以放一些摘要？</div>
-              </template>
-            </el-table-column>
-            <el-table-column label="作者" min-width="15%">
-              <template slot-scope="scope">
-                <div class="art-author"><u>{{scope.row.author}}</u></div>
-              </template>
-            </el-table-column>
-            <el-table-column label="发表日期" min-width="15%">
-              <template slot-scope="scope">
-                <div class="art-date">{{scope.row.date}}</div>
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-collapse-item>
-        <el-collapse-item title=" 校园周边" name="4">
-          <el-table :data="articles4" stripe align="left">
-            <el-table-column label="标题" min-width="70%">
-              <template slot-scope="scope">
-                <div class="art-title"><u>{{scope.row.title}}</u></div>
-                <div class="art-summary">这里或许可以放一些摘要？</div>
-              </template>
-            </el-table-column>
-            <el-table-column label="作者" min-width="15%">
-              <template slot-scope="scope">
-                <div class="art-author"><u>{{scope.row.author}}</u></div>
-              </template>
-            </el-table-column>
-            <el-table-column label="发表日期" min-width="15%">
-              <template slot-scope="scope">
-                <div class="art-date">{{scope.row.date}}</div>
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-collapse-item>
-        <el-collapse-item title=" 资源下载" name="5">
-          <el-table :data="articles5" stripe align="left">
-            <el-table-column label="标题" min-width="70%">
-              <template slot-scope="scope">
-                <div id="art-title"><u>{{scope.row.title}}</u></div>
-                <div id="art-summary">这里或许可以放一些摘要？</div>
-              </template>
-            </el-table-column>
-            <el-table-column label="作者" min-width="15%">
-              <template slot-scope="scope">
-                <div id="art-author"><u>{{scope.row.author}}</u></div>
-              </template>
-            </el-table-column>
-            <el-table-column label="发表日期" min-width="15%">
-              <template slot-scope="scope">
-                <div id="art-date">{{scope.row.date}}</div>
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-collapse-item>
-      </el-collapse>
-    </el-container>
-  </div>
+              <el-table-column min-width="10%">
+                <template slot-scope="scope">
+                  <img src="../assets/comment.png" style="width: 15px; height: 15px" />
+                  {{scope.row.comment_count}}
+                </template>
+              </el-table-column>
+
+              <el-table-column label="作者" min-width="15%">
+                <template slot-scope="scope">
+                  <div id="art-author"><u>{{scope.row.username}}</u></div>
+                </template>
+              </el-table-column>
+
+              <el-table-column label="发表日期" min-width="15%">
+                <template slot-scope="scope">
+                  <div id="art-date">{{scope.row.posting_time}}</div>
+                </template>
+              </el-table-column>
+
+            </el-table>
+          </el-container>
+        </ForumBorder>
+      </div>
+      <div v-else >
+        <body  background="https://s2.loli.net/2022/05/06/IbhUV8CEPNTewAs.png"
+               alt="blog7.png"
+               style="background-repeat:no-repeat;background-size: 100%">
+        <h1>欢迎来到本论坛</h1>
+        </body>
+      </div>
+
+
+    </el-carousel-item>
+  </el-carousel>
 
 </template>
 
 <script>
+  import ForumBorder from "@/components/ForumBorder";
   // @ is an alias to /src
   export default {
     name: 'HomeView',
+    components:{ForumBorder},
     data() {
       return {
         search: "",
-        activeNames: ['1'],
-        articles1: [
-          {
-            id: 1,
-            title: '本来不存希望，',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 2,
-            title: '心事化作春泥。',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 3,
-            title: '谁人巧言令色，',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 4,
-            title: '使我意马难收？',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 5,
-            title: '谁说时光最能疗创，',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 6,
-            title: '谁说旧仇转眼遗忘。',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 7,
-            title: '旧事笑声泪影，',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 8,
-            title: '历历在我心上。',
-            author: 'George Orwell',
-            date: '1984-01-01',
-          },
-        ],//讨论区
-        articles2: [
-          {
-            id: 1,
-            title: '本来不存希望，',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 2,
-            title: '心事化作春泥。',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 3,
-            title: '谁人巧言令色，',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 4,
-            title: '使我意马难收？',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 5,
-            title: '谁说时光最能疗创，',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 6,
-            title: '谁说旧仇转眼遗忘。',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 7,
-            title: '旧事笑声泪影，',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 8,
-            title: '历历在我心上。',
-            author: 'George Orwell',
-            date: '1984-01-01',
-          },
-        ],//课程推荐
-        articles3: [
-          {
-            id: 1,
-            title: '本来不存希望，',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 2,
-            title: '心事化作春泥。',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 3,
-            title: '谁人巧言令色，',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 4,
-            title: '使我意马难收？',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 5,
-            title: '谁说时光最能疗创，',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 6,
-            title: '谁说旧仇转眼遗忘。',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 7,
-            title: '旧事笑声泪影，',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 8,
-            title: '历历在我心上。',
-            author: 'George Orwell',
-            date: '1984-01-01',
-          },
-        ],//刷题板块
-        articles4: [
-          {
-            id: 1,
-            title: '本来不存希望，',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 2,
-            title: '心事化作春泥。',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 3,
-            title: '谁人巧言令色，',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 4,
-            title: '使我意马难收？',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 5,
-            title: '谁说时光最能疗创，',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 6,
-            title: '谁说旧仇转眼遗忘。',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 7,
-            title: '旧事笑声泪影，',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 8,
-            title: '历历在我心上。',
-            author: 'George Orwell',
-            date: '1984-01-01',
-          },
-        ],//校园周边
-        articles5: [
-          {
-            id: 1,
-            title: '本来不存希望，',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 2,
-            title: '心事化作春泥。',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 3,
-            title: '谁人巧言令色，',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 4,
-            title: '使我意马难收？',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 5,
-            title: '谁说时光最能疗创，',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 6,
-            title: '谁说旧仇转眼遗忘。',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 7,
-            title: '旧事笑声泪影，',
-            author: '测试',
-            date: '2002-02-12',
-          },
-          {
-            id: 8,
-            title: '历历在我心上。',
-            author: 'George Orwell',
-            date: '1984-01-01',
-          },
-        ],//资源共享
-        User: {
-          name: "团长你就是歌姬",
-          pho: "https://s2.loli.net/2022/05/06/f2Jx6BkcSLEnRtU.jpg",
-        }
+        posting_data: [],
       }
     },
     methods: {
-      goto_sector(sector_name) {
-        this.$router.push({ path: '/sector', query: { name: sector_name } });
-      },
-      goto_personCenter() {
-        this.$router.replace('/personcenter');
-      },
       goto_login() {
         this.$router.replace('/login');
       },
@@ -428,6 +102,22 @@
 </script>
 
 <style scoped>
+
+.el-carousel__item h1 {
+  color: #535660;
+  font-size: 40px;
+  opacity: 0.75;
+  line-height: 700px;
+  margin: 0;
+}
+
+.el-carousel__item:nth-child(2n) {
+  background-color: white;
+}
+
+.el-carousel__item:nth-child(2n+1) {
+  background-color: white;
+}
   .el-header,
   .el-footer {
     background-color: #B3C0D1;

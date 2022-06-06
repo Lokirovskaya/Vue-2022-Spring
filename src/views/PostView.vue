@@ -1,5 +1,5 @@
 <template>
-  <div class="Post">
+  <ForumBorder>
     <PostHead :posting_title="posting_title"
               :posting_time="posting_time"
               :user_id="user_id"
@@ -15,31 +15,34 @@
               @ToComment="toComment"></PostHead>
     <br>
     <div v-for="item in replys" :key="item.reply_id">
-    <PostReply
-        :reply_id="item.reply_id"
-        :username="item.username"
-        :content="item.content"
-        :like_count="item.like_count"
-        :reply_count="item.reply_count"
-        :time="item.time"
-        :like="item.like"
-        :replys="item.replys"
-        :posting_id="posting_id"
-        @ToNew="toNew"></PostReply>
+      <PostReply
+          :reply_id="item.reply_id"
+          :username="item.username"
+          :content="item.content"
+          :like_count="item.like_count"
+          :reply_count="item.reply_count"
+          :time="item.time"
+          :like="item.like"
+          :replys="item.replys"
+          :posting_id="posting_id"
+          @ToNew="toNew"></PostReply>
       <br>
     </div>
     <MarkdownEditor ref="MarkdownEditor"></MarkdownEditor>
     <el-button type="primary" @click="comment">回复</el-button> <br />
-  </div>
+  </ForumBorder>
+
+
 </template>
 <script>
 import PostHead from "@/components/PostHead";
 import PostReply from "@/components/PostReply";
 import MarkdownEditor from "@/components/MarkdownEditor";
 import qs from "qs";
+import ForumBorder from "@/components/ForumBorder";
 export default {
   name: 'PostView',
-  components:{PostHead,PostReply,MarkdownEditor},
+  components:{PostHead,PostReply,MarkdownEditor,ForumBorder},
   data(){
     return{
         posting_id: this.$route.query.id,
@@ -136,7 +139,7 @@ export default {
           });
     },
     toComment(){
-      this.$refs.MarkdownEditor.focus();
+      console.log("aaaaa");
     },
     comment(){
       this.input_html = this.$refs.MarkdownEditor.html;
