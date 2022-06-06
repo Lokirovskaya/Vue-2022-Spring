@@ -53,7 +53,7 @@
         <body  background="https://s2.loli.net/2022/05/06/IbhUV8CEPNTewAs.png"
                alt="blog7.png"
                style="background-repeat:no-repeat;background-size: 100%">
-        <h1>欢迎来到本论坛</h1>
+        <h1>欢 迎 来 到 本 论 坛</h1>
         </body>
       </div>
 
@@ -99,16 +99,23 @@
       },
     }
   }
+  //#535660
 </script>
 
 <style scoped>
 
+@keyframes textChange {
+  from{opacity: 0.45;}
+  to { opacity: 0.95;}
+}
 .el-carousel__item h1 {
-  color: #535660;
+  color: white;
   font-size: 40px;
-  opacity: 0.75;
   line-height: 700px;
   margin: 0;
+  animation: textChange 3.5s;
+  animation-iteration-count: 100;
+  animation-direction: alternate-reverse;
 }
 
 .el-carousel__item:nth-child(2n) {
