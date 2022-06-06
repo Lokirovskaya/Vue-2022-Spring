@@ -1,4 +1,5 @@
 <template>
+<ForumBorder>
 
     <div>
         <div v-if="this.$store.state.login_state == 0" class="login">
@@ -73,6 +74,7 @@
         
         <template slot="extra">
                   <!-- 上传并预览头像 -->
+                  <!-- 支持jpg、jpeg、png、heic等 -->
     <div class="alert-box-item" style="position: relative;left:-1270px;top:15px;"> 
 		<div class="bigImg-div" @click="toGetImg">
 			<img class="bigImg" :src=valueUrl v-if="valueUrl">
@@ -226,15 +228,17 @@
 
     </div>
     
-  
+</ForumBorder>
 </template>
 
 <script>
+import ForumBorder from "@/components/ForumBorder";
 // import PostHead from "@/components/PostHead";
 // import PostReply from "@/components/PostReply";
 let inputElement = null
 import qs from "qs";
 export default {
+  components: { ForumBorder },
   name: 'PersonCenter',
 //   components:{PostHead,PostReply},
 // components:{PostHead},
@@ -369,6 +373,7 @@ methods:
 					document.body.appendChild(inputElement)
 				}
 				inputElement.click()
+        // console.log('')
 			},
 			uploadFile(el) {
 				if (el && el.target && el.target.files && el.target.files.length > 0) {
