@@ -1,3 +1,5 @@
+/*前后端交互的模板*/
+
 this.$axios.post('/posting/publish', qs.stringify(post_data), {
           headers: {
             username: this.$store.state.username,
@@ -15,3 +17,17 @@ this.$axios.post('/posting/publish', qs.stringify(post_data), {
           .catch(err => {
             this.$message.error(err);
           });
+
+
+/*帖子边框的模板*/
+
+在<script>正下方一行加入：
+  import ForumBorder from "@/components/ForumBorder";
+
+在 export default 中加入：
+  components: { ForumBorder },
+  /*如果已经有 components，在其中加入 ForumBorder 就好*/
+
+把 <template> 下面所有的内容都用 <ForumBorder></ForumBorder> 包括起来
+
+参考 SectorView.vue
