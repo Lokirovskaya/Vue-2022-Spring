@@ -7,6 +7,8 @@
     <p>
       <el-input placeholder="输入密码" v-model="input_password" clearable style="width:300px" show-password></el-input>
     <p>
+      <el-input placeholder="输入校验码" v-model="input_admin_password" clearable style="width:300px" show-password></el-input>
+      <p>
     <div>
       <el-button @click="login" round>登录</el-button>
       <router-link to="/register" style="margin: 5px;">
@@ -26,6 +28,7 @@
       return {
         input_id: "",
         input_password: "",
+        input_admin_password:"",
         route_from: "",
       }
     },
