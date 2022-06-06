@@ -10,7 +10,9 @@
               :resource="resource"
               :like="like"
               @Download="Download"
-              @Like="ClickLike"></PostHead>
+              @Like="ClickLike"
+              @DelPost="DelPost"
+              @ToComment="toComment"></PostHead>
     <br>
     <div v-for="item in replys" :key="item.reply_id">
     <PostReply
@@ -53,7 +55,8 @@ export default {
         reply_count: undefined, // 总楼层数
         like: undefined, // 用户是否给该帖子点赞（布尔型）
         replys:[],
-        input_html:''
+        input_html:'',
+        autofocus: false
     }
   },
   methods:{
@@ -89,7 +92,6 @@ export default {
           });
     },
     Download(){
-      console.log(this.posting_id);
       this.$axios.post('/posting/downloadFile', qs.stringify({posting_id:this.posting_id}), {
         headers: {
           username: this.$store.state.username,
@@ -133,6 +135,9 @@ export default {
             this.$message.error(err);
           });
     },
+    toComment(){
+      this.$refs.MarkdownEditor.focus();
+    },
     comment(){
       this.input_html = this.$refs.MarkdownEditor.html;
       let date = new Date();
@@ -165,6 +170,36 @@ export default {
           .catch(err => {
             this.$message.error(err);
           });
+    },
+    DelPost(){
+      this.$confirm('此操作将删除该帖, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+
+        this.$axios.post('/user/delete_posting', qs.stringify({posting_id:this.posting_id}), {
+          headers: {
+            username: this.$store.state.username,
+            token: this.$store.state.token,
+          }
+        })
+            .then(res => {
+              if (res.data.errno === 0) {
+                this.$message.success('成功！');
+              }
+              else {
+                this.$message.error(res.data.msg);
+              }
+            })
+            .catch(err => {
+              this.$message.error(err);
+            });
+
+        this.$router.replace('/');
+      }).catch(() => {
+
+      });
     },
   },
   mounted() {

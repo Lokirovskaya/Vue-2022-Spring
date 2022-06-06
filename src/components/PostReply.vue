@@ -3,7 +3,7 @@
 
     <!--这是回复人的信息框，目前尚未添加的有-->
     <el-aside width="200px">
-      <p><el-link :underline="false" v-bind:href="User_Page"><i>{{ username }}</i></el-link></p>
+      <i>{{ username }}</i>
       <el-avatar shape="square" :size="160" v-bind:src="User_Pho"></el-avatar>
       <p style="line-height: 4px">LV{{ User_Level }}</p>
     </el-aside>
@@ -15,7 +15,6 @@
       </el-main>
       <!--这是评论的点赞评论部分-->
       <el-footer height="25px">
-        {{reply_id}}楼
         {{time}}&nbsp;
         {{likeNum}}
         <el-tooltip class="item" effect="light" content="点赞" placement="bottom">
@@ -30,6 +29,12 @@
                @click="see_Comment">
         </el-tooltip>
         &nbsp;评论数({{reply_count}})
+
+        <el-tooltip class="item" effect="light" content="删除本回复" placement="bottom">
+          <img style="width: 20px;height: 20px;position: relative; bottom: -3px" alt="delete"
+               src="../assets/delete.png" @click="delPost" v-show="this.$store.getters.is_admin">
+        </el-tooltip>
+
       </el-footer>
       <transition>
         <el-collapse-transition>   <!--折叠动画效果-->
@@ -209,7 +214,10 @@ export default {
       this.reply_name = arr[0];
       this.reply_id1 = arr[1];
       this.textarea = arr[0] + ':';
-    }
+    },
+    delPost(){//待填满喵
+
+    },
   }
 }
 </script>

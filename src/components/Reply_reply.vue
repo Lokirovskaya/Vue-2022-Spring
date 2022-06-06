@@ -3,17 +3,29 @@
       <el-main>
         <div>
           <el-avatar shape="square" :size="40" v-bind:src="User_Pho"></el-avatar>
-          <el-link :underline="false" v-bind:href="User_Page">&nbsp;<i>{{ username }}</i></el-link>&nbsp;<span v-if="judge===3">回复&nbsp;{{reply_to}}</span> :&nbsp; {{content}}
+          &nbsp;<i>{{ username }}</i><span v-if="judge===3">回复&nbsp;{{reply_to}}</span> :&nbsp; {{content}}
         </div>
       </el-main>
       <el-footer height="25px"><!--这是回复的回复的点赞评论板块-->
         {{time}}
         {{likeNum}}
+
+        <el-tooltip class="item" effect="light" content="点赞" placement="bottom">
         <img style="width: 20px;height: 20px;position: relative; bottom: -2px" alt="clicked_like" src="../assets/el-icon-clicked_like.png" v-if="like1"
              @click="LIKE">
         <img style="width: 20px;height: 20px;position: relative; bottom: -2px" alt="like" src="../assets/el-icon-like.png" v-else
              @click="LIKE">
+        </el-tooltip>
+
+        <el-tooltip class="item" effect="light" content="回复" placement="bottom">
         <img style="width: 20px;height: 20px;position: relative; left: 7px;bottom: -2px" alt="comment" src="../assets/comment.png" @click="comment">
+        </el-tooltip>
+
+        <el-tooltip class="item" effect="light" content="删除本回复" placement="bottom">
+          <img style="width: 20px;height: 20px;position: relative; left: 12px;bottom: -2px" alt="delete"
+               src="../assets/delete.png" @click="delPost" v-show="this.$store.getters.is_admin">
+        </el-tooltip>
+
     </el-footer>
   </el-container>
 </template>
@@ -81,6 +93,9 @@ export default {
     comment(){
       let arr = [this.username,this.reply_id];
       this.$emit('Comment',arr);
+    },
+    delPost(){//等待填满喵
+
     },
   }
 }

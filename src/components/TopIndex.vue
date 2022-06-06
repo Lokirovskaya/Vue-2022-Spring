@@ -90,17 +90,10 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$message({
-            type: 'success',
-            message: '退出登录'
-          });
           this.$store.commit('set_userstate_to_unlogged'); //切换到游客状态
           this.$router.replace('/');
         }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消'
-          });
+
         });
       },
       User_Command(command) {
