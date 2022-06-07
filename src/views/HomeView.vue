@@ -8,34 +8,35 @@
 
               <el-table-column min-width="5%"></el-table-column>
 
-              <el-table-column label="标题" min-width="50%">
+              <el-table-column label="标题" min-width="45%">
                 <template slot-scope="scope">
                   <router-link :to="{path:'post', query:{id:scope.row.posting_id}}">
                     <el-link id="art-title">
                       {{scope.row.posting_title}}
                     </el-link>
                   </router-link>
-                  <div id="art-summary">TODO：摘要</div>
+                  <div id="art-summary">{{scope.row.username}}</div>
                 </template>
               </el-table-column>
 
-              <el-table-column min-width="7%">
+              <el-table-column min-width="8%">
+                <template slot-scope="scope">
+                  <div class="el-icon-view" style="width: 15px; height: 15px"></div>
+                  {{scope.row.click_count}}
+                </template>
+              </el-table-column>
+
+              <el-table-column min-width="8%">
                 <template slot-scope="scope">
                   <img src="../assets/el-icon-like.png" style="width: 15px; height: 15px" />
                   {{scope.row.like_count}}
                 </template>
               </el-table-column>
 
-              <el-table-column min-width="10%">
+              <el-table-column min-width="8%">
                 <template slot-scope="scope">
                   <img src="../assets/comment.png" style="width: 15px; height: 15px" />
                   {{scope.row.comment_count}}
-                </template>
-              </el-table-column>
-
-              <el-table-column label="作者" min-width="15%">
-                <template slot-scope="scope">
-                  <div id="art-author"><u>{{scope.row.username}}</u></div>
                 </template>
               </el-table-column>
 
@@ -48,12 +49,6 @@
               <el-table-column label="最新回复时间" min-width="15%">
                 <template slot-scope="scope">
                   <div id="reply-date">{{scope.row.recent_comment_time}}</div>
-                </template>
-              </el-table-column>
-
-              <el-table-column label="点击量" min-width="15%">
-                <template slot-scope="scope">
-                  <div id="click_count">{{scope.row.click_count}}</div>
                 </template>
               </el-table-column>
 
