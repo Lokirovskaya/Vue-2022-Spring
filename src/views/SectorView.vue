@@ -29,7 +29,11 @@
                   {{scope.row.posting_title}}
                 </el-link>
               </router-link>
-              <div id="art-summary">{{scope.row.username}}</div>
+              <router-link :to="{path:'/personcenter', query:{user:scope.row.username}}">
+                <div id="art-author">
+                  <el-link>{{scope.row.username}}</el-link>
+                </div>
+              </router-link>
             </template>
           </el-table-column>
 
@@ -152,14 +156,10 @@
     font-size: 18px;
   }
 
-  #art-summary {
+  #art-author {
     font-size: 15px;
     margin-left: 20px;
     color: gray;
-  }
-
-  #art-author {
-    font-size: 15px;
   }
 
   .art-date {
