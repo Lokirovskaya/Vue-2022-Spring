@@ -39,6 +39,9 @@ export default new Vuex.Store({
     createPersistedState({
       storage: window.localStorage,
       key: 'store',
+      render(state) {
+        return { ...state };
+      }
     })
   ]
 })

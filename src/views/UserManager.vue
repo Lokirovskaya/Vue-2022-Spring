@@ -1,12 +1,12 @@
 <template>
   <ForumBorder>
-    <el-table :data="users" stripe border align="center">
-      <el-table-column prop="uid" label="UID" width="150"></el-table-column>
-      <el-table-column prop="username" label="用户名" width="150"></el-table-column>
-      <el-table-column prop="email" label="邮箱" width="180"></el-table-column>
-      <el-table-column prop="registerdate" label="注册日期" width="150"></el-table-column>
-      <el-table-column prop="exp" label="积分" width="130"></el-table-column>
-      <el-table-column label="用户状态" width="150">
+    <el-table :data="user_info" stripe border align="center">
+      <el-table-column prop="userid" label="UID" width="100"></el-table-column>
+      <el-table-column prop="username" label="用户名" width="200"></el-table-column>
+      <el-table-column prop="user_level" label="等级" width="100"></el-table-column>
+      <el-table-column prop="user_experience" label="经验" width="100"></el-table-column>
+      <el-table-column prop="last_login_day" label="上次登录" width="200"></el-table-column>
+      <el-table-column label="用户状态" width="200">
         <template slot-scope="scope">
           <div>{{get_user_status_string(scope.row)}}</div>
         </template>
@@ -15,7 +15,7 @@
       <el-table-column width="80">
         <template slot-scope="scope">
           <el-button v-if="scope.row.is_admin" type="info" size="small">禁言</el-button>
-          <el-button v-if="!scope.row.is_banned" @click="alert_ban_user(scope.row)" type="danger" size="small">
+          <el-button v-else-if="!scope.row.is_banned" @click="alert_ban_user(scope.row)" type="danger" size="small">
             禁言
           </el-button>
           <el-button v-else @click="alert_unban_user(scope.row)" type="warning" size="small">
@@ -36,37 +36,50 @@
     components: { ForumBorder },
     data() {
       return {
-        users: [{
-          uid: '20020212',
-          username: 'xyy',
-          email: '20373744@buaa.edu.cn',
-          registerdate: '2002-02-12',
-          exp: '114514',
-          is_admin: false,
-          is_banned: true,
-          bannned_until: '2099-09-09',
-        },
-        {
-          uid: '114514',
-          username: '???',
-          email: 'beijing@beijing.bj',
-          registerdate: '0000-00-00',
-          is_admin: false,
-          is_banned: false,
-          bannned_until: '2099-09-09',
-        },
-        ]
+        user_info: [],
       }
     },
 
+    mounted() {
+      this.get_all_user_info(0);
+    },
+
     methods: {
+      get_all_user_info(page) {
+        console.log({
+          headers: {
+            username: this.$store.state.username,
+            token: this.$store.state.token,
+          }
+        });
+        this.$axios.post('/user/manage', qs.stringify({ page_num: page }), {
+          headers: {
+            username: this.$store.state.username,
+            token: this.$store.state.token,
+          }
+        })
+          .then(res => {
+            if (res.data.errno === 0) {
+              this.user_info = res.data.page_data;
+              console.log(this.user_info);
+              this.$message.success('成功！');
+            }
+            else {
+              this.$message.error(res.data.msg);
+            }
+          })
+          .catch(err => {
+            this.$message.error(err);
+          });
+      },
+
       get_user_status_string(user) {
         if (user.is_admin) {
           user.is_banned = false;
           return '管理员';
         }
         else if (user.is_banned) {
-          return '禁言中，直到 ' + user.bannned_until;
+          return '禁言中，直到 ' + user.ban_time;
         }
         else return '用户';
       },
@@ -127,6 +140,6 @@
       unban_user(user) {
         user.is_banned = false;
       },
-    }
+    },
   }
 </script>
