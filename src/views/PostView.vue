@@ -29,7 +29,7 @@
       <br>
     </div>
     <MarkdownEditor ref="MarkdownEditor"></MarkdownEditor>
-    <el-button type="primary" @click="comment">回复</el-button> <br />
+    <el-button  @click="comment" id="MComment" style="margin-top: 10px">回复</el-button> <br />
   </ForumBorder>
 
 
@@ -139,7 +139,21 @@ export default {
           });
     },
     toComment(){
-      console.log("aaaaa");
+      let bridge = document.querySelector('#MComment');
+      let body = document.body;
+      let height = 0;
+
+      //计算DOM节点到body顶部的距离
+      do {
+        height +=bridge.offsetTop;
+        bridge = bridge.offsetParent;
+      } while(bridge !== body)
+
+      //滚动到指定位置
+      window.scrollTo({
+        top: height,
+        behavior: 'smooth'
+      })
     },
     comment(){
       this.input_html = this.$refs.MarkdownEditor.html;
