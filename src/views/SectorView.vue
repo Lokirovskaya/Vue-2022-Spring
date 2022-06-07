@@ -56,13 +56,13 @@
 
           <el-table-column label="最近回复" min-width="18%">
             <template slot-scope="scope">
-              <div id="art-author"><u>{{scope.row.recent_comment_time}}</u></div>
+              <div class="art-date">{{scope.row.recent_comment_time}}</div>
             </template>
           </el-table-column>
 
           <el-table-column label="发表日期" min-width="18%">
             <template slot-scope="scope">
-              <div id="art-date">{{scope.row.posting_time}}</div>
+              <div class="art-date">{{scope.row.posting_time}}</div>
             </template>
           </el-table-column>
 
@@ -162,7 +162,7 @@
     font-size: 15px;
   }
 
-  #art-date {
+  .art-date {
     font-size: 15px;
     color: gray;
   }

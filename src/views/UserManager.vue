@@ -1,8 +1,15 @@
 <template>
   <ForumBorder>
+    <div>总共有用户 {{this.user_sum}} 人</div>
     <el-table :data="user_info" stripe border align="center">
       <el-table-column prop="userid" label="UID" width="100"></el-table-column>
-      <el-table-column prop="username" label="用户名" width="200"></el-table-column>
+      <el-table-column label="用户名" width="200">
+        <template slot-scope="scope">
+          <router-link :to="{path:'/personcenter', query:{user:scope.row.username}}">
+            <el-link>{{scope.row.username}}</el-link>
+          </router-link>
+        </template>
+      </el-table-column>
       <el-table-column prop="user_level" label="等级" width="100"></el-table-column>
       <el-table-column prop="user_experience" label="经验" width="100"></el-table-column>
       <el-table-column prop="last_login_day" label="上次登录" width="200"></el-table-column>
@@ -24,6 +31,7 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination layout="prev, pager, next" :total="this.user_sum" :page-size="20"></el-pagination>
   </ForumBorder>
 </template>
 
@@ -37,6 +45,7 @@
     data() {
       return {
         user_info: [],
+        user_sum: 0,
       }
     },
 
@@ -46,12 +55,6 @@
 
     methods: {
       get_all_user_info(page) {
-        console.log({
-          headers: {
-            username: this.$store.state.username,
-            token: this.$store.state.token,
-          }
-        });
         this.$axios.post('/user/manage', qs.stringify({ page_num: page }), {
           headers: {
             username: this.$store.state.username,
@@ -61,7 +64,7 @@
           .then(res => {
             if (res.data.errno === 0) {
               this.user_info = res.data.page_data;
-              console.log(this.user_info);
+              this.user_sum = res.data.user_sum;
               this.$message.success('成功！');
             }
             else {
@@ -79,7 +82,7 @@
           return '管理员';
         }
         else if (user.is_banned) {
-          return '禁言中，直到 ' + user.ban_time;
+          return '禁言中，还有 ' + user.ban_time + ' 天解禁';
         }
         else return '用户';
       },
@@ -102,20 +105,14 @@
           type: 'warning'
         }).then(() => {
           this.unban_user(user)
-          this.$message.success('成功解禁 ' + user.username);
         });
       },
 
 
       ban_user(user, days) {
-        user.is_banned = true;
-        let date = new Date();
-        date.setTime(date.getTime() + days * 24 * 3600 * 1000);
-        user.bannned_until = date.toLocaleString();
-
         let post_data = {
-          ban_time: date.toLocaleString(),
-          banned_username: user.username
+          ban_time: parseInt(days),
+          banned_username: user.username,
         };
 
         this.$axios.post('/user/ban_user', qs.stringify(post_data), {
@@ -126,6 +123,8 @@
         })
           .then(res => {
             if (res.data.errno === 0) {
+              user.is_banned = true;
+              user.ban_time = days;
               this.$message.success('成功禁言 ' + user.username + '，时长 ' + days + ' 天');
             }
             else {
@@ -138,8 +137,26 @@
       },
 
       unban_user(user) {
-        user.is_banned = false;
+        this.$axios.post('/user/release_ban', qs.stringify({ banned_username: user.username }), {
+          headers: {
+            username: this.$store.state.username,
+            token: this.$store.state.token,
+          }
+        })
+          .then(res => {
+            if (res.data.errno === 0) {
+              user.is_banned = false;
+              this.$message.success('成功解禁 ' + user.username);
+            }
+            else {
+              this.$message.error(res.data.msg);
+            }
+          })
+          .catch(err => {
+            this.$message.error(err);
+          });
       },
+
     },
   }
 </script>
