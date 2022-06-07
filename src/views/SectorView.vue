@@ -22,38 +22,45 @@
 
           <el-table-column min-width="5%"></el-table-column>
 
-          <el-table-column label="标题" min-width="50%">
+          <el-table-column label="标题" min-width="45%">
             <template slot-scope="scope">
               <router-link :to="{path:'post', query:{id:scope.row.posting_id}}">
                 <el-link id="art-title">
                   {{scope.row.posting_title}}
                 </el-link>
               </router-link>
-              <div id="art-summary">TODO：摘要</div>
+              <div id="art-summary">{{scope.row.username}}</div>
             </template>
           </el-table-column>
 
-          <el-table-column min-width="5%">
+          <el-table-column min-width="8%">
+            <template slot-scope="scope">
+              <div class="el-icon-view" style="width: 15px; height: 15px"></div>
+              {{scope.row.click_count}}
+            </template>
+          </el-table-column>
+
+          <el-table-column min-width="8%">
             <template slot-scope="scope">
               <img src="../assets/el-icon-like.png" style="width: 15px; height: 15px" />
               {{scope.row.like_count}}
             </template>
           </el-table-column>
 
-          <el-table-column min-width="10%">
+          <el-table-column min-width="8%">
             <template slot-scope="scope">
               <img src="../assets/comment.png" style="width: 15px; height: 15px" />
               {{scope.row.comment_count}}
             </template>
           </el-table-column>
 
-          <el-table-column label="作者" min-width="15%">
+          <el-table-column label="最近回复" min-width="18%">
             <template slot-scope="scope">
-              <div id="art-author"><u>{{scope.row.username}}</u></div>
+              <div id="art-author"><u>{{scope.row.recent_comment_time}}</u></div>
             </template>
           </el-table-column>
 
-          <el-table-column label="发表日期" min-width="15%">
+          <el-table-column label="发表日期" min-width="18%">
             <template slot-scope="scope">
               <div id="art-date">{{scope.row.posting_time}}</div>
             </template>
@@ -95,6 +102,7 @@
             if (res.data.errno === 0) {
               this.sector_intro = res.data.sector_introduction;
               this.posting_data = res.data.data;
+              console.log(this.posting_data);
             }
             else {
               this.posting_data = [];
