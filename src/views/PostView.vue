@@ -83,8 +83,6 @@ export default {
               this.reply_count = res.data.reply_count;
               this.like = res.data.like;
               this.replys = res.data.replys;
-              console.log(res);
-              this.$message.success('成功！');
             }
             else {
               this.$message.error(res.data.msg);
@@ -103,7 +101,7 @@ export default {
       })
           .then(res => {
             if (res.data.errno === 0) {
-              this.$message.success('成功！');
+              this.$message.success('成功下载！');
             }
             else {
               this.$message.error(res.data.msg);

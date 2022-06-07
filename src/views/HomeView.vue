@@ -19,7 +19,7 @@
                 </template>
               </el-table-column>
 
-              <el-table-column min-width="5%">
+              <el-table-column min-width="7%">
                 <template slot-scope="scope">
                   <img src="../assets/el-icon-like.png" style="width: 15px; height: 15px" />
                   {{scope.row.like_count}}
@@ -45,6 +45,18 @@
                 </template>
               </el-table-column>
 
+              <el-table-column label="最新回复时间" min-width="15%">
+                <template slot-scope="scope">
+                  <div id="reply-date">{{scope.row.recent_comment_time}}</div>
+                </template>
+              </el-table-column>
+
+              <el-table-column label="点击量" min-width="15%">
+                <template slot-scope="scope">
+                  <div id="click_count">{{scope.row.click_count}}</div>
+                </template>
+              </el-table-column>
+
             </el-table>
           </el-container>
         </ForumBorder>
@@ -65,6 +77,7 @@
 
 <script>
   import ForumBorder from "@/components/ForumBorder";
+  import qs from "qs";
   // @ is an alias to /src
   export default {
     name: 'HomeView',
@@ -97,6 +110,24 @@
           this.goto_logout();
         }
       },
+      get_HomePage_info(){
+        this.$axios.post('/posting/getHomepagePostingList',qs.stringify({}))
+            .then(res => {
+              if (res.data.errno === 0) {
+                this.posting_data = res.data.data;
+              }
+              else {
+                this.posting_data = [];
+                this.$message.error(res.data.msg);
+              }
+            })
+            .catch(err => {
+              this.$message.error(err);
+            });
+      },
+    },
+    mounted() {
+      this.get_HomePage_info();
     }
   }
   //#535660
