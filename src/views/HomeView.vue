@@ -1,5 +1,5 @@
 <template>
-  <el-carousel height="700px" :autoplay="false" arrow="always">
+  <el-carousel id="Picture" height="700px" :autoplay="false" arrow="always" direction="vertical" >
     <el-carousel-item v-for="item in 2" :key="item" >
       <div v-if="item === 2">
         <ForumBorder>
@@ -57,10 +57,11 @@
         </ForumBorder>
       </div>
       <div v-else >
-        <body  background="https://s2.loli.net/2022/05/06/IbhUV8CEPNTewAs.png"
+        <body  background="https://s2.loli.net/2022/06/07/gyBqZaJc4tpTrfh.jpg"
                alt="blog7.png"
                style="background-repeat:no-repeat;background-size: 100%">
-        <h1>欢 迎 来 到 本 论 坛</h1>
+        <h1 @click="toPage">欢 迎 来 到 本 论 坛</h1>
+
         </body>
       </div>
 
@@ -119,6 +120,9 @@
             .catch(err => {
               this.$message.error(err);
             });
+      },
+      toPage(){
+        document.getElementById("Picture").setActiveItem(2);
       },
     },
     mounted() {
