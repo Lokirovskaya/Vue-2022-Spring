@@ -1,0 +1,89 @@
+<template>
+  <ForumBorder>
+    <el-table :data="posting_data" stripe align="left">
+
+      <el-table-column min-width="5%"></el-table-column>
+
+      <el-table-column label="标题" min-width="45%">
+        <template slot-scope="scope">
+          <router-link :to="{path:'post', query:{id:scope.row.posting_id}}">
+            <el-link id="art-title">
+              {{scope.row.posting_title}}
+            </el-link>
+          </router-link>
+          <div id="art-summary">{{scope.row.username}}</div>
+        </template>
+      </el-table-column>
+
+      <el-table-column min-width="8%">
+        <template slot-scope="scope">
+          <div class="el-icon-view" style="width: 15px; height: 15px"></div>
+          {{scope.row.click_count}}
+        </template>
+      </el-table-column>
+
+      <el-table-column min-width="8%">
+        <template slot-scope="scope">
+          <img src="../assets/el-icon-like.png" style="width: 15px; height: 15px" />
+          {{scope.row.like_count}}
+        </template>
+      </el-table-column>
+
+      <el-table-column min-width="8%">
+        <template slot-scope="scope">
+          <img src="../assets/comment.png" style="width: 15px; height: 15px" />
+          {{scope.row.comment_count}}
+        </template>
+      </el-table-column>
+
+      <el-table-column label="最近回复" min-width="18%">
+        <template slot-scope="scope">
+          <div id="art-author"><u>{{scope.row.recent_comment_time}}</u></div>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="发表日期" min-width="18%">
+        <template slot-scope="scope">
+          <div id="art-date">{{scope.row.posting_time}}</div>
+        </template>
+      </el-table-column>
+
+    </el-table>
+  </ForumBorder>
+</template>
+
+<script>
+import ForumBorder from "@/components/ForumBorder";
+export default {
+  name: "SearchView",
+  components: {ForumBorder},
+  data() {
+    return{
+      posting_data: [],
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+#art-title {
+  font-size: 18px;
+}
+
+#art-summary {
+  font-size: 15px;
+  margin-left: 20px;
+  color: gray;
+}
+
+#art-author {
+  font-size: 15px;
+}
+
+#art-date {
+  font-size: 15px;
+  color: gray;
+}
+
+</style>
