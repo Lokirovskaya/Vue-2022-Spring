@@ -2,7 +2,8 @@
   <el-container>
       <el-main>
         <div>
-          <el-avatar shape="square" :size="40" v-bind:src="user_photo"></el-avatar>
+          <img  :src="'http://43.138.55.69'+user_photo" class="qqtwo" style="height: 40px;width: 40px">
+          <!--<el-avatar shape="square" :size="40" v-bind:src="user_photo"></el-avatar>-->
           <span style="position: relative;bottom: 5px">
           &thinsp;
           <router-link :to="{path:'/personcenter', query:{user:username}}">
@@ -135,7 +136,9 @@ export default {
 </script>
 
 <style scoped>
-
+.qqtwo {
+  border: 5px black;
+}
 .el-main {
   background-color: white;
   color: #333;

@@ -186,6 +186,7 @@ export default {
           .then(res => {
             if (res.data.errno === 0) {
               this.toNew();
+              this.$message.success("回复成功!");
               this.input_html = '';
             }
             else {

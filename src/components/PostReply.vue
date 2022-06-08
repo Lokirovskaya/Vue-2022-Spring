@@ -8,11 +8,10 @@
         <p><i>{{ username }}</i></p>
       </router-link>
 
-      <div class="pho_back">
         <router-link :to="{path:'/personcenter', query:{user:username}}">
-          <el-avatar shape="square" :size="150" style="position: relative;bottom: -5px" v-bind:src="user_photo"></el-avatar>
+          <img  :src="'http://43.138.55.69'+user_photo" class="qqtwo" style="height: 150px;width: 150px;position: relative;bottom: -6px">
+          <!--<el-avatar shape="square" :size="150" style="position: relative;bottom: -5px" v-bind:src="user_photo"></el-avatar>-->
         </router-link>
-      </div>
 
       <p style="line-height: 4px">LV{{user_level}}</p>
     </el-aside>
@@ -61,7 +60,7 @@
                          :like="item.like"
                          :reply_to="item.reply_to"
                          @Comment="Comment"></Reply_reply>
-            <div style="background-color: white ;margin-top: 5px;margin-left: 30px;margin-right: 30px; ">
+            <div style="background-color: white ;">
               <el-input
                   ref="COMMENT"
                   type="textarea"
@@ -74,7 +73,7 @@
               >
               </el-input>
               <div style=" text-align: right ;margin-top: 10px">
-                <el-button size="mini" @click="f_Comment" style="position: relative;bottom: 5px">发表</el-button>
+                <el-button size="mini" @click="f_Comment" style="position: relative;bottom: 5px;left: -5px">发表</el-button>
               </div>
             </div>
           </div>
@@ -259,7 +258,9 @@ export default {
 </script>
 
 <style scoped>
-
+  .qqtwo {
+  border: 5px double black;
+}
 .pho_back {
   background-color: white;
   position: relative;

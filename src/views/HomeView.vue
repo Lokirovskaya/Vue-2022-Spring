@@ -223,6 +223,11 @@
 </script>
 
 <style scoped>
+
+@keyframes Atitle {
+  from{ }
+}
+
   body {
     width: 100%;
     background: url(https://s2.loli.net/2022/06/07/gyBqZaJc4tpTrfh.jpg) #061832 no-repeat;

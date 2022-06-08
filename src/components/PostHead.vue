@@ -8,11 +8,10 @@
         </p>
       </router-link>
 
-        <div class="pho_back">
-          <router-link :to="{path:'/personcenter', query:{user:username}}">
-          <el-avatar shape="square" :size="150" style="position: relative;bottom: -5px" v-bind:src="user_photo" ></el-avatar>
+        <router-link :to="{path:'/personcenter', query:{user:username}}">
+            <img  :src="'http://43.138.55.69'+user_photo"  class="qqtwo" style="height: 150px;width: 150px;position: relative;bottom: -6px">
           </router-link>
-        </div>
+
 
       <p>LV{{ user_level }}</p>
     </el-aside>
@@ -78,7 +77,6 @@
     data() {
       return {
         pho: 'https://s2.loli.net/2022/05/06/f2Jx6BkcSLEnRtU.jpg',
-        User_Pho: 'https://s2.loli.net/2022/05/08/1mkNYLO9siHrMud.png',    //用户头像
         User_Page: 'www.baidu.com',     //用户个人主页链接
         Level: 5,                  //用户等级
       }
@@ -91,14 +89,6 @@
         this.$emit('ToComment');
       },
       download(){
-        /*
-        axios({
-
-        })
-         */
-
-
-
         console.log(this.posting_id);
         this.$axios.post('/posting/downloadFile',
             qs.stringify({posting_id: this.posting_id}),
@@ -156,15 +146,8 @@
 
 <style scoped>
 
-  .pho_back {
-    background-color: white;
-    position: relative;
-    left: 17px;
-    height: 160px;
-    width: 160px;
-    border-style: solid;
-    border-color: dimgray;
-    border-width: 2px;
+  .qqtwo {
+    border: 5px double black;
   }
   .el-header {
     background-color: white;
