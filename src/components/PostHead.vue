@@ -10,11 +10,11 @@
 
         <div class="pho_back">
           <router-link :to="{path:'/personcenter', query:{user:username}}">
-          <el-avatar shape="square" :size="150" style="position: relative;bottom: -5px" v-bind:src="pho" ></el-avatar>
+          <el-avatar shape="square" :size="150" style="position: relative;bottom: -5px" v-bind:src="user_photo" ></el-avatar>
           </router-link>
         </div>
 
-      <p>LV{{ Level }}</p>
+      <p>LV{{ user_level }}</p>
     </el-aside>
     <el-container>
       <el-header height="40px">
@@ -62,6 +62,8 @@
       posting_time:{},
       user_id:{},
       username:{type: String, required: true},
+      user_level:{},
+      user_photo:{},
       content:{type: String, required: true},
       like_count:{type: Number, default: 0},
       authority:{},

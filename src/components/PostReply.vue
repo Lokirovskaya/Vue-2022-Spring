@@ -10,11 +10,11 @@
 
       <div class="pho_back">
         <router-link :to="{path:'/personcenter', query:{user:username}}">
-          <el-avatar shape="square" :size="150" style="position: relative;bottom: -5px" v-bind:src="User_Pho"></el-avatar>
+          <el-avatar shape="square" :size="150" style="position: relative;bottom: -5px" v-bind:src="user_photo"></el-avatar>
         </router-link>
       </div>
 
-      <p style="line-height: 4px">LV{{ User_Level }}</p>
+      <p style="line-height: 4px">LV{{ user_level }}</p>
     </el-aside>
     <el-container style="box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)">
 
@@ -53,6 +53,8 @@
                          :key="item.reply_id"
                          :username="item.username"
                          :content="item.content"
+                         :user_level="item.user_level"
+                         :user_photo="item.user_photo"
                          :like_count="item.like_count"
                          :time="item.time"
                          :judge="item.judge"
@@ -114,7 +116,8 @@ export default {
     reply_id:{},// 楼层ID
     user_id:{},// 楼层用户的ID
     username:{type: String, required: true},// 用户名
-    //userlevel:{type: Number, required: true},
+    user_photo:{},
+    user_level:{},
     content:{type: String, required: true},// 楼层的内容
     like_count:{type: Number, default: 0},// 回复的点赞数
     reply_count:{type: Number, default: 0},// 楼层的回复数

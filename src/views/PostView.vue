@@ -4,6 +4,8 @@
               :posting_time="posting_time"
               :user_id="user_id"
               :username="username"
+              :user_level="user_level"
+              :user_photo="user_photo"
               :content="content"
               :like_count="like_count"
               :authority="authority"
@@ -18,6 +20,8 @@
       <PostReply
           :reply_id="item.reply_id"
           :username="item.username"
+          :user_level="item.user_Level"
+          :user_photo="item.user_photo"
           :content="item.content"
           :like_count="item.like_count"
           :reply_count="item.reply_count"
@@ -50,7 +54,8 @@ export default {
         posting_time: '', // 发布时间
         user_id: undefined, // 发布用户ID
         username: '', // 用户名
-        User_Level: 2,  //用户等级,从全局变量找
+        user_level: undefined,  //用户等级,从全局变量找
+        user_photo: '',
         content:'', // 帖子正文内容
         like_count: undefined, // 帖子点赞数
         authority: undefined, // 帖子权限
@@ -76,6 +81,8 @@ export default {
               this.posting_time = res.data.posting_time;
               this.user_id = res.data.user_id;
               this.username = res.data.username;
+              this.user_Level = res.data.user_level;
+              this.user_photo = res.data.user_photo;
               this.content = res.data.content;
               this.like_count = res.data.like_count;
               this.authority = res.data.authority;

@@ -2,7 +2,7 @@
   <el-container>
       <el-main>
         <div>
-          <el-avatar shape="square" :size="40" v-bind:src="User_Pho"></el-avatar>
+          <el-avatar shape="square" :size="40" v-bind:src="user_photo"></el-avatar>
           <span style="position: relative;bottom: 5px">
           &thinsp;
           <router-link :to="{path:'/personcenter', query:{user:username}}">
@@ -53,6 +53,8 @@ export default {
     reply_id:{},// 回复的ID
     user_id:{},//  回复的用户ID
     username:{type: String, required: true},// 用户名
+    user_level:{},
+    user_photo:{},
     content:{type: String, required: true},// 回复的内容
     like_count:{type: Number, required: true},// 回复的点赞数
     time:{},// 回复时间
