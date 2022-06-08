@@ -35,7 +35,9 @@
               
                 <!-- <el-button size="small" v-on="this.commit('change_modify_state')"> -->
                   <!-- <el-button size="small" @click="change_modify_state()"> -->
-                    <el-button v-if="is_visit_self == 0" size="small"
+                    <el-button 
+                    
+                    size="small"
                     @click="
                     //alert('123');
                     //console.log('123'); 
@@ -71,7 +73,7 @@
 
             <div v-else>
               <br/>
-              <el-descriptions title="用户信息" :column="3" :size="size" border style="position: relative;">
+              <el-descriptions title="用户头像" :column="3" :size="size" border style="position: relative;">
         
         <template slot="extra">
 
@@ -90,11 +92,11 @@
 	<!-- </div> -->
 
 <el-upload
-  style="position: relative; left:-1000px; top:20px"
+  style="position: relative; left:-970px; top:20px"
   class="avatar-uploader" action="" :http-request="upload_file" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload" :limit="1" :auto-upload="true">
   <div style="position: relative;left:0px">
-  <img v-if="url_upload" :src="url_upload" class="avatar">
-  <img v_else :src="url_now" class="avatar">
+  <img v-if="url_upload" :src="'http://43.138.55.69'+url_upload" class="avatar">
+  <img v_else :src="'http://43.138.55.69'+url_now" class="avatar">
   <!-- <div v-else style="position: relative;top:19px;">上传头像</div> -->
   <!-- <i v-else class="el-icon-plus avatar-uploader-icon"></i> -->
   </div>
@@ -174,7 +176,7 @@
 
             <el-collapse v-model="activeNames" @change="handleChange">
             <el-collapse-item title="我的帖子" name="1">
-          <!-- <el-table :data="articles1" stripe="true" align="left">
+          <el-table :data="articles1" stripe="true" align="left">
             <el-table-column label="标题" min-width="70%">
               <template slot-scope="scope">
                 <div class="art-title"><u>{{scope.row.title}}</u></div>
@@ -190,11 +192,11 @@
                 <div class="art-date">{{scope.row.date}}</div>
               </template>
             </el-table-column>
-          </el-table> -->
+          </el-table>
             </el-collapse-item>
 
-            <el-collapse-item title="近期点赞" name="2">
-          <!-- <el-table :data="articles1" stripe="true" align="left">
+            <!-- <el-collapse-item title="近期点赞" name="2">
+          <el-table :data="articles1" stripe="true" align="left">
             <el-table-column label="标题" min-width="70%">
               <template slot-scope="scope">
                 <div class="art-title"><u>{{scope.row.title}}</u></div>
@@ -210,8 +212,8 @@
                 <div class="art-date">{{scope.row.date}}</div>
               </template>
             </el-table-column>
-          </el-table> -->
-            </el-collapse-item>
+          </el-table>
+            </el-collapse-item> -->
 
             <el-collapse-item title="近期评论" name="3">
           <!-- <el-table :data="articles1" stripe="true" align="left">
@@ -311,7 +313,7 @@ data(){
         // input_address:"",
         input_password:undefined,
         input_password2:undefined,
-        is_visit_self:undefined,
+        is_visit_self:undefined, //0：访问自己主页
 
         url_upload: undefined,
         // url_upload:".././assets/666.png",
@@ -510,7 +512,9 @@ methods:
         my_axios.post('/user/modify_photo', {photo:e.file})
           .then(res => {
             if (res.data.errno === 0) {
-              this.$message.success('附件上传成功！');
+              this.$message.success('头像修改成功！');
+              this.url_now = res.data.photo;
+              this.url_upload = res.data.photo;
               // this.file_id = res.data.file_id;
               // this.url_upload = res.data.url;
             }
@@ -698,8 +702,8 @@ methods:
     text-align: center;
   }
   .avatar {
-    width: 178px;
-    height: 178px;
+    width: 60px;
+    height: 60px;
     display: block;
   }
 </style>
