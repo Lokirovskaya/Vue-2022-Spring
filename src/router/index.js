@@ -36,16 +36,6 @@ const routes = [
     name: 'personcenter',
     component: () => import('../views/PersonCenter.vue')
   },
-  // {
-  //   path: '/viewifo',
-  //   name: 'viewifo',
-  //   component: () => import('../views/ViewIfo.vue')
-  // },
-  // {
-  //   path: '/modifyifo',
-  //   name: 'modifyifo',
-  //   component: () => import('../views/ModifyIfo.vue')
-  // },
   {
     path: '/sector',
     name: 'sector',
@@ -58,7 +48,7 @@ const routes = [
   },
   {
     path: '/search',
-    name: 'search' ,
+    name: 'search',
     component: () => import('../views/SearchView'),
   },
 ]
@@ -66,7 +56,11 @@ const routes = [
 const router = new VueRouter({
   mode: 'hash',
   base: process.env.BASE_URL,
-  routes
+  routes,
+  // eslint-disable-next-line no-unused-vars
+  scrollBehavior(to, from, saveTop) {
+    return { x: 0, y: 0 };
+  }
 })
 
 export default router
