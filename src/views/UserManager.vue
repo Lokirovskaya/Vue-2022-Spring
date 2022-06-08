@@ -1,5 +1,9 @@
 <template>
   <ForumBorder>
+    <el-breadcrumb separator-class="el-icon-arrow-right" style="margin: 20px; font-size: 15px;">
+      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+    </el-breadcrumb>
     <div>总共有用户 {{this.user_sum}} 人</div>
     <el-table :data="user_info" stripe border align="center">
       <el-table-column prop="userid" label="UID" width="100"></el-table-column>

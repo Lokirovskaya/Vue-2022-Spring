@@ -1,8 +1,12 @@
 <template>
   <ForumBorder>
     <el-container>
+      <el-breadcrumb separator-class="el-icon-arrow-right" style="margin: 20px; font-size: 15px;">
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item>{{sector_chinese_name[this.$route.query.name]}}</el-breadcrumb-item>
+      </el-breadcrumb>
       <el-header id="title">
-        这个板块的名称是 {{ sector_chinese_name[this.$route.query.name]}}
+        {{sector_chinese_name[this.$route.query.name]}}
       </el-header>
       <el-header id="intro" v-html="sector_intro"></el-header>
       <el-main>

@@ -1,5 +1,11 @@
 <template>
   <ForumBorder>
+    <el-breadcrumb separator-class="el-icon-arrow-right" style="margin: 20px; font-size: 15px;">
+      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{path:'/sector', query:{name:this.$route.query.name}}">
+        {{sector_chinese_name[this.$route.query.name]}}</el-breadcrumb-item>
+      <el-breadcrumb-item>发新帖</el-breadcrumb-item>
+    </el-breadcrumb>
     <div>
       你正在往板块 {{sector_chinese_name[this.$route.query.name]}} 发帖<br />
       请使用 Markdown 格式
