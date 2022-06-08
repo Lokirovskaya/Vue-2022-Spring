@@ -34,7 +34,7 @@
         </el-tooltip>
 
         <el-tooltip class="item" effect="light" content="回复" placement="bottom">
-          <img style="width: 20px;height: 20px;position: relative; left: 7px;bottom: -2px" alt="comment"
+          <img style="width: 20px;height: 20px;position: relative; left: 7px;bottom: -3px" alt="comment"
             src="../assets/comment.png" @click="Comment">
         </el-tooltip>
 

@@ -34,14 +34,14 @@
         </el-tooltip>
 
         <el-tooltip class="item" effect="light" content="评论" placement="bottom">
-          <img style="width: 20px;height: 20px;position: relative; left: 7px;bottom: -2px" alt="comment" src="../assets/comment.png"
+          <img style="width: 20px;height: 20px;position: relative; left: 7px;bottom: -3px" alt="comment" src="../assets/comment.png"
                @click="see_Comment">
         </el-tooltip>
-        &nbsp;评论数({{reply_count}})
+        <span style="position: relative;bottom: 2px">&nbsp;&nbsp;&nbsp;评论数({{reply_count}})</span>
 
         <el-tooltip class="item" effect="light" content="删除本回复" placement="bottom">
-          <img style="width: 20px;height: 20px;position: relative; bottom: -3px" alt="delete"
-               src="../assets/delete.png" @click="delPostReply" v-show="this.$store.getters.is_admin">
+          <img style="width: 20px;height: 20px;position: relative;right: -4px ;bottom: -3px" alt="delete"
+               src="../assets/delete.png" @click="delPostReply(reply_id)" v-show="this.$store.getters.is_admin">
         </el-tooltip>
 
       </el-footer>
@@ -224,8 +224,33 @@ export default {
       this.reply_id1 = arr[1];
       this.textarea = arr[0] + ':';
     },
-    delPostReply(){//待填满喵
-      console.log("delPostReply");
+    delPostReply(){
+      this.$confirm('此操作将删除该回复, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+
+        this.$axios.post('/user/delete_reply', qs.stringify({reply_id:this.reply_id}), {
+          headers: {
+            username: this.$store.state.username,
+            token: this.$store.state.token,
+          }
+        })
+            .then(res => {
+              if (res.data.errno === 0) {
+                this.$message.success('成功！');
+              }
+              else {
+                this.$message.error(res.data.msg);
+              }
+            })
+            .catch(err => {
+              this.$message.error(err);
+            });
+      }).catch(() => {
+
+      });
     },
   }
 }
