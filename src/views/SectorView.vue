@@ -110,7 +110,6 @@
             if (res.data.errno === 0) {
               this.sector_intro = res.data.sector_introduction;
               this.posting_data = res.data.data;
-              console.log(this.posting_data);
             }
             else {
               this.posting_data = [];
