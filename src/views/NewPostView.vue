@@ -11,10 +11,9 @@
         级的人才能查看本帖子
       </div>
 
-      <el-upload action="" :http-request="upload_file" :on-preview="handlePreview" :limit="1"
-        :file-list="this.file_list" :auto-upload="true">
+      <el-upload action="" :http-request="upload_file" :limit="1" :auto-upload="true">
         <el-button type="primary">点击上传</el-button>
-        <div slot="tip" class="el-upload__tip">选择附件以上传，大小求求你不要超过 20 MB</div>
+        <div slot="tip" class="el-upload__tip">选择附件以上传，大小不超过 100 M</div>
       </el-upload>
 
       <el-button type="success" @click="publish">发帖</el-button> <br />
@@ -42,7 +41,7 @@
         input_title: '',
         input_html: '',
         input_authority: 0,
-        file_list: [],
+        file_id: -1,
       }
     },
     methods: {
@@ -51,15 +50,13 @@
         let date = new Date();
         let now = date.toLocaleString();
 
-        console.log(this.file_list);
-
         let post_data = {
           sector_name: this.$route.query.name,
           title: this.input_title,
           content: this.input_html,
           time: now,
           authority: this.input_authority,
-          // in_file: this.file_list[0].url,
+          file_id: this.file_id,
         };
 
         this.$axios.post('/posting/publish', qs.stringify(post_data), {
@@ -83,7 +80,7 @@
 
       upload_file(e) {
         let formData = new FormData();
-        formData.append('in_file', e.file); // in_file 改成对应的后端的名字
+        formData.append('in_file', e.file);
 
         let my_axios = this.$axios.create({
           withCredentials: true,
@@ -97,7 +94,8 @@
         my_axios.post('/posting/uploadFile', formData)
           .then(res => {
             if (res.data.errno === 0) {
-              this.$message.success('成功！');
+              this.$message.success('附件上传成功！');
+              this.file_id = res.data.file_id;
             }
             else {
               this.$message.error(res.data.msg);

@@ -1,6 +1,7 @@
 <template>
   <div>
-    <mavon-editor v-model="content" ref="md" @change="change" style="min-height: 600px" />
+    <mavon-editor v-model="content" placeholder="在这里输入 Markdown 代码，在右侧实时展示效果" :autofocus="false" ref="md"
+      @change="change" style="min-height: 600px" />
 
 
   </div>
