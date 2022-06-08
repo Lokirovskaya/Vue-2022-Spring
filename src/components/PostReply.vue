@@ -14,7 +14,7 @@
         </router-link>
       </div>
 
-      <p style="line-height: 4px">LV{{ user_level }}</p>
+      <p style="line-height: 4px">LV{{user_level}}</p>
     </el-aside>
     <el-container style="box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)">
 
@@ -101,7 +101,6 @@ export default {
     return{
       User_Pho:'https://s2.loli.net/2022/05/06/f2Jx6BkcSLEnRtU.jpg', //用户头像
       User_Page:'www.baidu.com',      //用户个人主页链接
-      User_Level: 5, //用户等级
       like1:this.like,                     //该评论是否点赞
       SEE:false,                      //该评论是否可见
       likeNum:this.like_count,                 //该评论点赞数量

@@ -237,6 +237,8 @@ export default {
             this.posting_time = res.data.posting_time;
             this.user_id = res.data.user_id;
             this.username = res.data.username;
+            this.user_level = res.data.user_level;
+            this.user_photo = res.data.user_photo;
             this.content = res.data.content;
             this.like_count = res.data.like_count;
             this.authority = res.data.authority;
