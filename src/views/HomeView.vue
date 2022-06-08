@@ -1,17 +1,11 @@
 <template>
-  <!-- <el-carousel id="Picture" height="700px" :autoplay="false" arrow="always" direction="vertical">
-    <el-carousel-item v-for="item in 2" :key="item">
-      <div v-if="item === 2"> -->
 
-  <div src="../assets/bg.jpg"
-    style="width: 100%; background: url(https://s2.loli.net/2022/06/07/gyBqZaJc4tpTrfh.jpg) #061832 no-repeat; background-size: contain; padding-top: 500px; display: flex; justify-content: center;">
-    <div
-      style="width: 80%; border-top-left-radius: 50px; border-top-right-radius: 50px;background: #FFFFFF; padding-top: 50px; display: flex; justify-content: center;">
+  <body>
+    <div id="title">BUAA<br />学习生活论坛</div>
+    <div id="inner-body">
       <div style="width: 95%;">
         <el-container>
-          <el-header>
-          </el-header>
-
+          <el-header></el-header>
           <el-container>
             <el-header>
               <h2>当前热帖</h2>
@@ -100,22 +94,7 @@
         </el-container>
       </div>
     </div>
-  </div>
-  <!-- </div> -->
-  <!-- <div v-else>
-
-    <body background="https://s2.loli.net/2022/06/07/gyBqZaJc4tpTrfh.jpg" alt="blog7.png"
-      style="background-repeat:no-repeat;background-size: 100%">
-      <h1 @click="toPage">欢 迎 来 到 本 论 坛</h1>
-
-    </body> -->
-
-  <!-- </div>
-
-
-    </el-carousel-item>
-  </el-carousel> -->
-
+  </body>
 </template>
 
 <script>
@@ -244,49 +223,37 @@
 </script>
 
 <style scoped>
-  @keyframes textChange {
-    from {
-      opacity: 0.45;
-    }
-
-    to {
-      opacity: 0.95;
-    }
+  body {
+    width: 100%;
+    background: url(https://s2.loli.net/2022/06/07/gyBqZaJc4tpTrfh.jpg) #061832 no-repeat;
+    background-size: contain;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
   }
 
-  .el-carousel__item h1 {
-    color: white;
-    font-size: 40px;
-    line-height: 700px;
-    margin: 0;
-    animation: textChange 3.5s;
-    animation-iteration-count: 100;
-    animation-direction: alternate-reverse;
+  #title {
+    width: 100%;
+    height: 500px;
+    font-size: 72px;
+    color: #F4F4F4;
+    font-weight: bolder;
+    letter-spacing: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
   }
 
-  .el-carousel__item:nth-child(2n) {
-    background-color: white;
-  }
-
-  .el-carousel__item:nth-child(2n+1) {
-    background-color: white;
-  }
-
-  .title {
-    font-size: 30px;
-    background-color: #f1f1f1;
-    line-height: 80px;
-    min-height: 80px;
-    border-radius: 10px;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  .intro {
-    font-size: 20px;
-    background-color: #f1f1f1;
-    min-height: 200px;
-    margin-bottom: 20px;
+  #inner-body {
+    width: 80%;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    background: #FFFFFF;
+    padding-top: 50px;
+    display: flex;
+    justify-content: center;
   }
 
   .art-title {
