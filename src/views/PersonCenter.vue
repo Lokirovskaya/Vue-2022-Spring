@@ -35,7 +35,7 @@
               
                 <!-- <el-button size="small" v-on="this.commit('change_modify_state')"> -->
                   <!-- <el-button size="small" @click="change_modify_state()"> -->
-                    <el-button size="small"
+                    <el-button v-if="is_visit_self == 0" size="small"
                     @click="
                     //alert('123');
                     //console.log('123'); 
@@ -174,7 +174,7 @@
 
             <el-collapse v-model="activeNames" @change="handleChange">
             <el-collapse-item title="我的帖子" name="1">
-          <el-table :data="articles1" stripe="true" align="left">
+          <!-- <el-table :data="articles1" stripe="true" align="left">
             <el-table-column label="标题" min-width="70%">
               <template slot-scope="scope">
                 <div class="art-title"><u>{{scope.row.title}}</u></div>
@@ -190,11 +190,11 @@
                 <div class="art-date">{{scope.row.date}}</div>
               </template>
             </el-table-column>
-          </el-table>
+          </el-table> -->
             </el-collapse-item>
 
             <el-collapse-item title="近期点赞" name="2">
-          <el-table :data="articles1" stripe="true" align="left">
+          <!-- <el-table :data="articles1" stripe="true" align="left">
             <el-table-column label="标题" min-width="70%">
               <template slot-scope="scope">
                 <div class="art-title"><u>{{scope.row.title}}</u></div>
@@ -210,11 +210,11 @@
                 <div class="art-date">{{scope.row.date}}</div>
               </template>
             </el-table-column>
-          </el-table>
+          </el-table> -->
             </el-collapse-item>
 
             <el-collapse-item title="近期评论" name="3">
-          <el-table :data="articles1" stripe="true" align="left">
+          <!-- <el-table :data="articles1" stripe="true" align="left">
             <el-table-column label="标题" min-width="70%">
               <template slot-scope="scope">
                 <div class="art-title"><u>{{scope.row.title}}</u></div>
@@ -230,7 +230,7 @@
                 <div class="art-date">{{scope.row.date}}</div>
               </template>
             </el-table-column>
-          </el-table>
+          </el-table> -->
             </el-collapse-item>
 
 
@@ -302,17 +302,18 @@ data(){
         exp_next_lv: undefined, //下一等级经验值
         level:undefined,
 
-        input_username:"",
+        input_username:undefined,
         // input_sex:"",
         // input_phone_num:"",
         // input_email:"",
         // input_school:"",
         // input_city:"",
         // input_address:"",
-        input_password:"",
-        input_password2:"",
+        input_password:undefined,
+        input_password2:undefined,
+        is_visit_self:undefined,
 
-        url_upload: '',
+        url_upload: undefined,
         // url_upload:".././assets/666.png",
         // url_upload:require('.././assets/logo.png'),
         url_now:undefined,
@@ -370,6 +371,7 @@ methods:
       // this.username = this.$store.state.username;
       if (this.$route.query.user) //如果是访问其他人的主页
       {
+        this.is_visit_self = 1;
           this.$axios.post('/user/other_space', qs.stringify({other_name:this.$route.query.user}),{
             // this.$axios.post('/user/space', qs.stringify(),{
         headers: {
@@ -396,6 +398,8 @@ methods:
       
       else //访问自己的主页
       {
+        this.is_visit_self = 0;
+        console.log('visit self');
           this.$axios.post('/user/space', qs.stringify(),{
         headers: {
           username: this.$store.state.username,
