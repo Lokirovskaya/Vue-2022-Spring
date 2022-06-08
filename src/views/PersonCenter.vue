@@ -364,7 +364,7 @@ methods:
       // this.username = this.$store.state.username;
       if (this.$route.query.user) //如果是访问其他人的主页
       {
-          this.$axios.post('/user/other_space', qs.stringify(this.$route.query.user),{
+          this.$axios.post('/user/other_space', qs.stringify({other_name:this.$route.query.user}),{
             // this.$axios.post('/user/space', qs.stringify(),{
         headers: {
           username: this.$store.state.username,
