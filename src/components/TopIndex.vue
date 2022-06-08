@@ -53,7 +53,7 @@
               <span style="position: relative;bottom: -3px">&nbsp;{{ this.$store.state.username }}&nbsp;&nbsp;</span>
             </div>
             <el-dropdown-menu slot="dropdown">
-              <router-link :to="{path:'/personcenter'}">
+              <router-link :to="{path:'/personcenter',query:{user:this.$store.state.username}}">
                 <el-dropdown-item command="a">个人中心</el-dropdown-item>
               </router-link>
               <el-dropdown-item command="b">退出登录</el-dropdown-item>
