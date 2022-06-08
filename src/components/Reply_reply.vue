@@ -100,8 +100,33 @@ export default {
       let arr = [this.username,this.reply_id];
       this.$emit('Comment',arr);
     },
-    delPostRReply(){//等待填满喵
-      console.log("delPostRReply");
+    delPostRReply(){
+      this.$confirm('此操作将删除该回复, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+
+        this.$axios.post('/user/delete_reply', qs.stringify({reply_id:this.reply_id}), {
+          headers: {
+            username: this.$store.state.username,
+            token: this.$store.state.token,
+          }
+        })
+            .then(res => {
+              if (res.data.errno === 0) {
+                this.$message.success('成功！');
+              }
+              else {
+                this.$message.error(res.data.msg);
+              }
+            })
+            .catch(err => {
+              this.$message.error(err);
+            });
+      }).catch(() => {
+
+      });
     },
   }
 }

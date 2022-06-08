@@ -224,7 +224,7 @@ export default {
       this.reply_id1 = arr[1];
       this.textarea = arr[0] + ':';
     },
-    delPostReply(){//待填满喵
+    delPostReply(){
       this.$confirm('此操作将删除该回复, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
