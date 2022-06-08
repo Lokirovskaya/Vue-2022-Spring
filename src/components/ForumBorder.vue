@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 100%; height: 100%; display: flex; justify-content: center;">
+  <div style="width: 100%; height: 100%; background-color: #F6F6F6; display: flex; justify-content: center;">
     <div style="width: 80%;">
       <slot></slot>
     </div>

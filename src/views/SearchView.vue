@@ -17,7 +17,7 @@
 
       <el-table-column min-width="8%">
         <template slot-scope="scope">
-          <div class="el-icon-view" style="width: 15px; height: 15px"></div>
+          <div class="el-icon-view" style="font-size: 15px;"></div>
           {{scope.row.click_count}}
         </template>
       </el-table-column>
@@ -53,20 +53,20 @@
 </template>
 
 <script>
-import ForumBorder from "@/components/ForumBorder";
-import qs from "qs";
-export default {
-  name: "SearchView",
-  components: {ForumBorder},
-  data() {
-    return{
-      search: this.$route.query.searchContent,
-      posting_data: [],
-    }
-  },
-  methods:{
-    get_Search_Info(){
-      this.$axios.post('/posting/searchPosting', qs.stringify({search: this.search}))
+  import ForumBorder from "@/components/ForumBorder";
+  import qs from "qs";
+  export default {
+    name: "SearchView",
+    components: { ForumBorder },
+    data() {
+      return {
+        search: this.$route.query.searchContent,
+        posting_data: [],
+      }
+    },
+    methods: {
+      get_Search_Info() {
+        this.$axios.post('/posting/searchPosting', qs.stringify({ search: this.search }))
           .then(res => {
             if (res.data.errno === 0) {
               this.posting_data = res.data.data;
@@ -80,41 +80,39 @@ export default {
           .catch(err => {
             this.$message.error(err);
           });
-    }
-  },
-  mounted() {
-    this.get_Search_Info();
-  },
-  watch: {
-    $route(to, from) {
-      if (to.query.searchContent !== from.query.searchContent) {
-        this.search = to.query.searchContent;
-        this.get_Search_Info();
       }
     },
-  },
-}
+    mounted() {
+      this.get_Search_Info();
+    },
+    watch: {
+      $route(to, from) {
+        if (to.query.searchContent !== from.query.searchContent) {
+          this.search = to.query.searchContent;
+          this.get_Search_Info();
+        }
+      },
+    },
+  }
 </script>
 
 <style scoped>
+  #art-title {
+    font-size: 18px;
+  }
 
-#art-title {
-  font-size: 18px;
-}
+  #art-summary {
+    font-size: 15px;
+    margin-left: 20px;
+    color: gray;
+  }
 
-#art-summary {
-  font-size: 15px;
-  margin-left: 20px;
-  color: gray;
-}
+  #art-author {
+    font-size: 15px;
+  }
 
-#art-author {
-  font-size: 15px;
-}
-
-#art-date {
-  font-size: 15px;
-  color: gray;
-}
-
+  #art-date {
+    font-size: 15px;
+    color: gray;
+  }
 </style>
