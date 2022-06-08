@@ -3,7 +3,13 @@
       <el-main>
         <div>
           <el-avatar shape="square" :size="40" v-bind:src="User_Pho"></el-avatar>
-          &nbsp;<i>{{ username }}</i>&nbsp;<span v-if="judge===3">回复&nbsp;{{reply_to}}</span> :&nbsp; {{content}}
+          <span style="position: relative;bottom: 5px">
+          &thinsp;
+          <router-link :to="{path:'/personcenter', query:{user:username}}">
+            <i>{{ username }}</i>
+          </router-link>
+          <span v-if="judge===3">回复&nbsp;{{reply_to}}</span> :&nbsp; {{content}}
+          </span>
         </div>
       </el-main>
       <el-footer height="25px"><!--这是回复的回复的点赞评论板块-->
@@ -102,6 +108,7 @@ export default {
 </script>
 
 <style scoped>
+
 .el-main {
   background-color: white;
   color: #333;

@@ -1,10 +1,19 @@
 <template>
   <el-container>
     <el-aside style="width: 200px">
-      <p>
-        <i>{{ username }}</i>
-      </p>
-      <el-avatar shape="square" :size="160" v-bind:src="User_Pho"></el-avatar>
+
+      <router-link :to="{path:'/personcenter', query:{user:username}}">
+        <p>
+          <i>{{ username }}</i>
+        </p>
+      </router-link>
+
+        <div class="pho_back">
+          <router-link :to="{path:'/personcenter', query:{user:username}}">
+          <el-avatar shape="square" :size="150" style="position: relative;bottom: -5px" v-bind:src="pho" ></el-avatar>
+          </router-link>
+        </div>
+
       <p>LV{{ Level }}</p>
     </el-aside>
     <el-container>
@@ -61,6 +70,7 @@
     },
     data() {
       return {
+        pho: 'https://s2.loli.net/2022/05/06/f2Jx6BkcSLEnRtU.jpg',
         User_Pho: 'https://s2.loli.net/2022/05/08/1mkNYLO9siHrMud.png',    //用户头像
         User_Page: 'www.baidu.com',     //用户个人主页链接
         Level: 5,                  //用户等级
@@ -84,6 +94,17 @@
 </script>
 
 <style scoped>
+
+  .pho_back {
+    background-color: white;
+    position: relative;
+    left: 17px;
+    height: 160px;
+    width: 160px;
+    border-style: solid;
+    border-color: dimgray;
+    border-width: 2px;
+  }
   .el-header {
     background-color: white;
     color: #333;
