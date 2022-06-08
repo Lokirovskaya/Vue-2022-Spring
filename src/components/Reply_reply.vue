@@ -8,7 +8,7 @@
           <router-link :to="{path:'/personcenter', query:{user:username}}">
             <i>{{ username }}</i>
           </router-link>
-          <span v-if="judge===3">回复&nbsp;{{reply_to}}</span> :&nbsp; {{content}}
+          <span v-if="judge===3">&nbsp;回复&nbsp;{{reply_to}}</span> :&nbsp; {{content}}
           </span>
         </div>
       </el-main>
