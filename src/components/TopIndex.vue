@@ -34,7 +34,7 @@
     <el-col :span="8">
       <div class="grid-content" style="position: relative;bottom: -10.5px">
         <el-input placeholder="请输入关键词" prefix-icon="el-icon-search" size="middle" v-model="search">
-          <el-button slot="append" icon="el-icon-search"></el-button>
+          <el-button slot="append" icon="el-icon-search" @click="Search"></el-button>
         </el-input>
       </div>
     </el-col>
@@ -101,7 +101,11 @@
           this.goto_logout();
         }
       },
-    }
+      Search(){
+        this.$router.push({path: '/search',query:{searchContent: this.search}});
+        this.search = '';
+      }
+    },
   }
 </script>
 

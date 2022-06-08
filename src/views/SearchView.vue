@@ -54,14 +54,37 @@
 
 <script>
 import ForumBorder from "@/components/ForumBorder";
+import qs from "qs";
 export default {
   name: "SearchView",
   components: {ForumBorder},
   data() {
     return{
+      search: this.$route.query.searchContent,
       posting_data: [],
     }
-  }
+  },
+  methods:{
+    get_Search_Info(){
+      this.$axios.post('/posting/searchPosting', qs.stringify({search: this.search}))
+          .then(res => {
+            if (res.data.errno === 0) {
+              this.posting_data = res.data.data;
+              console.log(this.posting_data);
+            }
+            else {
+              this.posting_data = [];
+              this.$message.error(res.data.msg);
+            }
+          })
+          .catch(err => {
+            this.$message.error(err);
+          });
+    }
+  },
+  mounted() {
+    this.get_Search_Info();
+  },
 }
 </script>
 
