@@ -77,17 +77,28 @@
 
                   <!-- 上传并预览头像 -->
                   <!-- 支持jpg、jpeg、png、heic等 -->
-    <div class="alert-box-item" style="position: relative;left:-370px;top:15px;"> 
-		<div class="bigImg-div" @click="toGetImg">
+    <!-- <div class="alert-box-item" style="position: relative;left:-370px;top:15px;">  -->
+		<!-- <div class="bigImg-div" @click="toGetImg"> -->
 			<!-- <img class="bigImg" :src=url_upload v-if="url_upload"> -->
       
 
-      <img class="bigImg" :src="url_upload" v-if="url_upload">
+      <!-- <img class="bigImg" :src="url_upload" v-if="url_upload"> -->
       <!-- <img class="bigImg" :src="url_now" v-else> -->
       <!-- <img class="bigImg" src=".././assets/666.png" v-else> -->
-      <div v-else style="position: relative;top:19px;">上传头像</div>
-		</div>
-	</div>
+      <!-- <div v-else style="position: relative;top:19px;">上传头像</div> -->
+		<!-- </div> -->
+	<!-- </div> -->
+
+<el-upload
+  style="position: relative; left:-1000px; top:20px"
+  class="avatar-uploader" action="" :http-request="upload_file" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload" :limit="1" :auto-upload="true">
+  <div style="position: relative;left:0px">
+  <img v-if="url_upload" :src="url_upload" class="avatar">
+  <img v_else :src="url_now" class="avatar">
+  <!-- <div v-else style="position: relative;top:19px;">上传头像</div> -->
+  <!-- <i v-else class="el-icon-plus avatar-uploader-icon"></i> -->
+  </div>
+</el-upload>
 
             <!-- <el-button size="small" style="position: relative;left:-1070px;top:-25px;">上传头像</el-button> -->
       <!-- <el-button size="small"><router-link to="/viewifo">修改完成</router-link></el-button> -->
@@ -144,7 +155,7 @@
 </el-descriptions>
 
 <br/>
-<div style="position: relative;left:-460px;">
+<div style="position: relative;left:-330px;">
     修改密码：
 <el-input placeholder="输入新密码" v-model="input_password" clearable style="width:150px; position: relative;left:0px;" show-password></el-input>
 <!-- <br/><br/> -->
@@ -235,14 +246,8 @@
         
 
 <!-- <el-upload
-  class="avatar-uploader"
-  action=""
-  :http-request="upload_file"
-  
-  :show-file-list="false"
-  :on-success="handleAvatarSuccess"
-  :before-upload="beforeAvatarUpload">
-  <img v-if="imageUrl" :src="imageUrl" class="avatar">
+  class="avatar-uploader" action="" :http-request="upload_file" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload" :limit="1" :auto-upload="true">
+  <img v-if="url_upload" :src="url_upload" class="avatar">
   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
 </el-upload> -->
 
@@ -255,7 +260,7 @@
 import ForumBorder from "@/components/ForumBorder";
 // import PostHead from "@/components/PostHead";
 // import PostReply from "@/components/PostReply";
-let inputElement = null
+// let inputElement = null
 import qs from "qs";
 export default {
   components: { ForumBorder },
@@ -312,7 +317,7 @@ data(){
         // url_upload:require('.././assets/logo.png'),
         url_now:undefined,
 
-        imageUrl: ''
+        // imageUrl: ''
 
         // fileList: [{name: '', url: ''}]
         
@@ -331,10 +336,10 @@ methods:
     let user_ifo = {
         username:this.input_username,
         // reply_id:this.reply_id,
-        photo:this.url_upload
+        // photo:this.url_upload
       };//数据打包
       // console.log(user_ifo);
-    this.$axios.post('/user/modify_user', qs.stringify(user_ifo),{
+    this.$axios.post('/user/modify_username', qs.stringify(user_ifo),{
         headers: {
           username: this.$store.state.username,
           token: this.$store.state.token,
@@ -342,8 +347,9 @@ methods:
       })
             .then(res => {
               if (res.data.errno === 0) {
-                this.username = this.input_username;
-                this.$store.state.username = this.username;
+                this.username = this.input_username; //更新页面变量
+                this.$store.state.username = this.username; //更新全局变量
+                // this.$store.token = res.data.token; //更新token
                 this.$message.success(res.data.msg);
                 this.modify_state = 0;
               }
@@ -399,6 +405,8 @@ methods:
       .then(res => {
               if (res.data.errno === 0) {
                 this.url_now = res.data.user_photo;
+                // this.url_now = require(res.data.user_photo);
+                console.log('1:'+this.url_now);
                 this.username = this.$store.state.username;
                 // this.username = this.$route.query.user;
                 this.level = res.data.user_level;
@@ -432,7 +440,11 @@ methods:
         // }
         else {
           // alert('success');
-          this.$axios.post('/user/modify_password', qs.stringify(password_ifo))
+          this.$axios.post('/user/modify_password', qs.stringify(password_ifo),
+          {headers: {
+          username: this.$store.state.username,
+          token: this.$store.state.token,
+            }})
             .then(res => {
               if (res.data.errno === 0) {
                 this.$message.success(res.data.msg);
@@ -448,59 +460,99 @@ methods:
         }
     },
 
-    toGetImg() {
-				if (inputElement === null) {
-				// 生成文件上传的控件
-					inputElement = document.createElement('input')
-					inputElement.setAttribute('type', 'file')
-					inputElement.style.display = 'none'
+    // toGetImg() {
+		// 		if (inputElement === null) {
+		// 		// 生成文件上传的控件
+		// 			inputElement = document.createElement('input')
+		// 			inputElement.setAttribute('type', 'file')
+		// 			inputElement.style.display = 'none'
 
-					if (window.addEventListener) {
-						inputElement.addEventListener('change', this.uploadFile, false)
-					} else {
-						inputElement.attachEvent('onchange', this.uploadFile)
-					}
+		// 			if (window.addEventListener) {
+		// 				inputElement.addEventListener('change', this.uploadFile, false)
+		// 			} else {
+		// 				inputElement.attachEvent('onchange', this.uploadFile)
+		// 			}
 
-					document.body.appendChild(inputElement)
-				}
-				inputElement.click()
-        // console.log('print:');
-        // console.log(this.url_upload);
+		// 			document.body.appendChild(inputElement)
+		// 		}
+		// 		inputElement.click()
+    //     // console.log('print:');
+    //     // console.log(this.url_upload);
         
-			},
+		// 	},
 
-			uploadFile(el) {
-        console.log('upload')
-				if (el && el.target && el.target.files && el.target.files.length > 0) {
-					console.log(el)
-					const files = el.target.files[0]
-					const isLt2M = files.size / 1024 / 1024 < 2
-					const size = files.size / 1024 / 1024
-					console.log(size)
-          // console.log('here')
-					// 判断上传文件的大小
-					if (!isLt2M) {
-						this.$message.error('上传头像图片大小不能超过 2MB!')
-					} else if (files.type.indexOf('image') === -1) { //如果不是图片格式
-						// this.$dialog.toast({ mes: '请选择图片文件' });
-						this.$message.error('请选择图片文件1');
-					} else {
-						const that = this;
-						const reader = new FileReader(); // 创建读取文件对象
-						reader.readAsDataURL(el.target.files[0]); // 发起异步请求，读取文件
-						reader.onload = function() { // 文件读取完成后
-							// 读取完成后，将结果赋值给img的src
-							that.url_upload = this.result;
-							console.log(this.result);
-							// 数据传到后台
-						const formData = new FormData()
-						formData.append('file', files); // 可以传到后台的数据
-						};
-					}
-        }
-				},
-        // let formData = new FormData();
-        // formData.append('photo', files); // in_file 改成对应的后端的名字
+
+    upload_file(e) {
+      
+						// const reader = new FileReader(); // 创建读取文件对象
+						// reader.readAsDataURL(e.target.files[0]); // 发起异步请求，读取文件
+						// reader.onload = function() { // 文件读取完成后
+						// 	// 读取完成后，将结果赋值给img的src
+						// 	this.url_upload = this.result;
+            // }
+
+        let formData = new FormData();
+        formData.append('in_file', e.file);
+
+        let my_axios = this.$axios.create({
+          withCredentials: true,
+          headers: {
+            username: this.$store.state.username,
+            token: this.$store.state.token,
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+
+        my_axios.post('/user/modify_photo', {photo:e.file})
+          .then(res => {
+            if (res.data.errno === 0) {
+              this.$message.success('附件上传成功！');
+              // this.file_id = res.data.file_id;
+              // this.url_upload = res.data.url;
+            }
+            else {
+              this.$message.error(res.data.msg);
+            }
+          })
+          .catch(err => {
+            this.$message.error(err);
+          });
+      },
+    
+
+			// uploadFile(el) {
+      //   console.log('upload')
+      //   const files = el.target.files[0]
+			// 	if (el && el.target && el.target.files && el.target.files.length > 0) {
+			// 		console.log(el)
+			// 		// const files = el.target.files[0]
+			// 		const isLt2M = files.size / 1024 / 1024 < 2
+			// 		const size = files.size / 1024 / 1024
+			// 		console.log(size)
+      //     // console.log('here')
+			// 		// 判断上传文件的大小
+			// 		if (!isLt2M) {
+			// 			this.$message.error('上传头像图片大小不能超过 2MB!')
+			// 		} else if (files.type.indexOf('image') === -1) { //如果不是图片格式
+			// 			// this.$dialog.toast({ mes: '请选择图片文件' });
+			// 			this.$message.error('请选择图片文件');
+			// 		} else {
+			// 			const that = this;
+			// 			const reader = new FileReader(); // 创建读取文件对象
+			// 			reader.readAsDataURL(el.target.files[0]); // 发起异步请求，读取文件
+			// 			reader.onload = function() { // 文件读取完成后
+			// 				// 读取完成后，将结果赋值给img的src
+			// 				that.imageUrl = this.result;
+			// 				console.log(this.result);
+			// 				// 数据传到后台
+			// 			const formData = new FormData()
+			// 			formData.append('file', files); // 可以传到后台的数据
+			// 			};
+			// 		}
+      //   }
+			// 	// },
+      //   let formData = new FormData();
+      //   formData.append('photo', files); // in_file 改成对应的后端的名字
 
       //   let my_axios = this.$axios.create({
       //     withCredentials: true,
@@ -511,7 +563,7 @@ methods:
       //     }
       //   });
 
-      //   my_axios.post('/posting/uploadFile', formData)
+      //   my_axios.post('/posting/modify_photo', formData)
       //     .then(res => {
       //       if (res.data.errno === 0) {
       //         this.$message.success('成功！');
@@ -538,24 +590,34 @@ methods:
     //       }
     //     },
 
-      //   handleAvatarSuccess(res, file) {
-      //     console.log('success');
-      //     console.log('imageurl:'+this.imageUrl);
-      //   this.imageUrl = URL.createObjectURL(file.raw);
-      // },
-      // beforeAvatarUpload(file) {
-      //   console.log('before');
-      //   const isJPG = file.type === 'image/jpeg';
-      //   const isLt2M = file.size / 1024 / 1024 < 2;
+        handleAvatarSuccess(res, file) {
+          console.log('success');
+          console.log('imageurl:'+this.imageUrl);
+        this.imageUrl = URL.createObjectURL(file.raw);
+      },
+      beforeAvatarUpload(file) {
+        console.log('before');
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
 
-      //   if (!isJPG) {
-      //     this.$message.error('上传头像图片只能是 JPG 格式!');
-      //   }
-      //   if (!isLt2M) {
-      //     this.$message.error('上传头像图片大小不能超过 2MB!');
-      //   }
-      //   return isJPG && isLt2M;
-      // }
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        // if (isJPG && isLt2M) //为了实时显示头像
+        // {
+        //   const that = this;
+				// 		const reader = new FileReader(); // 创建读取文件对象
+				// 		reader.readAsDataURL(el.target.files[0]); // 发起异步请求，读取文件
+				// 		reader.onload = function() { // 文件读取完成后
+				// 			// 读取完成后，将结果赋值给img的src
+				// 			that.url_upload = this.result;
+        //     }
+        // }
+        return isJPG && isLt2M;
+      }
 
     // input_init(){
     //   this.input_username = this.username;
@@ -615,6 +677,8 @@ methods:
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
     cursor: pointer;
+    width: 60px;
+    height: 60px;
     position: relative;
     overflow: hidden;
   }
@@ -624,8 +688,8 @@ methods:
   .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
-    width: 178px;
-    height: 178px;
+    width: 30px;
+    height: 30px;
     line-height: 178px;
     text-align: center;
   }
