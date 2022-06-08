@@ -11,13 +11,13 @@
         级的人才能查看本帖子
       </div>
 
-      <!-- <el-upload :on-preview="handlePreview" :limit="1" :file-list="file_list" :auto-upload="false">
+      <el-upload action="" :http-request="upload_file" :on-preview="handlePreview" :limit="1"
+        :file-list="this.file_list" :auto-upload="true">
         <el-button type="primary">点击上传</el-button>
-        <div slot="tip" class="el-upload__tip">选择附件以上传，大小不超过 20 MB</div>
-      </el-upload> -->
-      <!-- <input type="file" value="" id="file" @change="upload_file"> <br /> -->
+        <div slot="tip" class="el-upload__tip">选择附件以上传，大小求求你不要超过 20 MB</div>
+      </el-upload>
 
-      <el-button type="success" @click="publish()">发帖</el-button> <br />
+      <el-button type="success" @click="publish">发帖</el-button> <br />
 
     </div>
   </ForumBorder>
@@ -62,8 +62,6 @@
           // in_file: this.file_list[0].url,
         };
 
-        console.log(post_data);
-
         this.$axios.post('/posting/publish', qs.stringify(post_data), {
           headers: {
             username: this.$store.state.username,
@@ -85,20 +83,29 @@
 
       upload_file(e) {
         let formData = new FormData();
-        let data = JSON.stringify({
-          user: "username",
-          env: "dev"
-        });
-        formData.append('file', e.target.files[0]);
-        formData.append('data', data);   // 上传文件的同时， 也可以上传其他数据
-        let url = this.$store.state.path + "api/tools/handle_upload_file";
-        let config = {
-          headers: { 'Content-Type': 'multipart/form-data' }
-        };
-        this.$axios.post(url, formData, config).then(function (response) {
-          console.log(response.data)
+        formData.append('in_file', e.file); // in_file 改成对应的后端的名字
 
-        })
+        let my_axios = this.$axios.create({
+          withCredentials: true,
+          headers: {
+            username: this.$store.state.username,
+            token: this.$store.state.token,
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+
+        my_axios.post('/posting/uploadFile', formData)
+          .then(res => {
+            if (res.data.errno === 0) {
+              this.$message.success('成功！');
+            }
+            else {
+              this.$message.error(res.data.msg);
+            }
+          })
+          .catch(err => {
+            this.$message.error(err);
+          });
       }
     }
   }
