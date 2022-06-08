@@ -39,8 +39,10 @@
         </el-tooltip>
 
         <el-tooltip class="item" effect="light" content="资源下载" placement="bottom">
+
           <img style="width: 20px;height: 20px;position: relative; left: 14px;bottom: -2px" alt="download"
                src="../assets/download.png" @click="download">
+
         </el-tooltip>
 
         <el-tooltip class="item" effect="light" content="删除本贴" placement="bottom">
@@ -55,10 +57,13 @@
 
 <script>
 
+  import qs from "qs";
+
   export default {
     name: "PostHead",
     props:{
       posting_title:{type: String, required: true},
+      posting_id: {},
       posting_time:{},
       user_id:{},
       username:{type: String, required: true},
@@ -86,7 +91,61 @@
         this.$emit('ToComment');
       },
       download(){
-        this.$emit('Download');//下载
+        /*
+        axios({
+
+        })
+         */
+
+
+
+        console.log(this.posting_id);
+        this.$axios.post('/posting/downloadFile',
+            qs.stringify({posting_id: this.posting_id}),
+            {responseType: 'blob'}
+            ).then((res) =>{
+              console.log(res);
+              const link = document.createElement('a');
+              let blob = new Blob([res.data]);
+              link.style.display = 'none';
+              const url = window.URL || window.webkitURL || window.moxURL;
+              link.href = url.createObjectURL(blob);
+              link.setAttribute('download',this.resource);
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+              url.revokeObjectURL(link.href);
+        }).catch((err)=>{
+          this.$message.error(err);
+        })
+
+        /*
+        return new Promise((resolve,reject) => {
+          axios({
+            url: '/posting/downloadFile',// 请求地址
+            method: 'post',
+            data: {posting_id: this.posting_id},// 参数
+            headers: {
+              username: this.$store.state.username,
+              token: this.$store.state.token,
+              "content-type":"multipart/from-data",
+            },
+            responseType: 'blob'// 表明返回服务器返回的数据类型
+          }).then(res => {
+            console.log(res.data);
+
+            let blob = new Blob([res.data]);
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = this.resource;
+            link.click();
+            window.URL.revokeObjectURL(link.href);
+            resolve(res);
+          }).catch(err=>{
+            reject(err);
+          });
+        });
+         */
       },
       delPost(){
         this.$emit('DelPost');//删除帖子

@@ -1,6 +1,7 @@
 <template>
   <ForumBorder>
     <PostHead :posting_title="posting_title"
+              :posting_id="posting_id"
               :posting_time="posting_time"
               :user_id="user_id"
               :username="username"
@@ -11,7 +12,6 @@
               :authority="authority"
               :resource="resource"
               :like="like"
-              @Download="Download"
               @Like="ClickLike"
               @DelPost="DelPost"
               @ToComment="toComment"></PostHead>
@@ -99,6 +99,7 @@ export default {
             this.$message.error(err);
           });
     },
+    /*
     Download(){
       this.$axios.post('/posting/downloadFile', qs.stringify({posting_id: this.posting_id}), {
         headers: {
@@ -118,6 +119,8 @@ export default {
             this.$message.error(err);
           });
     },
+
+     */
     ClickLike(){
       let like_data = {
         judge:1,
