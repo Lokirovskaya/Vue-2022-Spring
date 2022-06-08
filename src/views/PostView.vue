@@ -20,7 +20,7 @@
       <PostReply
           :reply_id="item.reply_id"
           :username="item.username"
-          :user_level="item.user_Level"
+          :user_level="item.user_level"
           :user_photo="item.user_photo"
           :content="item.content"
           :like_count="item.like_count"
@@ -81,7 +81,7 @@ export default {
               this.posting_time = res.data.posting_time;
               this.user_id = res.data.user_id;
               this.username = res.data.username;
-              this.user_Level = res.data.user_level;
+              this.user_level = res.data.user_level;
               this.user_photo = res.data.user_photo;
               this.content = res.data.content;
               this.like_count = res.data.like_count;
@@ -100,7 +100,7 @@ export default {
           });
     },
     Download(){
-      this.$axios.post('/posting/downloadFile', qs.stringify({posting_id:this.posting_id}), {
+      this.$axios.post('/posting/downloadFile', qs.stringify({posting_id: this.posting_id}), {
         headers: {
           username: this.$store.state.username,
           token: this.$store.state.token,
