@@ -85,6 +85,14 @@ export default {
   mounted() {
     this.get_Search_Info();
   },
+  watch: {
+    $route(to, from) {
+      if (to.query.searchContent !== from.query.searchContent) {
+        this.search = to.query.searchContent;
+        this.get_Search_Info();
+      }
+    },
+  },
 }
 </script>
 
