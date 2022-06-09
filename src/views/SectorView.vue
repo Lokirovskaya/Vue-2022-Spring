@@ -28,7 +28,7 @@
 
           <el-table-column label="标题" min-width="45%">
             <template slot-scope="scope">
-              <router-link :to="{path:'post', query:{id:scope.row.posting_id}}">
+              <router-link :to="{path:'/post', query:{id:scope.row.posting_id}}">
                 <el-link id="art-title">
                   {{scope.row.posting_title}}
                 </el-link>
@@ -62,13 +62,13 @@
             </template>
           </el-table-column>
 
-          <el-table-column label="最近回复" min-width="18%">
+          <el-table-column label="最近回复" min-width="20%">
             <template slot-scope="scope">
               <div class="art-date">{{scope.row.recent_comment_time}}</div>
             </template>
           </el-table-column>
 
-          <el-table-column label="发表日期" min-width="18%">
+          <el-table-column label="发表日期" min-width="20%">
             <template slot-scope="scope">
               <div class="art-date">{{scope.row.posting_time}}</div>
             </template>
@@ -168,5 +168,13 @@
   .art-date {
     font-size: 15px;
     color: gray;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .router-link-active {
+    text-decoration: none;
   }
 </style>
