@@ -112,8 +112,8 @@
 
                     <el-table-column min-width="10%">
                     <template >
-                      <el-button round type="text" @click="DelPost(scope.row.posting_id)">
-                      <div style="width: 15px; height: 15px">删除{{scope.row.posting_id}}</div>
+                      <el-button round type="text" @click="DelPost(posting.row.posting_id)">
+                      <div style="width: 15px; height: 15px">删除</div>
                       </el-button>
                     </template>
                   </el-table-column>
@@ -229,7 +229,7 @@
     methods:
     {
       DelPost(id){
-        alert('id:'+id);
+        // alert('id:'+id);
       this.$confirm('此操作将删除该帖, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
