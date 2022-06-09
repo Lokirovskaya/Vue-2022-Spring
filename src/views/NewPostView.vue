@@ -7,22 +7,35 @@
       <el-breadcrumb-item>发新帖</el-breadcrumb-item>
     </el-breadcrumb>
     <div>
-      你正在往板块 {{sector_chinese_name[this.$route.query.name]}} 发帖<br />
-      请使用 Markdown 格式
-      <el-input v-model="input_title" placeholder="标题"></el-input>
-      <MarkdownEditor ref="MarkdownEditor"></MarkdownEditor><br />
       <div>
-        请输入阅读权限：只有高于
-        <el-input-number v-model="input_authority" :min="0" :max="10"></el-input-number>
-        级的人才能查看本帖子
+        <el-input placeholder="请输入标题" v-model="input_title" size="medium" style="font-size: 18px;">
+          <template slot="prepend">标题</template>
+        </el-input>
       </div>
 
-      <el-upload action="" :http-request="upload_file" :limit="1" :auto-upload="true">
-        <el-button type="primary">点击上传</el-button>
-        <div slot="tip" class="el-upload__tip">选择附件以上传，大小不超过 100 M</div>
-      </el-upload>
+      <MarkdownEditor ref="MarkdownEditor"></MarkdownEditor><br />
 
-      <el-button type="success" @click="publish">发帖</el-button> <br />
+      <div id="attribute">
+        <div>
+          <div>阅读权限</div>
+          <el-input-number v-model="input_authority" :min="0" :max="10" size="medium"></el-input-number>
+          <div id="note">查看本帖子的最小等级</div>
+        </div>
+
+        <div>
+          <div>上传附件</div>
+          <el-upload action="" :http-request="upload_file" :limit="1" :auto-upload="true">
+            <el-button type="primary">点击上传</el-button>
+            <div id="note">选择附件上传，大小不超过 100 MB</div>
+          </el-upload>
+        </div>
+
+        <div style="margin-left: auto; margin-top: auto; margin-bottom: auto;">
+          <el-button type="success" @click="publish">发帖</el-button>
+        </div>
+      </div>
+
+
 
     </div>
   </ForumBorder>
@@ -50,6 +63,7 @@
         file_id: -1,
       }
     },
+
     methods: {
       publish() {
         this.input_html = this.$refs.MarkdownEditor.html;
@@ -82,7 +96,6 @@
           .catch(err => {
             this.$message.error(err);
           });
-        //this.$router.push({path:'/sector',query:{name:this.$route.query.name}});
       },
 
       upload_file(e) {
@@ -115,3 +128,20 @@
     }
   }
 </script>
+
+<style scoped>
+  #attribute {
+    width: 98%;
+    display: flex;
+    padding: 15px;
+  }
+
+  #attribute>div {
+    margin: 20px;
+  }
+
+  #attribute #note {
+    font-size: 15px;
+    color: gray;
+  }
+</style>

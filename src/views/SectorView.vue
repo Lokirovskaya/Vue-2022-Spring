@@ -6,9 +6,8 @@
         <el-breadcrumb-item>{{sector_chinese_name[this.$route.query.name]}}</el-breadcrumb-item>
       </el-breadcrumb>
       <el-header id="title">
-        {{sector_chinese_name[this.$route.query.name]}}
+        -{{sector_chinese_name[this.$route.query.name]}}-
       </el-header>
-      <el-header id="intro" v-html="sector_intro"></el-header>
       <el-main>
 
         <div v-if="this.$store.getters.is_logged">
@@ -28,7 +27,7 @@
 
           <el-table-column label="标题" min-width="45%">
             <template slot-scope="scope">
-              <router-link :to="{path:'post', query:{id:scope.row.posting_id}}">
+              <router-link :to="{path:'/post', query:{id:scope.row.posting_id}}">
                 <el-link id="art-title">
                   {{scope.row.posting_title}}
                 </el-link>
@@ -62,13 +61,13 @@
             </template>
           </el-table-column>
 
-          <el-table-column label="最近回复" min-width="18%">
+          <el-table-column label="最近回复" min-width="20%">
             <template slot-scope="scope">
               <div class="art-date">{{scope.row.recent_comment_time}}</div>
             </template>
           </el-table-column>
 
-          <el-table-column label="发表日期" min-width="18%">
+          <el-table-column label="发表日期" min-width="20%">
             <template slot-scope="scope">
               <div class="art-date">{{scope.row.posting_time}}</div>
             </template>
@@ -137,15 +136,16 @@
   }
 </script>
 
-<style>
+<style scoped>
   #title {
-    font-size: 30px;
-    background-color: #f1f1f1;
+    font-size: 40px;
+    letter-spacing: 10px;
+    background-color: #F4F4F4;
     line-height: 80px;
     min-height: 80px;
-    border-radius: 10px;
     text-align: center;
     margin-bottom: 20px;
+    font-weight: bolder;
   }
 
   #intro {
@@ -168,5 +168,13 @@
   .art-date {
     font-size: 15px;
     color: gray;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .router-link-active {
+    text-decoration: none;
   }
 </style>

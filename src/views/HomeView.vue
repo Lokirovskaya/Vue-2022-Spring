@@ -1,63 +1,76 @@
 <template>
 
-  <body>
-    <div id="title">BUAA<br />学习生活论坛</div>
+  <div id="body">
+    <div id="title">学习生活交流论坛</div>
     <div id="inner-body">
       <div style="width: 95%;">
         <el-container>
           <el-header></el-header>
           <el-container>
-            <el-header>
-              <h2>当前热帖</h2>
-            </el-header>
-            <el-main>
-              <el-table :data="posting_data.slice(0,5)" stripe>
 
-                <el-table-column label="标题" min-width="45%">
-                  <template slot-scope="scope">
-                    <router-link :to="{path:'post', query:{id:scope.row.posting_id}}">
-                      <el-link class="art-title">
-                        {{scope.row.posting_title}}
-                      </el-link>
-                    </router-link>
-                  </template>
-                </el-table-column>
+            <el-container>
+              <el-header>
+                <h2>当前热帖</h2>
+              </el-header>
+              <el-card shadow="hover">
+                <el-table :data="hot_posting_data" stripe>
+                  <el-table-column>
+                    <template slot-scope="scope">
+                      <div style="margin: 5px">
+                        <router-link :to="{path:'/post', query:{id:scope.row.posting_id}}">
+                          <el-link class="art-title">{{scope.row.posting_title}}</el-link>
+                        </router-link>
+                      </div>
+                      <div style="margin: 5px">
+                        <span style="margin-left: 5px; margin-right: 20px;">
+                          <router-link :to="{path:'/personcenter', query:{user:scope.row.username}}">
+                            <el-link class="art-author">{{scope.row.username}}</el-link>
+                          </router-link>
+                        </span>
+                        <div class="el-icon-view" style="font-size: 15px;"></div>
+                        <span style="margin-left: 5px; margin-right: 20px;">{{scope.row.click_count}}</span>
+                        <img src="../assets/el-icon-like.png" style="width: 15px; height: 15px" />
+                        <span style="margin-left: 5px; margin-right: 20px;">{{scope.row.like_count}}</span>
+                        <img src="../assets/comment.png" style="width: 15px; height: 15px" />
+                        <span style="margin-left: 5px; margin-right: 20px;">{{scope.row.comment_count}}</span>
+                      </div>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-card>
+            </el-container>
 
-                <el-table-column min-width="8%">
-                  <template slot-scope="scope">
-                    <div class="el-icon-view" style="width: 15px; height: 15px"></div>
-                    {{scope.row.click_count}}
-                  </template>
-                </el-table-column>
-
-                <el-table-column min-width="8%">
-                  <template slot-scope="scope">
-                    <img src="../assets/el-icon-like.png" style="width: 15px; height: 15px" />
-                    {{scope.row.like_count}}
-                  </template>
-                </el-table-column>
-
-                <el-table-column min-width="8%">
-                  <template slot-scope="scope">
-                    <img src="../assets/comment.png" style="width: 15px; height: 15px" />
-                    {{scope.row.comment_count}}
-                  </template>
-                </el-table-column>
-
-                <el-table-column label="作者" min-width="15%">
-                  <template slot-scope="scope">
-                    <div class="art-author">{{scope.row.username}}</div>
-                  </template>
-                </el-table-column>
-
-                <el-table-column label="最新回复时间" min-width="15%">
-                  <template slot-scope="scope">
-                    <div class="art-date">{{scope.row.recent_comment_time}}</div>
-                  </template>
-                </el-table-column>
-
-              </el-table>
-            </el-main>
+            <el-container>
+              <el-header>
+                <h2>最新帖子</h2>
+              </el-header>
+              <el-card shadow="hover">
+                <el-table :data="recent_posting_data" stripe>
+                  <el-table-column>
+                    <template slot-scope="scope">
+                      <div style="margin: 5px">
+                        <router-link :to="{path:'/post', query:{id:scope.row.posting_id}}">
+                          <el-link class="art-title">{{scope.row.posting_title}}</el-link>
+                        </router-link>
+                      </div>
+                      <div style="margin: 5px">
+                        <span style="margin-left: 5px; margin-right: 20px;">
+                          <router-link :to="{path:'/personcenter', query:{user:scope.row.username}}">
+                            <el-link class="art-author">{{scope.row.username}}</el-link>
+                          </router-link>
+                        </span>
+                        <div class="el-icon-view" style="font-size: 15px;"></div>
+                        <span style="margin-left: 5px; margin-right: 20px;">{{scope.row.click_count}}</span>
+                        <img src="../assets/el-icon-like.png" style="width: 15px; height: 15px" />
+                        <span style="margin-left: 5px; margin-right: 20px;">{{scope.row.like_count}}</span>
+                        <img src="../assets/comment.png" style="width: 15px; height: 15px" />
+                        <span style="margin-left: 5px; margin-right: 20px;">{{scope.row.comment_count}}</span>
+                      </div>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-card>
+            </el-container>
           </el-container>
 
           <el-container>
@@ -65,36 +78,47 @@
               <h2>访问板块</h2>
             </el-header>
             <el-main style="display: flex; align-items: flex-start; flex-direction: column;">
-              <el-card v-for="item in this.sector_data" :key="item.name" shadow="hover"
-                @click.native="goto_sector(item.name)" style="width: 99%; margin-bottom: 20px;">
-                <div style="display: flex; align-items: flex-start; flex-direction: row;">
-                  <div style="width: 5%;"></div>
-                  <div style="width: 30%; display: flex; align-items: flex-start; flex-direction: column;">
-                    <div :class="item.icon + '  sector-icon'" @click="goto_sector(discussion)"></div>
-                    <div class="sector-name">{{item.chinese_name}}</div>
-                    <div class="sector-intro">{{item.intro}}</div>
-                  </div>
-                  <div style="display: flex; align-items: flex-start; flex-direction: column;">
-                    <div style="margin: 8px">最新发表：</div>
-                    <div class="art-title" style="margin: 5px">{{item.post_title}}</div>
-                    <div style="margin: 5px">
-                      <span class="art-author" style="margin-left: 5px; margin-right: 20px;">{{item.author}}</span>
-                      <div class="el-icon-view" style="font-size: 15px;"></div>
-                      <span style="margin-left: 5px; margin-right: 20px;">{{item.click_count}}</span>
-                      <img src="../assets/el-icon-like.png" style="width: 15px; height: 15px" />
-                      <span style="margin-left: 5px; margin-right: 20px;">{{item.like_count}}</span>
-                      <img src="../assets/comment.png" style="width: 15px; height: 15px" />
-                      <span style="margin-left: 5px; margin-right: 20px;">{{item.comment_count}}</span>
+              <div v-for="item in this.sector_data" :key="item.name" style="width: 99%; margin-bottom: 20px;">
+                <router-link :to="{ path:'/sector', query:{name:item.name}}">
+                  <el-card shadow="hover">
+                    <div style="display: flex; align-items: flex-start; flex-direction: row;">
+                      <div style="width: 5%;"></div>
+                      <div style="width: 30%; display: flex; align-items: flex-start; flex-direction: column;">
+                        <div :class="item.icon + '  sector-icon'" @click="goto_sector(discussion)"></div>
+                        <div class="sector-name">{{item.chinese_name}}</div>
+                        <div class="sector-intro">{{item.intro}}</div>
+                      </div>
+                      <div style="display: flex; align-items: flex-start; flex-direction: column;">
+                        <div style="margin: 8px">最新发表：</div>
+                        <div style="margin: 5px">
+                          <router-link :to="{path:'/post', query:{id:item.posting_id}}">
+                            <el-link class="art-title">{{item.post_title}}</el-link>
+                          </router-link>
+                        </div>
+                        <div style="margin: 5px">
+                          <span style="margin-left: 5px; margin-right: 20px;">
+                            <router-link :to="{path:'/personcenter', query:{user:item.author}}">
+                              <el-link class="art-author">{{item.author}}</el-link>
+                            </router-link>
+                          </span>
+                          <div class="el-icon-view" style="font-size: 15px;"></div>
+                          <span style="margin-left: 5px; margin-right: 20px;">{{item.click_count}}</span>
+                          <img src="../assets/el-icon-like.png" style="width: 15px; height: 15px" />
+                          <span style="margin-left: 5px; margin-right: 20px;">{{item.like_count}}</span>
+                          <img src="../assets/comment.png" style="width: 15px; height: 15px" />
+                          <span style="margin-left: 5px; margin-right: 20px;">{{item.comment_count}}</span>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </el-card>
+                  </el-card>
+                </router-link>
+              </div>
             </el-main>
           </el-container>
         </el-container>
       </div>
     </div>
-  </body>
+  </div>
 </template>
 
 <script>
@@ -104,69 +128,70 @@
     data() {
       return {
         search: "",
-        posting_data: [],
-        sector_data: [
-          {
+        hot_posting_data: [],
+        recent_posting_data: [],
+        sector_data: {
+          discussion: {
             name: 'discussion',
             chinese_name: '讨论区',
             icon: 'el-icon-position',
             intro: '自由讨论',
-            post_title: '哈哈',
+            post_title: '',
             post_id: 0,
-            author: 'lokii',
+            author: '',
             click_count: 0,
             like_count: 0,
             comment_count: 0,
           },
-          {
+          recommendation: {
             name: 'recommendation',
             chinese_name: '课程推荐',
             icon: 'el-icon-collection',
             intro: '自由讨论',
-            post_title: '哈哈',
+            post_title: '',
             post_id: 0,
-            author: 'lokii',
+            author: '',
             click_count: 0,
             like_count: 0,
             comment_count: 0,
           },
-          {
+          exercise: {
             name: 'exercise',
             chinese_name: '刷题板块',
             icon: 'el-icon-medal',
             intro: '自由讨论',
-            post_title: '哈哈',
+            post_title: '',
             post_id: 0,
-            author: 'lokii',
+            author: '',
             click_count: 0,
             like_count: 0,
             comment_count: 0,
           },
-          {
+          campus: {
             name: 'campus',
             chinese_name: '校园周边',
             icon: 'el-icon-present',
             intro: '自由讨论',
-            post_title: '哈哈',
+            post_title: '',
             post_id: 0,
-            author: 'lokii',
+            author: '',
             click_count: 0,
             like_count: 0,
             comment_count: 0,
           },
-          {
+          resource: {
             name: 'resource',
             chinese_name: '资源共享',
             icon: 'el-icon-download',
             intro: '自由讨论',
-            post_title: '哈哈',
+            post_title: '',
             post_id: 0,
-            author: 'lokii',
+            author: '',
             click_count: 0,
             like_count: 0,
             comment_count: 0,
           },
-        ]
+        },
       }
     },
     methods: {
@@ -200,10 +225,17 @@
         this.$axios.post('/posting/getHomepagePostingList', qs.stringify({}))
           .then(res => {
             if (res.data.errno === 0) {
-              this.posting_data = res.data.data;
+              this.hot_posting_data = res.data.data1.slice(0, 5);
+              this.recent_posting_data = res.data.data2.slice(0, 5);
+              if (res.data.discussion[0]) this.set_sector_info('discussion', res.data.discussion[1]);
+              if (res.data.recommendation[0]) this.set_sector_info('recommendation', res.data.recommendation[1]);
+              if (res.data.exercise[0]) this.set_sector_info('exercise', res.data.exercise[1]);
+              if (res.data.campus[0]) this.set_sector_info('campus', res.data.campus[1]);
+              if (res.data.resource[0]) this.set_sector_info('discussion', res.data.resource[1]);
             }
             else {
-              this.posting_data = [];
+              this.hot_posting_data = [];
+              this.recent_posting_data = [];
               this.$message.error(res.data.msg);
             }
           })
@@ -211,23 +243,37 @@
             this.$message.error(err);
           });
       },
-      toPage() {
-        document.getElementById("Picture").setActiveItem(2);
-      },
+
+      set_sector_info(sector_name, data) {
+        this.sector_data[sector_name].post_id = data.posting_id;
+        this.sector_data[sector_name].post_title = data.posting_title;
+        this.sector_data[sector_name].author = data.username;
+        this.sector_data[sector_name].click_count = data.click_count;
+        this.sector_data[sector_name].like_count = data.like_count;
+        this.sector_data[sector_name].comment_count = data.comment_count;
+      }
     },
     mounted() {
       this.get_HomePage_info();
-    }
+    },
+    watch: {
+      // eslint-disable-next-line no-unused-vars
+      '$route'(to, from) {
+        this.$router.go(0);
+      }
+    },
   }
   //#535660
 </script>
 
 <style scoped>
+  @keyframes Atitle {
+    from {}
+  }
 
-
-  body {
+  #body {
     width: 100%;
-    background: url(https://s2.loli.net/2022/06/07/gyBqZaJc4tpTrfh.jpg) #061832 no-repeat;
+    background: url(../assets/bg.jpg) #061832 no-repeat;
     background-size: contain;
     display: flex;
     justify-content: center;
@@ -237,7 +283,7 @@
 
   #title {
     width: 100%;
-    height: 500px;
+    height: 600px;
     font-size: 72px;
     color: #F4F4F4;
     font-weight: bolder;
@@ -312,5 +358,13 @@
   .row-bg {
     padding: 10px 0;
     background-color: #f9fafc;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .router-link-active {
+    text-decoration: none;
   }
 </style>

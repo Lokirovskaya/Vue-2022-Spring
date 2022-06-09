@@ -1,5 +1,10 @@
 <template>
   <ForumBorder>
+    <el-breadcrumb separator-class="el-icon-arrow-right" style="margin: 20px; font-size: 15px;">
+      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{path:'/sector', query:{name:this.sector_name}}">{{sector_chinese_name[sector_name]}}</el-breadcrumb-item>
+      <el-breadcrumb-item>{{this.posting_title}}</el-breadcrumb-item>
+    </el-breadcrumb>
     <PostHead :posting_title="posting_title"
               :posting_id="posting_id"
               :posting_time="posting_time"
@@ -71,7 +76,15 @@ export default {
         cur_replys:[],
         cur_page: undefined,
         input_html:'',
-        autofocus: false
+        autofocus: false,
+        sector_name: '',
+        sector_chinese_name: {
+          'discussion': '讨论区',
+          'recommendation': '课程推荐',
+          'exercise': '刷题板块',
+          'campus': '校园周边',
+          'resource': '资源共享',
+      },
     }
   },
   methods:{
@@ -98,6 +111,8 @@ export default {
               this.like = res.data.like;
               this.replys = res.data.replys;
               this.cur_replys = this.replys.slice((this.cur_page-1)*20,this.cur_page*20);
+              this.sector_name = res.data.sector_name;
+
             }
             else {
               this.$message.error(res.data.msg);
@@ -245,6 +260,9 @@ export default {
             this.like = res.data.like;
             this.replys = res.data.replys;
             this.created();
+            this.sector_name = res.data.sector_name;
+            console.log(res);
+
           }
           else {
             this.$message.error(res.data.msg);
