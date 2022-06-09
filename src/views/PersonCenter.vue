@@ -97,8 +97,8 @@
               <el-collapse-item title="我的帖子" name="1">
 
                 <el-table :data="posting_data" stripe="true" align="left">
-                  <el-table-column label="标题" min-width="70%">
 
+                  <el-table-column label="标题" min-width="70%">
                     <template slot-scope="scope">
                       <router-link style="color:black" :to="{path:'/post', query:{id:scope.row.posting_id}}">
                         <div class="art-title">
@@ -106,13 +106,23 @@
                         </div>
                       </router-link>
                     </template>
+                  </el-table-column>
 
+                  <!-- <el-button>123</el-button> -->
+
+                    <el-table-column min-width="10%">
+                    <template >
+                      <el-button round type="text" @click="DelPost(scope.row.posting_id)">
+                      <div style="width: 15px; height: 15px">删除{{scope.row.posting_id}}</div>
+                      </el-button>
+                    </template>
                   </el-table-column>
 
                   <el-table-column min-width="8%">
                     <template slot-scope="scope">
                       <div class="el-icon-view" style="width: 15px; height: 15px"></div>
                       {{scope.row.click_count}}
+
                     </template>
                   </el-table-column>
 
@@ -142,6 +152,7 @@
                     </template>
                   </el-table-column>
                 </el-table>
+                <!-- <el-button>a</el-button> -->
               </el-collapse-item>
 
               <el-collapse-item title="近期评论" name="3">
@@ -217,6 +228,38 @@
     },
     methods:
     {
+      DelPost(id){
+        alert('id:'+id);
+      this.$confirm('此操作将删除该帖, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+
+        this.$axios.post('/user/delete_posting', qs.stringify({posting_id:id}), {
+          headers: {
+            username: this.$store.state.username,
+            token: this.$store.state.token,
+          }
+        })
+            .then(res => {
+              if (res.data.errno === 0) {
+                this.$message.success(res.data.msg);
+              }
+              else {
+                this.$message.error(res.data.msg);
+              }
+            })
+            .catch(err => {
+              this.$message.error(err);
+            });
+
+        // this.$router.replace('/');
+      }).catch(() => {
+
+      });
+    },
+
       go_back() {
         this.modify_state = 0;
       },
