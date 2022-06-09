@@ -14,21 +14,20 @@
         <div v-if="this.modify_state == 0">
           <br />
           <el-descriptions title="用户信息" :column="3" :size="size" border style="position: relative;">
+            
             <template slot="extra">
-
-
               <div v-if="is_visit_self === 0">
                 <el-button style="position:relative;left:-10px;" size="small" @click="                
                     modify_state = 1;
-                    input_username = username;             
+                    input_username = username;
                     input_password = '';
                     input_password2 = '';
                     ">
                   修改信息
                 </el-button>
               </div>
-
             </template>
+
             <el-descriptions-item label="用户名">{{username}}</el-descriptions-item>
             <el-descriptions-item label="等级">lv{{level}}</el-descriptions-item>
             <el-descriptions-item label="经验值">{{exp_now}}</el-descriptions-item>
@@ -41,9 +40,9 @@
           <el-descriptions title="用户头像" :column="3" :size="size" border style="position: relative;">
 
 <el-upload
-  style="position: relative; left:-960px; top:20px"
+  style="position: relative; left:100%; top:20px"
   class="avatar-uploader" action="" :http-request="upload_file" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload" :limit="1" :auto-upload="true">
-  <div style="position: relative;left:left:-1600%;">
+  <div style="position: relative;left:200%">
   <img v-if="url_upload" :src="'http://43.138.55.69'+url_upload" class="avatar">
   <img v_else :src="'http://43.138.55.69'+url_now" class="avatar">
   </div>
@@ -225,6 +224,7 @@ export default {
         url_now: undefined,
         posting_data: [],
         reply_data: [],
+
       }
     },
     methods:
@@ -472,7 +472,7 @@ export default {
   }
 
   .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
+    border: 1px solid #d9d9d9;
     border-radius: 6px;
     cursor: pointer;
     width: 60px;
