@@ -24,7 +24,7 @@
 
         <div>
           <div>上传附件</div>
-          <el-upload action="" :http-request="upload_file" :limit="1" :auto-upload="true">
+          <el-upload action="" :http-request="upload_file" :limit="1" :auto-upload="true" :before-remove="file_remove">
             <el-button type="primary">点击上传</el-button>
             <div id="note">选择附件上传，大小不超过 100 MB</div>
           </el-upload>
@@ -57,6 +57,7 @@
         input_title: '',
         input_html: '',
         input_authority: 0,
+        input_has_file: false,
         file_id: -1,
       }
     },
@@ -74,6 +75,7 @@
           time: now,
           authority: this.input_authority,
           file_id: this.file_id,
+          has_file: this.input_has_file,
         };
 
         this.$axios.post('/posting/publish', qs.stringify(post_data), {
@@ -85,7 +87,6 @@
           .then(res => {
             if (res.data.errno === 0) {
               console.log(res.data);
-              this.$message.success('发帖成功！');
               setTimeout(() => {
                 this.$router.push({ path: '/sector', query: { name: this.$route.query.name } });
               }, 1000);
@@ -117,6 +118,7 @@
             if (res.data.errno === 0) {
               this.$message.success('附件上传成功！');
               this.file_id = res.data.file_id;
+              this.has_file = true;
             }
             else {
               this.$message.error(res.data.msg);
@@ -125,6 +127,10 @@
           .catch(err => {
             this.$message.error(err);
           });
+      },
+
+      file_remove() {
+        this.has_file = false;
       }
     }
   }

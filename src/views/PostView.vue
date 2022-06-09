@@ -64,11 +64,11 @@ export default {
         posting_time: '', // 发布时间
         user_id: undefined, // 发布用户ID
         username: '', // 用户名
-        user_level: undefined,  //用户等级,从全局变量找
+        user_level: 0,  //用户等级,从全局变量找
         user_photo: '',
         content:'', // 帖子正文内容
         like_count: undefined, // 帖子点赞数
-        authority: undefined, // 帖子权限
+        authority: 0, // 帖子权限
         resource: '', // 帖子资源名称
         reply_count: undefined, // 总楼层数
         like: undefined, // 用户是否给该帖子点赞（布尔型）
@@ -97,21 +97,27 @@ export default {
       })
           .then(res => {
             if (res.data.errno === 0) {
+              this.user_level = res.data.user_level;
+              this.sector_name = res.data.sector_name;
+              this.authority = res.data.authority;
+
+              if (this.user_level < this.authority) {
+                this.$message.error('阅读权限不足！当前帖子要求权限 ' + this.authority);
+                this.$router.push({ path: '/sector', query: { name: this.sector_name } });
+              }
+
               this.posting_title = res.data.posting_title;
               this.posting_time = res.data.posting_time;
               this.user_id = res.data.user_id;
               this.username = res.data.username;
-              this.user_level = res.data.user_level;
               this.user_photo = res.data.user_photo;
               this.content = res.data.content;
-              this.like_count = res.data.like_count;
-              this.authority = res.data.authority;
+              this.like_count = res.data.like_count;        
               this.resource = res.data.resource;
               this.reply_count = res.data.reply_count;
               this.like = res.data.like;
               this.replys = res.data.replys;
               this.cur_replys = this.replys.slice((this.cur_page-1)*20,this.cur_page*20);
-              this.sector_name = res.data.sector_name;
 
             }
             else {
@@ -246,23 +252,28 @@ export default {
     })
         .then(res => {
           if (res.data.errno === 0) {
+            this.authority = res.data.authority;
+            this.user_level = res.data.user_level;
+            this.sector_name = res.data.sector_name;
+
+            if (this.user_level < this.authority) {
+              this.$message.error('阅读权限不足！当前帖子要求权限 ' + this.authority);
+              this.$router.push({ path: '/sector', query: { name: this.sector_name } });
+            }
+
             this.posting_title = res.data.posting_title;
             this.posting_time = res.data.posting_time;
             this.user_id = res.data.user_id;
             this.username = res.data.username;
-            this.user_level = res.data.user_level;
             this.user_photo = res.data.user_photo;
             this.content = res.data.content;
             this.like_count = res.data.like_count;
-            this.authority = res.data.authority;
             this.resource = res.data.resource;
             this.reply_count = res.data.reply_count;
             this.like = res.data.like;
             this.replys = res.data.replys;
             this.created();
-            this.sector_name = res.data.sector_name;
             console.log(res);
-
           }
           else {
             this.$message.error(res.data.msg);

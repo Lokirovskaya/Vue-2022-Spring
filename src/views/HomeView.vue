@@ -95,7 +95,7 @@
                       <div style="display: flex; align-items: flex-start; flex-direction: column;">
                         <div style="margin: 5px; color: gray;">最新发表：</div>
                         <div style="margin: 5px">
-                          <router-link :to="{path:'/post', query:{id:item.posting_id}}">
+                          <router-link :to="{path:'/post', query:{id:item.post_id}}">
                             <el-link class="art-title">{{item.post_title}}</el-link>
                           </router-link>
                         </div>
