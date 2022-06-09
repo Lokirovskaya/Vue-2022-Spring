@@ -4,7 +4,7 @@
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>用户中心</el-breadcrumb-item>
     </el-breadcrumb>
-    <div>
+
       <div v-if="this.$store.state.login_state == 0" class="login">
         <h1>请登录</h1>
 
