@@ -11,6 +11,7 @@ export default new Vuex.Store({
     login_state: 0,
     userid: 0,
     username: '',
+    user_photo: '',
     token: '',
   },
   getters: {
@@ -29,6 +30,7 @@ export default new Vuex.Store({
     set_userstate_to_banned(state) { state.login_state = 3; },
     set_userid(state, userid) { state.userid = userid; },
     set_username(state, username) { state.username = username; },
+    set_userphoto(state, userphoto) { state.user_photo = userphoto; },
     set_token(state, token) { state.token = token; },
   },
   actions: {
