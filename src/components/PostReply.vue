@@ -36,7 +36,7 @@
           <img style="width: 20px;height: 20px;position: relative; left: 7px;bottom: -3px" alt="comment" src="../assets/comment.png"
                @click="see_Comment">
         </el-tooltip>
-        <span style="position: relative;bottom: 2px">&nbsp;&nbsp;&nbsp;评论数({{reply_count}})</span>
+        <span style="position: relative;bottom: 2px">&nbsp;&nbsp;&nbsp;评论数({{reply_count1}})</span>
 
         <el-tooltip class="item" effect="light" content="删除本回复" placement="bottom">
           <img style="width: 20px;height: 20px;position: relative;right: -4px ;bottom: -3px" alt="delete"
@@ -47,7 +47,7 @@
       <transition>
         <el-collapse-transition>   <!--折叠动画效果-->
           <div v-show="SEE" >
-            <Reply_reply v-for="item in replys"
+            <Reply_reply v-for="item in cur_replys"
                          :reply_id="item.reply_id"
                          :key="item.reply_id"
                          :username="item.username"
@@ -60,7 +60,15 @@
                          :like="item.like"
                          :reply_to="item.reply_to"
                          @Comment="Comment"></Reply_reply>
-            <div style="background-color: white ;">
+            <div style="background-color: #F6F6F6 ;">
+              <el-pagination layout="prev, pager, next, jumper"
+                             :total="reply_count1"
+                             :page-size="5"
+                             @current-change="handleCurrentChange"
+                             style="margin-top: 10px"
+                             v-show="reply_count1 !== 0">
+              </el-pagination>
+              <div style="margin-left: 80px;margin-right: 80px">
               <el-input
                   ref="COMMENT"
                   type="textarea"
@@ -75,6 +83,8 @@
               <div style=" text-align: right ;margin-top: 10px">
                 <el-button size="mini" @click="f_Comment" style="position: relative;bottom: 5px;left: -5px">发表</el-button>
               </div>
+              </div>
+
             </div>
           </div>
         </el-collapse-transition>
@@ -106,7 +116,11 @@ export default {
       textarea:'', //楼中楼输入框的内容
       judge: 2,
       reply_name: '', //被回复人的名字
-      reply_id1: undefined //回复楼中楼的ID, 用于回复楼中楼
+      reply_id1: undefined, //回复楼中楼的ID, 用于回复楼中楼
+      replys1: this.replys,
+      cur_replys: [],
+      reply_count1: this.reply_count,
+      isFirst: true,
     }
   },
 
@@ -163,12 +177,18 @@ export default {
 
     see_Comment(){
         this.SEE = (this.SEE ===true)?false:true;
+        if(this.isFirst)
+        {
+          this.isFirst = false;
+          this.created();
+        }
     },
 
     f_Comment(){//回复
       let name = this.textarea.split(':')[0];
       let content = undefined;
       let post_data = undefined;
+      let reply = undefined;
       let date = new Date();
       let now = date.toLocaleString();
       if(name === this.reply_name)//楼中楼回复喵
@@ -189,6 +209,17 @@ export default {
           content: content,
           time: now,
         };
+        reply = {
+          reply_id: 1,
+          username: this.$store.state.username,
+          content: content,
+          user_level: 0,
+          like_count: 0,
+          user_photo: this.$store.state.user_photo,
+          like:false,
+          time: now,
+          judge: 2,
+        };
       }else if(this.judge === 3){
         post_data = {
           judge: this.judge,
@@ -197,6 +228,18 @@ export default {
           reply_id1:this.reply_id1,
           content: content,
           time: now,
+        };
+        reply = {
+          reply_id: 1,
+          username: this.$store.state.username,
+          content: content,
+          user_level: 0,
+          like_count: 0,
+          user_photo: this.$store.state.user_photo,
+          like:false,
+          time: now,
+          judge: 3,
+          reply_to: this.reply_name,
         };
       }
 
@@ -208,8 +251,14 @@ export default {
       })
           .then(res => {
             if (res.data.errno === 0) {
-              this.$emit('ToNew');
+              this.replys1.push(reply);
+              if( this.cur_replys.length < 5 )
+              {
+                  this.cur_replys.push(reply);
+              }
               this.textarea = '';
+              this.reply_count1++;
+              this.$message.success("回复成功!");
             }
             else {
               this.$message.error(res.data.msg);
@@ -252,6 +301,13 @@ export default {
       }).catch(() => {
 
       });
+    },
+    handleCurrentChange(currentindex){
+      this.cur_page = currentindex;
+      this.cur_replys = this.replys1.slice((currentindex-1)*5,currentindex*5);
+    },
+    created(){
+      this.cur_replys = this.replys.slice(0,5);
     },
   }
 }
