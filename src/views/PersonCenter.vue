@@ -41,13 +41,14 @@
           <el-descriptions title="用户头像" :column="3" :size="size" border style="position: relative;">
 
 <el-upload
-  style="position: relative; left:-1600%; top:20px"
+  style="position: relative; left:-960px; top:20px"
   class="avatar-uploader" action="" :http-request="upload_file" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload" :limit="1" :auto-upload="true">
   <div style="position: relative;left:left:-1600%;">
   <img v-if="url_upload" :src="'http://43.138.55.69'+url_upload" class="avatar">
   <img v_else :src="'http://43.138.55.69'+url_now" class="avatar">
   </div>
 </el-upload>
+
       <el-button size="small" style="position: relative;left:-20px;top:-28px;"
       @click="goto_modify">
       提交
@@ -180,26 +181,6 @@ export default {
 
 data(){
     return{
-        articles1: [
-          {
-            id: 1,
-            title: '本来不存希望，',
-            author: '讨论区',
-            date: '2002-02-12',
-          },
-          {
-            id: 2,
-            title: 'test',
-            author: '课程推荐',
-            date: '2002-02-12',
-          },
-          {
-            id: 2,
-            title: 'test',
-            author: '刷题板块',
-            date: '2002-02-12',
-          },
-        ],
         modify_state:0,
         username:this.$store.state.username,
         exp_now: undefined, //当前经验值
