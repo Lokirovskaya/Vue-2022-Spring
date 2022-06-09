@@ -106,6 +106,7 @@ export default {
               if (this.user_level < this.authority) {
                 this.$message.error('阅读权限不足！当前帖子要求权限 ' + this.authority);
                 this.$router.push({ path: '/sector', query: { name: this.sector_name } });
+                return;
               }
 
               //this.posting_title = res.data.posting_title;
@@ -263,6 +264,7 @@ export default {
             if (this.user_level < this.authority) {
               this.$message.error('阅读权限不足！当前帖子要求权限 ' + this.authority);
               this.$router.push({ path: '/sector', query: { name: this.sector_name } });
+              return;
             }
 
             this.posting_title = res.data.posting_title;
