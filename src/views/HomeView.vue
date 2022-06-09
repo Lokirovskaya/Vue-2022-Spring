@@ -1,7 +1,7 @@
 <template>
 
   <div id="body">
-    <div id="title">BUAA<br />学习生活论坛</div>
+    <div id="title">学习生活交流论坛</div>
     <div id="inner-body">
       <div style="width: 95%;">
         <el-container>
