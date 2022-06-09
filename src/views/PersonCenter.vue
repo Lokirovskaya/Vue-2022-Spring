@@ -41,9 +41,9 @@
         <template slot="extra">
 
 <el-upload
-  style="position: relative; left:-970px; top:20px"
+  style="position: relative; left:-1600%; top:20px"
   class="avatar-uploader" action="" :http-request="upload_file" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload" :limit="1" :auto-upload="true">
-  <div style="position: relative;left:0px">
+  <div style="position: relative;left:left:-1600%;">
   <img v-if="url_upload" :src="'http://43.138.55.69'+url_upload" class="avatar">
   <img v_else :src="'http://43.138.55.69'+url_now" class="avatar">
   </div>
