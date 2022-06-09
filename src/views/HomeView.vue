@@ -130,68 +130,68 @@
         search: "",
         hot_posting_data: [],
         recent_posting_data: [],
-        sector_data: [
-          {
+        sector_data: {
+          discussion: {
             name: 'discussion',
             chinese_name: '讨论区',
             icon: 'el-icon-position',
             intro: '自由讨论',
-            post_title: '哈哈',
+            post_title: '',
             post_id: 0,
-            author: 'lokii',
+            author: '',
             click_count: 0,
             like_count: 0,
             comment_count: 0,
           },
-          {
+          recommendation: {
             name: 'recommendation',
             chinese_name: '课程推荐',
             icon: 'el-icon-collection',
             intro: '自由讨论',
-            post_title: '哈哈',
+            post_title: '',
             post_id: 0,
-            author: 'lokii',
+            author: '',
             click_count: 0,
             like_count: 0,
             comment_count: 0,
           },
-          {
+          exercise: {
             name: 'exercise',
             chinese_name: '刷题板块',
             icon: 'el-icon-medal',
             intro: '自由讨论',
-            post_title: '哈哈',
+            post_title: '',
             post_id: 0,
-            author: 'lokii',
+            author: '',
             click_count: 0,
             like_count: 0,
             comment_count: 0,
           },
-          {
+          campus: {
             name: 'campus',
             chinese_name: '校园周边',
             icon: 'el-icon-present',
             intro: '自由讨论',
-            post_title: '哈哈',
+            post_title: '',
             post_id: 0,
-            author: 'lokii',
+            author: '',
             click_count: 0,
             like_count: 0,
             comment_count: 0,
           },
-          {
+          resource: {
             name: 'resource',
             chinese_name: '资源共享',
             icon: 'el-icon-download',
             intro: '自由讨论',
-            post_title: '哈哈',
+            post_title: '',
             post_id: 0,
-            author: 'lokii',
+            author: '',
             click_count: 0,
             like_count: 0,
             comment_count: 0,
           },
-        ]
+        },
       }
     },
     methods: {
@@ -227,6 +227,11 @@
             if (res.data.errno === 0) {
               this.hot_posting_data = res.data.data1.slice(0, 5);
               this.recent_posting_data = res.data.data2.slice(0, 5);
+              if (res.data.discussion[0]) this.set_sector_info('discussion', res.data.discussion[1]);
+              if (res.data.recommendation[0]) this.set_sector_info('recommendation', res.data.recommendation[1]);
+              if (res.data.exercise[0]) this.set_sector_info('exercise', res.data.exercise[1]);
+              if (res.data.campus[0]) this.set_sector_info('campus', res.data.campus[1]);
+              if (res.data.resource[0]) this.set_sector_info('discussion', res.data.resource[1]);
             }
             else {
               this.hot_posting_data = [];
@@ -238,6 +243,15 @@
             this.$message.error(err);
           });
       },
+
+      set_sector_info(sector_name, data) {
+        this.sector_data[sector_name].post_id = data.posting_id;
+        this.sector_data[sector_name].post_title = data.posting_title;
+        this.sector_data[sector_name].author = data.username;
+        this.sector_data[sector_name].click_count = data.click_count;
+        this.sector_data[sector_name].like_count = data.like_count;
+        this.sector_data[sector_name].comment_count = data.comment_count;
+      }
     },
     mounted() {
       this.get_HomePage_info();
