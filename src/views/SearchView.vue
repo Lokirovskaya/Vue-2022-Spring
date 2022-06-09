@@ -10,18 +10,25 @@
 
       <el-table-column label="标题" min-width="45%">
         <template slot-scope="scope">
-          <router-link :to="{path:'post', query:{id:scope.row.posting_id}}">
-            <el-link id="art-title">
+
+          <router-link :to="{path:'/post', query:{id:scope.row.posting_id}}">
+            <el-link class="art-title">
               {{scope.row.posting_title}}
             </el-link>
           </router-link>
-          <div id="art-summary">{{scope.row.username}}</div>
+          <span v-if="scope.row.has_file" class="art-attribute"> [资源帖]</span>
+          <span v-if="scope.row.authority>0" class="art-attribute"> [阅读权限 {{scope.row.authority}}]</span>
+          <router-link :to="{path:'/personcenter', query:{user:scope.row.username}}">
+            <div id="art-author">
+              <el-link>{{scope.row.username}}</el-link>
+            </div>
+          </router-link>
         </template>
       </el-table-column>
 
       <el-table-column min-width="8%">
         <template slot-scope="scope">
-          <div class="el-icon-view" style="font-size: 15px;"></div>
+          <div class="el-icon-view" style="width: 15px; height: 15px"></div>
           {{scope.row.click_count}}
         </template>
       </el-table-column>
@@ -40,15 +47,15 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="最近回复" min-width="18%">
+      <el-table-column label="最近回复" min-width="20%">
         <template slot-scope="scope">
-          <div id="art-author"><u>{{scope.row.recent_comment_time}}</u></div>
+          <div class="art-date">{{scope.row.recent_comment_time}}</div>
         </template>
       </el-table-column>
 
-      <el-table-column label="发表日期" min-width="18%">
+      <el-table-column label="发表日期" min-width="20%">
         <template slot-scope="scope">
-          <div id="art-date">{{scope.row.posting_time}}</div>
+          <div class="art-date">{{scope.row.posting_time}}</div>
         </template>
       </el-table-column>
 
@@ -65,6 +72,7 @@
     data() {
       return {
         search: this.$route.query.searchContent,
+        user_level: 0,
         posting_data: [],
       }
     },
@@ -73,8 +81,8 @@
         this.$axios.post('/posting/searchPosting', qs.stringify({ search: this.search }))
           .then(res => {
             if (res.data.errno === 0) {
+              this.user_level = res.data.user_level;
               this.posting_data = res.data.data;
-              console.log(this.posting_data);
             }
             else {
               this.posting_data = [];
@@ -101,6 +109,16 @@
 </script>
 
 <style scoped>
+#title {
+  font-size: 40px;
+  letter-spacing: 10px;
+  background-color: #F4F4F4;
+  line-height: 80px;
+  min-height: 80px;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: bolder;
+}
   #art-title {
     font-size: 18px;
   }
@@ -111,12 +129,22 @@
     color: gray;
   }
 
+.art-attribute {
+  font-size: 15px;
+  color: gray;
+}
+
   #art-author {
     font-size: 15px;
+    margin-left: 20px;
+    color: gray;
   }
 
   #art-date {
     font-size: 15px;
     color: gray;
   }
+a {
+  text-decoration: none;
+}
 </style>
