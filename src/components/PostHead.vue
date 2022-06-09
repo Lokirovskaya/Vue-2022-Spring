@@ -37,12 +37,8 @@
             src="../assets/comment.png" @click="Comment">
         </el-tooltip>
 
-        <el-tooltip class="item" effect="light" content="资源下载" placement="bottom">
-
           <img style="width: 20px;height: 20px;position: relative; left: 14px;bottom: -2px" alt="download"
-               src="../assets/download.png" @click="download">
-
-        </el-tooltip>
+               src="../assets/download.png" v-if="has_file" @click="download">
 
         <el-tooltip class="item" effect="light" content="删除本贴" placement="bottom">
           <img style="width: 20px;height: 20px;position: relative; left: 20px;bottom: -3px" alt="delete"
@@ -72,6 +68,7 @@
       like_count:{type: Number, default: 0},
       authority:{},
       resource:{type: String},
+      has_file:{type: Boolean},
       like:{type: Boolean, default: false}
     },
     data() {
@@ -87,24 +84,33 @@
       },
       download(){
         console.log(this.posting_id);
-        this.$axios.post('/posting/downloadFile',
-            qs.stringify({posting_id: this.posting_id}),
-            {responseType: 'blob'}
-            ).then((res) =>{
-              console.log(res);
-              const link = document.createElement('a');
-              let blob = new Blob([res.data]);
-              link.style.display = 'none';
-              const url = window.URL || window.webkitURL || window.moxURL;
-              link.href = url.createObjectURL(blob);
-              link.setAttribute('download',this.resource);
-              document.body.appendChild(link);
-              link.click();
-              document.body.removeChild(link);
-              url.revokeObjectURL(link.href);
-        }).catch((err)=>{
-          this.$message.error(err);
-        })
+        this.$confirm('此操作将下载该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$axios.post('/posting/downloadFile',
+              qs.stringify({posting_id: this.posting_id}),
+              {responseType: 'blob'}
+          ).then((res) =>{
+            console.log(res);
+            const link = document.createElement('a');
+            let blob = new Blob([res.data]);
+            link.style.display = 'none';
+            const url = window.URL || window.webkitURL || window.moxURL;
+            link.href = url.createObjectURL(blob);
+            link.setAttribute('download',this.resource);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            url.revokeObjectURL(link.href);
+          }).catch((err)=>{
+            this.$message.error(err);
+          })
+        }).catch(() => {
+
+        });
+
 
         /*
         return new Promise((resolve,reject) => {
