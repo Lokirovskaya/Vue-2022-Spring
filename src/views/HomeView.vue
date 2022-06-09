@@ -7,53 +7,33 @@
         <el-container>
           <el-header></el-header>
           <el-container>
+
             <el-container>
               <el-header>
                 <h2>当前热帖</h2>
               </el-header>
               <el-main>
                 <el-table :data="hot_posting_data" stripe>
-
                   <el-table-column label="标题" min-width="45%">
                     <template slot-scope="scope">
-                      <router-link :to="{path:'post', query:{id:scope.row.posting_id}}">
-                        <el-link class="art-title">
-                          {{scope.row.posting_title}}
-                        </el-link>
-                      </router-link>
-                    </template>
-                  </el-table-column>
-
-                  <el-table-column min-width="8%">
-                    <template slot-scope="scope">
-                      <div class="el-icon-view" style="width: 15px; height: 15px"></div>
-                      {{scope.row.click_count}}
-                    </template>
-                  </el-table-column>
-
-                  <el-table-column min-width="8%">
-                    <template slot-scope="scope">
-                      <img src="../assets/el-icon-like.png" style="width: 15px; height: 15px" />
-                      {{scope.row.like_count}}
-                    </template>
-                  </el-table-column>
-
-                  <el-table-column min-width="8%">
-                    <template slot-scope="scope">
-                      <img src="../assets/comment.png" style="width: 15px; height: 15px" />
-                      {{scope.row.comment_count}}
-                    </template>
-                  </el-table-column>
-
-                  <el-table-column label="作者" min-width="15%">
-                    <template slot-scope="scope">
-                      <div class="art-author">{{scope.row.username}}</div>
-                    </template>
-                  </el-table-column>
-
-                  <el-table-column label="最新回复时间" min-width="15%">
-                    <template slot-scope="scope">
-                      <div class="art-date">{{scope.row.recent_comment_time}}</div>
+                      <div style="margin: 5px">
+                        <router-link :to="{path:'/post', query:{id:scope.row.posting_id}}">
+                          <el-link class="art-title">{{scope.row.posting_title}}</el-link>
+                        </router-link>
+                      </div>
+                      <div style="margin: 5px">
+                        <span style="margin-left: 5px; margin-right: 20px;">
+                          <router-link :to="{path:'/personcenter', query:{user:scope.row.username}}">
+                            <el-link class="art-author">{{scope.row.username}}</el-link>
+                          </router-link>
+                        </span>
+                        <div class="el-icon-view" style="font-size: 15px;"></div>
+                        <span style="margin-left: 5px; margin-right: 20px;">{{scope.row.click_count}}</span>
+                        <img src="../assets/el-icon-like.png" style="width: 15px; height: 15px" />
+                        <span style="margin-left: 5px; margin-right: 20px;">{{scope.row.like_count}}</span>
+                        <img src="../assets/comment.png" style="width: 15px; height: 15px" />
+                        <span style="margin-left: 5px; margin-right: 20px;">{{scope.row.comment_count}}</span>
+                      </div>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -65,50 +45,29 @@
                 <h2>最新帖子</h2>
               </el-header>
               <el-main>
-                <el-table :data="hot_posting_data" stripe>
+                <el-table :data="recent_posting_data" stripe>
                   <el-table-column label="标题" min-width="45%">
                     <template slot-scope="scope">
-                      <router-link :to="{path:'post', query:{id:scope.row.posting_id}}">
-                        <el-link class="art-title">
-                          {{scope.row.posting_title}}
-                        </el-link>
-                      </router-link>
+                      <div style="margin: 5px">
+                        <router-link :to="{path:'/post', query:{id:scope.row.posting_id}}">
+                          <el-link class="art-title">{{scope.row.posting_title}}</el-link>
+                        </router-link>
+                      </div>
+                      <div style="margin: 5px">
+                        <span style="margin-left: 5px; margin-right: 20px;">
+                          <router-link :to="{path:'/personcenter', query:{user:scope.row.username}}">
+                            <el-link class="art-author">{{scope.row.username}}</el-link>
+                          </router-link>
+                        </span>
+                        <div class="el-icon-view" style="font-size: 15px;"></div>
+                        <span style="margin-left: 5px; margin-right: 20px;">{{scope.row.click_count}}</span>
+                        <img src="../assets/el-icon-like.png" style="width: 15px; height: 15px" />
+                        <span style="margin-left: 5px; margin-right: 20px;">{{scope.row.like_count}}</span>
+                        <img src="../assets/comment.png" style="width: 15px; height: 15px" />
+                        <span style="margin-left: 5px; margin-right: 20px;">{{scope.row.comment_count}}</span>
+                      </div>
                     </template>
                   </el-table-column>
-
-                  <el-table-column min-width="8%">
-                    <template slot-scope="scope">
-                      <div class="el-icon-view" style="width: 15px; height: 15px"></div>
-                      {{scope.row.click_count}}
-                    </template>
-                  </el-table-column>
-
-                  <el-table-column min-width="8%">
-                    <template slot-scope="scope">
-                      <img src="../assets/el-icon-like.png" style="width: 15px; height: 15px" />
-                      {{scope.row.like_count}}
-                    </template>
-                  </el-table-column>
-
-                  <el-table-column min-width="8%">
-                    <template slot-scope="scope">
-                      <img src="../assets/comment.png" style="width: 15px; height: 15px" />
-                      {{scope.row.comment_count}}
-                    </template>
-                  </el-table-column>
-
-                  <el-table-column label="作者" min-width="15%">
-                    <template slot-scope="scope">
-                      <div class="art-author">{{scope.row.username}}</div>
-                    </template>
-                  </el-table-column>
-
-                  <el-table-column label="最新回复时间" min-width="15%">
-                    <template slot-scope="scope">
-                      <div class="art-date">{{scope.row.recent_comment_time}}</div>
-                    </template>
-                  </el-table-column>
-
                 </el-table>
               </el-main>
             </el-container>
