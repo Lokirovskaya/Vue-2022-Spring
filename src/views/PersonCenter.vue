@@ -291,7 +291,7 @@
               this.$message.success(res.data.msg);
               this.modify_state = 0;
               setTimeout(() => {
-                this.$router.push({ path: '/sector', query: { name: this.$route.query.name } });
+                this.$router.push({ path: '/login' });
               }, 1000);
             }
             else {
