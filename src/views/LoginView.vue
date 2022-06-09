@@ -7,13 +7,23 @@
     <p>
       <el-input placeholder="输入密码" v-model="input_password" clearable style="width:300px" show-password></el-input>
     <p>
-      <el-input placeholder="输入校验码" v-model="input_admin_password" clearable style="width:300px" show-password></el-input>
-      <p>
+
     <div>
       <el-button @click="login" round>登录</el-button>
       <router-link to="/register" style="margin: 5px;">
         <el-button round>去注册</el-button>
       </router-link>
+      <br /><br />
+      <div>
+        <span style="color: #555;">作为管理员登录  </span>
+        <el-switch v-model="login_as_admin" active-color="#13CE66" inactive-color="#DCDFE6"></el-switch>
+      </div>
+      <br />
+      <el-collapse-transition>
+        <el-input v-show="login_as_admin" placeholder="输入校验码" v-model="input_admin_password" clearable
+          style="width:300px" show-password></el-input>
+      </el-collapse-transition>
+
     </div>
   </div>
   <div v-else>
@@ -28,8 +38,9 @@
       return {
         input_id: "",
         input_password: "",
-        input_admin_password:"",
+        input_admin_password: "",
         route_from: "",
+        login_as_admin: false,
       }
     },
     methods: {
@@ -46,12 +57,11 @@
               this.$store.commit('set_token', res.data.data.authorization);
               this.$store.commit('set_userid', res.data.data.userid);
               this.$store.commit('set_username', res.data.data.username);
-              this.$store.commit('set_userphoto',res.data.data.photo);
+              this.$store.commit('set_userphoto', res.data.data.photo);
               this.$message.success(res.data.data.username + ' 登录成功！');
-              if ( res.data.data.last_login_day === null )
-              {
-                this.$router.push({path: '/post', query:{id: 1}});
-              }else{
+              if (res.data.data.last_login_day === null) {
+                this.$router.push({ path: '/post', query: { id: 1 } });
+              } else {
                 setTimeout(() => {
                   this.$router.push(this.route_from);
                 }, 1000);
