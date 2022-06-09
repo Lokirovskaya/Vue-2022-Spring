@@ -224,9 +224,6 @@
 
 <style scoped>
 
-@keyframes Atitle {
-  from{ }
-}
 
   body {
     width: 100%;
