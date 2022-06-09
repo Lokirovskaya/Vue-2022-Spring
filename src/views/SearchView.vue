@@ -1,5 +1,9 @@
 <template>
   <ForumBorder>
+    <el-breadcrumb separator-class="el-icon-arrow-right" style="margin: 20px; font-size: 15px;">
+      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item>搜索</el-breadcrumb-item>
+    </el-breadcrumb>
     <el-table :data="posting_data" stripe align="left">
 
       <el-table-column min-width="5%"></el-table-column>

@@ -1,10 +1,12 @@
 <template>
-<ForumBorder>
+  <ForumBorder>
+    <el-breadcrumb separator-class="el-icon-arrow-right" style="margin: 20px; font-size: 15px;">
+      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item>用户中心</el-breadcrumb-item>
+    </el-breadcrumb>
 
-    <div>
-        <div v-if="this.$store.state.login_state == 0" class="login">
-    <div>{{this.$route.query.userid}}</div>
-    <h1>请登录</h1>
+      <div v-if="this.$store.state.login_state == 0" class="login">
+        <h1>请登录</h1>
 
   </div>
   <div>
@@ -22,9 +24,9 @@
                       input_password = '';
                       input_password2 = '';
                     ">
-                    修改信息
-                    </el-button>
-                    </div>
+                  修改信息
+                </el-button>
+              </div>
 
             </template>
             <el-descriptions-item label="用户名">{{username}}</el-descriptions-item>
@@ -34,11 +36,9 @@
         <br/>
             </div>
 
-            <div v-else>
-              <br/>
-              <el-descriptions title="用户头像" :column="3" :size="size" border style="position: relative;">
-        
-        <template slot="extra">
+        <div v-else>
+          <br />
+          <el-descriptions title="用户头像" :column="3" :size="size" border style="position: relative;">
 
 <el-upload
   style="position: relative; left:-1600%; top:20px"
@@ -54,7 +54,12 @@
       </el-button>
 
 
-    </template>
+              <!-- <img class="bigImg" :src="url_upload" v-if="url_upload"> -->
+              <!-- <img class="bigImg" :src="url_now" v-else> -->
+              <!-- <img class="bigImg" src=".././assets/666.png" v-else> -->
+              <!-- <div v-else style="position: relative;top:19px;">上传头像</div> -->
+              <!-- </div> -->
+              <!-- </div> -->
 
     <el-descriptions-item label="用户名">
         <el-input placeholder="输入新用户名" v-model="input_username" clearable style="width:150px"></el-input>
@@ -62,26 +67,20 @@
     </el-descriptions-item>
 </el-descriptions>
 
-<br/>
-<div style="position: relative;left:-330px;">
-    修改密码：
-<el-input placeholder="输入新密码" v-model="input_password" clearable style="width:150px; position: relative;left:0px;" show-password></el-input>
-<!-- <br/><br/> -->
-<el-input placeholder="确认密码" v-model="input_password2" clearable style="width:150px; position: relative;left:20px;" show-password></el-input>
-<el-button size="small" style="position: relative;left:40px;" @click="modify_pwd">修改密码</el-button>
-</div>
-<br/>
-            </div>
+            <!-- <el-descriptions-item label="学校"> -->
+            <!-- <el-input placeholder="输入新学校" v-model="input_school" clearable style="width:250px"></el-input> -->
+            <!-- <el-button size="small" style="position: relative;left:20px;" v-on:click="school = input_school">修改</el-button> -->
+            <!-- </el-descriptions-item> -->
 
 <div v-if="this.modify_state == 0">
         <el-menu mode="horizontal">
 
             <el-collapse v-model="activeNames" @change="handleChange">
 
-            <el-collapse-item title="我的帖子" name="1">
+              <el-collapse-item title="我的帖子" name="1">
 
-          <el-table :data="posting_data" stripe="true" align="left">
-            <el-table-column label="标题" min-width="70%">
+                <el-table :data="posting_data" stripe="true" align="left">
+                  <el-table-column label="标题" min-width="70%">
 
               <template slot-scope="scope">
                 <router-link style="color:black" :to="{path:'/post', query:{id:scope.row.posting_id}}">
@@ -89,40 +88,40 @@
                 </router-link>
               </template>
 
-            </el-table-column>
+                  </el-table-column>
 
-            <el-table-column min-width="8%">
-            <template slot-scope="scope">
-              <div class="el-icon-view" style="width: 15px; height: 15px"></div>
-              {{scope.row.click_count}}
-            </template>
-          </el-table-column>
+                  <el-table-column min-width="8%">
+                    <template slot-scope="scope">
+                      <div class="el-icon-view" style="width: 15px; height: 15px"></div>
+                      {{scope.row.click_count}}
+                    </template>
+                  </el-table-column>
 
-          <el-table-column min-width="8%">
-            <template slot-scope="scope">
-              <img src="../assets/el-icon-like.png" style="width: 15px; height: 15px" />
-              {{scope.row.like_count}}
-            </template>
-          </el-table-column>
+                  <el-table-column min-width="8%">
+                    <template slot-scope="scope">
+                      <img src="../assets/el-icon-like.png" style="width: 15px; height: 15px" />
+                      {{scope.row.like_count}}
+                    </template>
+                  </el-table-column>
 
-          <el-table-column min-width="8%">
-            <template slot-scope="scope">
-              <img src="../assets/comment.png" style="width: 15px; height: 15px" />
-              {{scope.row.comment_count}}
-            </template>
-          </el-table-column>
+                  <el-table-column min-width="8%">
+                    <template slot-scope="scope">
+                      <img src="../assets/comment.png" style="width: 15px; height: 15px" />
+                      {{scope.row.comment_count}}
+                    </template>
+                  </el-table-column>
 
-          <el-table-column label="最近回复" min-width="18%">
-            <template slot-scope="scope">
-              <div class="art-date">{{scope.row.recent_comment_time}}</div>
-            </template>
-          </el-table-column>
+                  <el-table-column label="最近回复" min-width="18%">
+                    <template slot-scope="scope">
+                      <div class="art-date">{{scope.row.recent_comment_time}}</div>
+                    </template>
+                  </el-table-column>
 
-          <el-table-column label="发表日期" min-width="18%">
-            <template slot-scope="scope">
-              <div class="art-date">{{scope.row.time}}</div>
-            </template>
-          </el-table-column>
+                  <el-table-column label="发表日期" min-width="18%">
+                    <template slot-scope="scope">
+                      <div class="art-date">{{scope.row.time}}</div>
+                    </template>
+                  </el-table-column>
 
           </el-table>
 
@@ -130,17 +129,19 @@
 
             <el-collapse-item title="近期评论" name="3">
 
-          <el-table :data="reply_data" stripe="true" align="left">
+                <el-table :data="reply_data" stripe="true" align="left">
 
-        <el-table-column label="评论内容" min-width="70%"> 
+                  <el-table-column label="评论内容" min-width="70%">
 
-              <template slot-scope="scope">
-                <router-link style="color:black" :to="{path:'/post', query:{id:scope.row.posting_id_id}}">
-                <div class="art-title"><el-link v-html="scope.row.content"></el-link></div>
-                </router-link>
-              </template>
+                    <template slot-scope="scope">
+                      <router-link style="color:black" :to="{path:'/post', query:{id:scope.row.posting_id_id}}">
+                        <div class="art-title">
+                          <el-link v-html="scope.row.content"></el-link>
+                        </div>
+                      </router-link>
+                    </template>
 
-            </el-table-column>
+                  </el-table-column>
 
           <el-table-column label="获赞" min-width="8%">
             <template slot-scope="scope">
@@ -155,8 +156,8 @@
             </template>
           </el-table-column>
 
-          </el-table>
-            </el-collapse-item>
+                </el-table>
+              </el-collapse-item>
 
 
             </el-collapse>
@@ -165,8 +166,8 @@
 </div>
   </div>
     </div>
-    
-</ForumBorder>
+
+  </ForumBorder>
 </template>
 
 <script>
@@ -180,30 +181,30 @@ export default {
 data(){
     return{
         articles1: [
-        {
-          id: 1,
-          title: '本来不存希望，',
-          author: '讨论区',
-          date: '2002-02-12',
-        },
-        {
+          {
+            id: 1,
+            title: '本来不存希望，',
+            author: '讨论区',
+            date: '2002-02-12',
+          },
+          {
             id: 2,
             title: 'test',
             author: '课程推荐',
             date: '2002-02-12',
-        },
-        {
+          },
+          {
             id: 2,
             title: 'test',
-            author: '刷题板块', 
+            author: '刷题板块',
             date: '2002-02-12',
-        },
+          },
         ],
         modify_state:0,
         username:this.$store.state.username,
         exp_now: undefined, //当前经验值
         exp_next_lv: undefined, //下一等级经验值
-        level:undefined,
+        level: undefined,
 
         input_username:undefined,
         input_password:undefined,
@@ -251,24 +252,24 @@ methods:
               this.$message.error(err);
             });
 
-    },
+      },
 
-    init_view(){
-      console.log('run init_view');
-      console.log(this.$store.state.username);
-      console.log(this.$route.query.user);
-      // this.username = this.$store.state.username;
-      if (this.$route.query.user != this.$store.state.username) //如果是访问其他人的主页
-      {
-        this.is_visit_self = 1;
-          this.$axios.post('/user/other_space', qs.stringify({other_name:this.$route.query.user}),{
+      init_view() {
+        console.log('run init_view');
+        console.log(this.$store.state.username);
+        console.log(this.$route.query.user);
+        // this.username = this.$store.state.username;
+        if (this.$route.query.user != this.$store.state.username) //如果是访问其他人的主页
+        {
+          this.is_visit_self = 1;
+          this.$axios.post('/user/other_space', qs.stringify({ other_name: this.$route.query.user }), {
             // this.$axios.post('/user/space', qs.stringify(),{
-        headers: {
-          username: this.$store.state.username,
-          token: this.$store.state.token,
-        }
-      })
-      .then(res => {
+            headers: {
+              username: this.$store.state.username,
+              token: this.$store.state.token,
+            }
+          })
+            .then(res => {
               if (res.data.errno === 0) {
                 this.url_now = res.data.user_photo;
                 this.username = this.$route.query.user;
@@ -281,27 +282,27 @@ methods:
                 this.$message.error(res.data.msg);
               }
             })
-            .catch(err => { 
+            .catch(err => {
               this.$message.error(err);
             });
-            // console.log(this.url_now);
-      }
-      
-      else //访问自己的主页
-      {
-        this.is_visit_self = 0;
-        console.log('visit self');
-          this.$axios.post('/user/space', qs.stringify(),{
-        headers: {
-          username: this.$store.state.username,
-          token: this.$store.state.token,
+          // console.log(this.url_now);
         }
-      })
-      .then(res => {
+
+        else //访问自己的主页
+        {
+          this.is_visit_self = 0;
+          console.log('visit self');
+          this.$axios.post('/user/space', qs.stringify(), {
+            headers: {
+              username: this.$store.state.username,
+              token: this.$store.state.token,
+            }
+          })
+            .then(res => {
               if (res.data.errno === 0) {
                 this.url_now = res.data.user_photo;
                 // this.url_now = require(res.data.user_photo);
-                console.log('1:'+this.url_now);
+                console.log('1:' + this.url_now);
                 this.username = this.$store.state.username;
                 // this.username = this.$route.query.user;
                 this.level = res.data.user_level;
@@ -313,19 +314,19 @@ methods:
                 this.$message.error(res.data.msg);
               }
             })
-            .catch(err => { 
+            .catch(err => {
               this.$message.error(err);
             });
-            console.log(this.url_now);
-      }
-            console.log('print:'+this.url_upload);
-    },
+          console.log(this.url_now);
+        }
+        console.log('print:' + this.url_upload);
+      },
 
-    modify_pwd(){
-      let password_ifo = {
-        password_1:this.input_password,
-        password_2:this.input_password2
-      }
+      modify_pwd() {
+        let password_ifo = {
+          password_1: this.input_password,
+          password_2: this.input_password2
+        }
         if (this.input_password === '') {
           this.$message.error('密码不能为空！');
         }
@@ -335,10 +336,12 @@ methods:
         else {
           // alert('success');
           this.$axios.post('/user/modify_password', qs.stringify(password_ifo),
-          {headers: {
-          username: this.$store.state.username,
-          token: this.$store.state.token,
-            }})
+            {
+              headers: {
+                username: this.$store.state.username,
+                token: this.$store.state.token,
+              }
+            })
             .then(res => {
               if (res.data.errno === 0) {
                 this.$message.success(res.data.msg);
@@ -348,7 +351,7 @@ methods:
                 this.$message.error(res.data.msg);
               }
             })
-            .catch(err => { 
+            .catch(err => {
               this.$message.error(err);
             });
         }
@@ -368,7 +371,7 @@ methods:
           }
         });
 
-        my_axios.post('/user/modify_photo', {photo:e.file})
+        my_axios.post('/user/modify_photo', { photo: e.file })
           .then(res => {
             if (res.data.errno === 0) {
               this.$message.success('头像修改成功！');
@@ -385,9 +388,9 @@ methods:
           });
       },
 
-        handleAvatarSuccess(res, file) {
-          console.log('success');
-          console.log('imageurl:'+this.imageUrl);
+      handleAvatarSuccess(res, file) {
+        console.log('success');
+        console.log('imageurl:' + this.imageUrl);
         this.imageUrl = URL.createObjectURL(file.raw);
       },
       beforeAvatarUpload(file) {
@@ -406,10 +409,10 @@ methods:
 
     },
     mounted: function () {
-  // alert('页面一加载，就会弹出此窗口')
-  this.init_view();
- }
-};
+      // alert('页面一加载，就会弹出此窗口')
+      this.init_view();
+    }
+  };
 </script>
 
 <style>
@@ -417,35 +420,38 @@ methods:
     cursor: pointer;
     color: #409EFF;
   }
+
   .el-icon-arrow-down {
     font-size: 12px;
   }
+
   a {
-  text-decoration: none;
-}
- 
-.router-link-active {
-  text-decoration: none;
-}
+    text-decoration: none;
+  }
 
-	.alert-box-item {
-		overflow: hidden;
-	}
+  .router-link-active {
+    text-decoration: none;
+  }
 
-	.bigImg-div {
-		width: 60px;
-		height: 60px;
-		border-radius: 20%;
-		overflow: hidden;
-		border: 1px solid #ddd;
-	}
+  .alert-box-item {
+    overflow: hidden;
+  }
 
-	.bigImg {
-		display: block;
-		width: 60px;
-		height: 60px;
-		border-radius: 20%;
-	}
+  .bigImg-div {
+    width: 60px;
+    height: 60px;
+    border-radius: 20%;
+    overflow: hidden;
+    border: 1px solid #ddd;
+  }
+
+  .bigImg {
+    display: block;
+    width: 60px;
+    height: 60px;
+    border-radius: 20%;
+  }
+
   .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
@@ -455,9 +461,11 @@ methods:
     position: relative;
     overflow: hidden;
   }
+
   .avatar-uploader .el-upload:hover {
     border-color: #409EFF;
   }
+
   .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
@@ -466,13 +474,14 @@ methods:
     line-height: 178px;
     text-align: center;
   }
+
   .avatar {
     width: 60px;
     height: 60px;
     display: block;
   }
 
-    #art-title1 {
+  #art-title1 {
     font-size: 18px;
   }
 

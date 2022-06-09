@@ -6,9 +6,8 @@
         <el-breadcrumb-item>{{sector_chinese_name[this.$route.query.name]}}</el-breadcrumb-item>
       </el-breadcrumb>
       <el-header id="title">
-        {{sector_chinese_name[this.$route.query.name]}}
+        -{{sector_chinese_name[this.$route.query.name]}}-
       </el-header>
-      <el-header id="intro" v-html="sector_intro"></el-header>
       <el-main>
 
         <div v-if="this.$store.getters.is_logged">
@@ -139,13 +138,14 @@
 
 <style scoped>
   #title {
-    font-size: 30px;
-    background-color: #f1f1f1;
+    font-size: 40px;
+    letter-spacing: 10px;
+    background-color: #F4F4F4;
     line-height: 80px;
     min-height: 80px;
-    border-radius: 10px;
     text-align: center;
     margin-bottom: 20px;
+    font-weight: bolder;
   }
 
   #intro {
