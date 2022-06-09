@@ -37,7 +37,7 @@
                   <!-- <el-button size="small" @click="change_modify_state()"> -->
                     <div v-if="is_visit_self === 0">
                     <el-button 
-                    
+                    style="position:relative;left:-10px;"
                     size="small"
                     @click="
                     //alert('123');
@@ -67,7 +67,8 @@
             <!-- <el-descriptions-item label="居住地">{{city}}</el-descriptions-item> -->
             <!-- <el-descriptions-item label="联系地址">{{address}}</el-descriptions-item> -->
             <!-- <el-descriptions-item label="等级">lv{{level}} ( {{exp_now}}/{{exp_next_lv}} )</el-descriptions-item> -->
-            <el-descriptions-item label="等级">lv{{level}} 经验值：{{exp_now}}</el-descriptions-item>
+            <el-descriptions-item label="等级">lv{{level}}</el-descriptions-item>
+            <el-descriptions-item label="经验值">{{exp_now}}</el-descriptions-item>
             <!-- <el-descriptions-item label="用户状态">{{user_status}}</el-descriptions-item> -->
         </el-descriptions>
         <br/>
@@ -183,9 +184,16 @@
           <el-table :data="posting_data" stripe="true" align="left">
             <el-table-column label="标题" min-width="70%">
 
+              <!-- <template slot-scope="scope">
+                <router-link style="color:black" :to="{path:'/post', query:{id:scope.row.posting_id}}">
+                <div class="art-title"><e-link>{{scope.row.title}}</e-link></div>
+                </router-link>
+              </template> -->
+
               <template slot-scope="scope">
-                
-                <div class="art-title"><u><e-link>{{scope.row.title}}</e-link></u></div>
+                <router-link style="color:black" :to="{path:'/post', query:{id:scope.row.posting_id}}">
+                <div class="art-title"><el-link>{{scope.row.title}}</el-link></div>
+                </router-link>
               </template>
 
             </el-table-column>
@@ -219,7 +227,7 @@
 
           <el-table-column label="发表日期" min-width="18%">
             <template slot-scope="scope">
-              <div class="art-date">{{scope.row.posting_time}}</div>
+              <div class="art-date">{{scope.row.time}}</div>
             </template>
           </el-table-column>
 
@@ -320,71 +328,49 @@
 
           <el-table :data="reply_data" stripe="true" align="left">
 
-<el-table-column label="标题" min-width="70%">
+        <el-table-column label="评论内容" min-width="70%"> 
 
               <template slot-scope="scope">
-                
-                <div class="art-title"><u><e-link>{{scope.row.title}}</e-link></u></div>
+                <router-link style="color:black" :to="{path:'/post', query:{id:scope.row.posting_id_id}}">
+                <div class="art-title"><el-link v-html="scope.row.content"></el-link></div>
+                </router-link>
               </template>
 
             </el-table-column>
 
-            <el-table-column min-width="8%">
+            <!-- <el-table-column min-width="8%">
             <template slot-scope="scope">
               <div class="el-icon-view" style="width: 15px; height: 15px"></div>
               {{scope.row.click_count}}
             </template>
-          </el-table-column>
+          </el-table-column> -->
 
-          <el-table-column min-width="8%">
+          <el-table-column label="获赞" min-width="8%">
             <template slot-scope="scope">
               <img src="../assets/el-icon-like.png" style="width: 15px; height: 15px" />
               {{scope.row.like_count}}
             </template>
           </el-table-column>
 
-          <el-table-column min-width="8%">
+          <!-- <el-table-column min-width="8%">
             <template slot-scope="scope">
               <img src="../assets/comment.png" style="width: 15px; height: 15px" />
               {{scope.row.comment_count}}
             </template>
-          </el-table-column>
+          </el-table-column> -->
 
-          <el-table-column label="最近回复" min-width="18%">
+          <!-- <el-table-column label="最近回复" min-width="18%">
             <template slot-scope="scope">
               <div class="art-date">{{scope.row.recent_comment_time}}</div>
             </template>
-          </el-table-column>
+          </el-table-column> -->
 
-          <el-table-column label="发表日期" min-width="18%">
+          <el-table-column label="评论时间" min-width="18%">
             <template slot-scope="scope">
-              <div class="art-date">{{scope.row.posting_time}}</div>
+              <div class="art-date">{{scope.row.time}}</div>
             </template>
           </el-table-column>
 
-            <!-- <el-table-column label="标题" min-width="70%">
-
-              <template slot-scope="scope">
-                <div class="art-title"><u>{{scope.row.title}}</u></div>
-              </template>
-
-            </el-table-column>
-
-            <el-table-column label="板块" min-width="15%">
-
-              <template slot-scope="scope">
-                <div class="art-author"><u>{{scope.row.author}}</u></div>
-              </template>
-
-            </el-table-column>
-
-            <el-table-column label="发表日期" min-width="15%">
-
-              <template slot-scope="scope">
-                <div class="art-date">{{scope.row.date}}</div>
-              </template>
-
-            </el-table-column> -->
           </el-table>
             </el-collapse-item>
 
@@ -491,6 +477,13 @@ methods:
     //     this.$router.replace('/viewifo');
     // },
     
+
+      getSimpleText(html){
+      var re1 = new RegExp("<.+?>","g");//匹配html标签的正则表达式，"g"是搜索匹配多个符合的内容
+      var msg = html.replace(re1,'');//执行替换成空字符
+      return msg;
+      },
+
     goto_modify(){
     let user_ifo = {
         username:this.input_username,
