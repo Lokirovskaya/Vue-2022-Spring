@@ -16,6 +16,7 @@
               :like_count="like_count"
               :authority="authority"
               :resource="resource"
+              :has_file="has_file"
               :like="like"
               @Like="ClickLike"
               @DelPost="DelPost"
@@ -70,6 +71,7 @@ export default {
         like_count: undefined, // 帖子点赞数
         authority: 0, // 帖子权限
         resource: '', // 帖子资源名称
+        has_file: undefined,//是否为资源贴
         reply_count: undefined, // 总楼层数
         like: undefined, // 用户是否给该帖子点赞（布尔型）
         replys:[],
@@ -106,14 +108,14 @@ export default {
                 this.$router.push({ path: '/sector', query: { name: this.sector_name } });
               }
 
-              this.posting_title = res.data.posting_title;
-              this.posting_time = res.data.posting_time;
-              this.user_id = res.data.user_id;
-              this.username = res.data.username;
-              this.user_photo = res.data.user_photo;
-              this.content = res.data.content;
+              //this.posting_title = res.data.posting_title;
+              //this.posting_time = res.data.posting_time;
+              //this.user_id = res.data.user_id;
+              //this.username = res.data.username;
+              //this.user_photo = res.data.user_photo;
+              //this.content = res.data.content;
               this.like_count = res.data.like_count;        
-              this.resource = res.data.resource;
+              //this.resource = res.data.resource;
               this.reply_count = res.data.reply_count;
               this.like = res.data.like;
               this.replys = res.data.replys;
@@ -271,6 +273,7 @@ export default {
             this.content = res.data.content;
             this.like_count = res.data.like_count;
             this.resource = res.data.resource;
+            this.has_file = res.data.has_file;
             this.reply_count = res.data.reply_count;
             this.like = res.data.like;
             this.replys = res.data.replys;
