@@ -307,6 +307,7 @@
     width: 80%;
     /* border-top-left-radius: 50px;
     border-top-right-radius: 50px; */
+    margin-bottom: 50px;
     border-radius: 50px;
     background: #FFFFFF;
     padding-top: 50px;
