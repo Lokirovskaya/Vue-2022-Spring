@@ -93,7 +93,7 @@
                         <div class="sector-intro">{{item.intro}}</div>
                       </div>
                       <div style="display: flex; align-items: flex-start; flex-direction: column;">
-                        <div style="margin: 8px">最新发表：</div>
+                        <div style="margin: 5px; color: gray;">最新发表：</div>
                         <div style="margin: 5px">
                           <router-link :to="{path:'/post', query:{id:item.posting_id}}">
                             <el-link class="art-title">{{item.post_title}}</el-link>
@@ -240,7 +240,7 @@
               if (res.data.recommendation[0]) this.set_sector_info('recommendation', res.data.recommendation[1]);
               if (res.data.exercise[0]) this.set_sector_info('exercise', res.data.exercise[1]);
               if (res.data.campus[0]) this.set_sector_info('campus', res.data.campus[1]);
-              if (res.data.resource[0]) this.set_sector_info('discussion', res.data.resource[1]);
+              if (res.data.resource[0]) this.set_sector_info('resource', res.data.resource[1]);
             }
             else {
               this.hot_posting_data = [];
