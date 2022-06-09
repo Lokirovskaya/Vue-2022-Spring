@@ -12,9 +12,9 @@
               <el-header>
                 <h2>当前热帖</h2>
               </el-header>
-              <el-main>
+              <el-card shadow="hover">
                 <el-table :data="hot_posting_data" stripe>
-                  <el-table-column label="标题" min-width="45%">
+                  <el-table-column>
                     <template slot-scope="scope">
                       <div style="margin: 5px">
                         <router-link :to="{path:'/post', query:{id:scope.row.posting_id}}">
@@ -37,16 +37,16 @@
                     </template>
                   </el-table-column>
                 </el-table>
-              </el-main>
+              </el-card>
             </el-container>
 
             <el-container>
               <el-header>
                 <h2>最新帖子</h2>
               </el-header>
-              <el-main>
+              <el-card shadow="hover">
                 <el-table :data="recent_posting_data" stripe>
-                  <el-table-column label="标题" min-width="45%">
+                  <el-table-column>
                     <template slot-scope="scope">
                       <div style="margin: 5px">
                         <router-link :to="{path:'/post', query:{id:scope.row.posting_id}}">
@@ -69,7 +69,7 @@
                     </template>
                   </el-table-column>
                 </el-table>
-              </el-main>
+              </el-card>
             </el-container>
           </el-container>
 
