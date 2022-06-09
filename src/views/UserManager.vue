@@ -35,7 +35,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination layout="prev, pager, next" :total="this.user_sum" :page-size="20"></el-pagination>
+    <el-pagination layout="prev, pager, next" :total="this.user_sum" :page-size="20" @current-change="get_all_user_info"></el-pagination>
   </ForumBorder>
 </template>
 
@@ -54,12 +54,12 @@
     },
 
     mounted() {
-      this.get_all_user_info(0);
+      this.get_all_user_info(1);
     },
 
     methods: {
       get_all_user_info(page) {
-        this.$axios.post('/user/manage', qs.stringify({ page_num: page }), {
+        this.$axios.post('/user/manage', qs.stringify({ page: page }), {
           headers: {
             username: this.$store.state.username,
             token: this.$store.state.token,

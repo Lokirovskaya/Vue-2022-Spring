@@ -66,8 +66,7 @@
 
             <div style="margin: 10px;">
               <div>修改用户名</div>
-              <el-input placeholder="输入新用户名" v-model="input_username" style="margin: 5px;" clearable
-                ></el-input>
+              <el-input placeholder="输入新用户名" v-model="input_username" style="margin: 5px;" clearable></el-input>
               <br />
               <el-button size="small" @click="goto_modify">提交</el-button>
             </div>
@@ -92,11 +91,11 @@
         <div v-if="this.modify_state === 0" style="display: flex; align-items: center; flex-direction: column;">
           <el-menu mode="horizontal" style="width: 95%;">
 
-            <el-collapse v-model="activeNames" @change="handleChange">
+            <el-collapse>
 
               <el-collapse-item title="我的帖子" name="1">
 
-                <el-table :data="posting_data" stripe="true" align="left">
+                <el-table :data="posting_data" stripe align="left">
 
                   <el-table-column label="标题" min-width="70%">
                     <template slot-scope="scope">
@@ -110,10 +109,10 @@
 
                   <!-- <el-button>123</el-button> -->
 
-                    <el-table-column min-width="10%">
-                    <template >
-                      <el-button round type="text" @click="DelPost(posting.row.posting_id)">
-                      <div style="width: 15px; height: 15px">删除</div>
+                  <el-table-column min-width="10%">
+                    <template slot-scope="scope">
+                      <el-button round type="text" @click="DelPost(scope.row.posting_id)">
+                        <div style="width: 15px; height: 15px">删除</div>
                       </el-button>
                     </template>
                   </el-table-column>
@@ -157,7 +156,7 @@
 
               <el-collapse-item title="近期评论" name="3">
 
-                <el-table :data="reply_data" stripe="true" align="left">
+                <el-table :data="reply_data" stripe align="left">
 
                   <el-table-column label="评论内容" min-width="70%">
 
@@ -228,23 +227,26 @@
     },
     methods:
     {
-      DelPost(id){
+      DelPost(id) {
         // alert('id:'+id);
-      this.$confirm('此操作将删除该帖, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
+        this.$confirm('此操作将删除该帖, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
 
-        this.$axios.post('/user/delete_posting', qs.stringify({posting_id:id}), {
-          headers: {
-            username: this.$store.state.username,
-            token: this.$store.state.token,
-          }
-        })
+          this.$axios.post('/user/delete_posting', qs.stringify({ posting_id: id }), {
+            headers: {
+              username: this.$store.state.username,
+              token: this.$store.state.token,
+            }
+          })
             .then(res => {
               if (res.data.errno === 0) {
                 this.$message.success(res.data.msg);
+                setTimeout(() => {
+                  this.$router.go(0);
+                }, 500);
               }
               else {
                 this.$message.error(res.data.msg);
@@ -254,11 +256,11 @@
               this.$message.error(err);
             });
 
-        // this.$router.replace('/');
-      }).catch(() => {
+          // this.$router.replace('/');
+        }).catch(() => {
 
-      });
-    },
+        });
+      },
 
       go_back() {
         this.modify_state = 0;
