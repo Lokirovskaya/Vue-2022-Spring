@@ -27,11 +27,14 @@
 
           <el-table-column label="标题" min-width="45%">
             <template slot-scope="scope">
+
               <router-link :to="{path:'/post', query:{id:scope.row.posting_id}}">
-                <el-link id="art-title">
+                <el-link class="art-title">
                   {{scope.row.posting_title}}
                 </el-link>
               </router-link>
+              <span v-if="scope.row.has_file" class="art-attribute"> [资源帖]</span>
+              <span v-if="scope.row.authority>0" class="art-attribute"> [阅读权限 {{scope.row.authority}}]</span>
               <router-link :to="{path:'/personcenter', query:{user:scope.row.username}}">
                 <div id="art-author">
                   <el-link>{{scope.row.username}}</el-link>
@@ -88,8 +91,8 @@
     components: { ForumBorder },
     data() {
       return {
-        sector_intro: '',
         posting_data: [],
+        user_level: 0,
         sector_chinese_name: {
           'discussion': '讨论区',
           'recommendation': '课程推荐',
@@ -107,7 +110,7 @@
         )
           .then(res => {
             if (res.data.errno === 0) {
-              this.sector_intro = res.data.sector_introduction;
+              this.user_level = res.data.user_level;
               this.posting_data = res.data.data;
             }
             else {
@@ -148,20 +151,18 @@
     font-weight: bolder;
   }
 
-  #intro {
-    font-size: 20px;
-    background-color: #f1f1f1;
-    min-height: 200px;
-    margin-bottom: 20px;
-  }
-
-  #art-title {
+  .art-title {
     font-size: 18px;
   }
 
   #art-author {
     font-size: 15px;
     margin-left: 20px;
+    color: gray;
+  }
+
+  .art-attribute {
+    font-size: 15px;
     color: gray;
   }
 
