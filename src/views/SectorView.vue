@@ -127,7 +127,7 @@
 
     watch: {
       $route(to, from) {
-        if (to.query.name != from.query.name) {
+        if (to.query.name !== from.query.name) {
           this.name = to.query.name;
           this.get_sector_info();
         }
