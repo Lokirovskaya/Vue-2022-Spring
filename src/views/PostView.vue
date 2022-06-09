@@ -257,7 +257,7 @@ export default {
           }
         })
         .catch(err => {
-          this.$message.error(err);
+          this.$message.error(err+' 登录后才能看帖子内容!');
         });
   }
 }
