@@ -240,8 +240,8 @@
           .then(res => {
             if (res.data.errno === 0) {
               this.username = this.input_username; //更新页面变量
-              this.$store.state.username = this.username; //更新全局变量
-              // this.$store.token = res.data.token; //更新token
+              this.$store.state.username = this.input_username; //更新全局变量
+              this.$store.state.token = res.data.authorization; //更新token
               this.$message.success(res.data.msg);
               this.modify_state = 0;
             }
