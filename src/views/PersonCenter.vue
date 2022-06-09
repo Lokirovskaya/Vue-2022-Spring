@@ -2,107 +2,95 @@
   <ForumBorder>
     <el-breadcrumb separator-class="el-icon-arrow-right" style="margin: 20px; font-size: 15px;">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item><el-link :underline="false" type="info" @click="go_back">用户中心</el-link></el-breadcrumb-item>
+      <el-breadcrumb-item>
+        <el-link :underline="false" type="info" @click="go_back">用户中心</el-link>
+      </el-breadcrumb-item>
     </el-breadcrumb>
     <div>
+
       <div v-if="this.$store.state.login_state == 0" class="login">
         <h1>请登录</h1>
 
       </div>
       <div>
 
-        <div v-if="this.modify_state == 0">
-          <br />
-          <el-descriptions title="用户信息" :column="3" :size="size" border style="position: relative;">
-            
-            <template slot="extra">
-              <div v-if="is_visit_self === 0">
-                <el-button style="position:relative;left:-10px;" size="small" @click="                
-                    modify_state = 1;
-                    input_username = username;
-                    input_password = '';
-                    input_password2 = '';
-                    ">
-                  修改信息
-                </el-button>
-              </div>
-            </template>
+        <div v-if="this.modify_state === 0">
+          <div style="display: flex; justify-items: center; align-items: center; flex-direction: column;">
 
-            <el-descriptions-item label="用户名">{{username}}</el-descriptions-item>
-            <el-descriptions-item label="等级">lv{{level}}</el-descriptions-item>
-            <el-descriptions-item label="经验值">{{exp_now}}</el-descriptions-item>
-          </el-descriptions>
-          <br />
+            <div v-if="is_visit_self === 0" style="margin-left: auto;">
+              <el-button style="position:relative;left:-10px;" @click="                
+                modify_state = 1;
+                input_username = username;
+                input_password = '';
+                input_password2 = '';
+                ">
+                修改信息
+              </el-button>
+            </div>
+
+
+            <img :src="'http://43.138.55.69'+url_now" class="avatar">
+
+            <div style="font-size: 25px; margin: 5px;">{{username}}</div>
+
+            <el-descriptions border style="margin: 15px;">
+              <el-descriptions-item label="等级">Lv{{level}}</el-descriptions-item>
+              <el-descriptions-item label="经验值">{{exp_now}}</el-descriptions-item>
+            </el-descriptions>
+
+          </div>
         </div>
 
         <div v-else>
-          <br />
-          <el-descriptions title="用户头像" :column="3" :size="size" border style="position: relative;">
+          <div style="display: flex; justify-items: center; align-items: center; flex-direction: column;">
 
-<el-upload
-  style="position: relative; left:100%; top:20px"
-  class="avatar-uploader" action="" :http-request="upload_file" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload" :limit="1" :auto-upload="true">
-  <div style="position: relative;left:200%">
-  <img v-if="url_upload" :src="'http://43.138.55.69'+url_upload" class="avatar">
-  <img v_else :src="'http://43.138.55.69'+url_now" class="avatar">
-  </div>
-</el-upload>
-
-      <el-button size="small" style="position: relative;left:-20px;top:-28px;"
-      @click="goto_modify">
-      提交
-      </el-button>
-            <template slot="extra">
-
-              <el-upload style="position: relative; left:-970px; top:20px" class="avatar-uploader" action=""
-                :http-request="upload_file" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload"
-                :limit="1" :auto-upload="true">
-                <div style="position: relative;left:0px">
-                  <img v-if="url_upload" :src="'http://43.138.55.69'+url_upload" class="avatar">
-                  <img v_else :src="'http://43.138.55.69'+url_now" class="avatar">
-                  <!-- <div v-else style="position: relative;top:19px;">上传头像</div> -->
-                  <!-- <i v-else class="el-icon-plus avatar-uploader-icon"></i> -->
-                </div>
-              </el-upload>
-
-              <!-- <el-button size="small" style="position: relative;left:-1070px;top:-25px;">上传头像</el-button> -->
-              <!-- <el-button size="small"><router-link to="/viewifo">修改完成</router-link></el-button> -->
-
-              <el-button size="small" style="position: relative;left:-20px;top:-28px;" @click="goto_modify">
-                提交
-              </el-button>
-              <el-button size="small" style="position: relative;left:-20px;top:-28px;" @click="go_back">
+            <div v-if="is_visit_self === 0" style="margin-left: auto;">
+              <el-button style="position:relative;left:-10px;" @click="                
+                modify_state = 0;
+                input_username = username;
+                input_password = '';
+                input_password2 = '';
+                ">
                 返回
               </el-button>
+            </div>
 
-            </template>
+            <el-upload class="avatar-uploader" action="" :http-request="upload_file" :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload" :limit="1" :auto-upload="true">
+              <img v-if="url_upload" :src="'http://43.138.55.69'+url_upload" class="avatar">
+              <img v_else :src="'http://43.138.55.69'+url_now" class="avatar">
+            </el-upload>
+            <div>点击上方修改头像</div>
 
-            <el-descriptions-item label="用户名">
-              <el-input placeholder="输入新用户名" v-model="input_username" clearable style="width:150px"></el-input>
-            </el-descriptions-item>
+            <el-divider></el-divider>
 
+            <div style="margin: 10px;">
+              <div>修改用户名</div>
+              <el-input placeholder="输入新用户名" v-model="input_username" style="margin: 5px;" clearable
+                ></el-input>
+              <br />
+              <el-button size="small" @click="goto_modify">提交</el-button>
+            </div>
 
-          </el-descriptions>
-
-          <br />
-          <div style="position: relative;left:-330px;">
-            修改密码：
-            <el-input placeholder="输入新密码" v-model="input_password" clearable
-              style="width:150px; position: relative;left:0px;" show-password></el-input>
-            <!-- <br/><br/> -->
-            <el-input placeholder="确认密码" v-model="input_password2" clearable
-              style="width:150px; position: relative;left:20px;" show-password></el-input>
-            <el-button size="small" style="position: relative;left:40px;" @click="modify_pwd">修改密码</el-button>
+            <div style="margin: 10px;">
+              <div>修改密码</div>
+              <el-input placeholder="输入新密码" v-model="input_password" style="margin: 5px;" clearable show-password>
+              </el-input>
+              <br />
+              <el-input placeholder="确认密码" v-model="input_password2" style="margin: 5px;" clearable show-password>
+              </el-input>
+              <br />
+              <el-button size="small" @click="modify_pwd">修改密码</el-button>
+            </div>
           </div>
-          <br />
         </div>
 
         <!-- <el-menu-item index="/PersonCenter" style="position: relative;left:950px;"><el-link><router-link to="/modifyifo">修改个人资料</router-link></el-link></el-menu-item> -->
         <!-- <el-link :underline="false" style="position: relative;right:2px;bottom:-19px" @click="goto_login">编辑资料</el-link> -->
 
 
-        <div v-if="this.modify_state == 0">
-          <el-menu mode="horizontal">
+        <div v-if="this.modify_state === 0" style="display: flex; align-items: center; flex-direction: column;">
+          <el-menu mode="horizontal" style="width: 95%;">
 
             <el-collapse v-model="activeNames" @change="handleChange">
 
@@ -142,13 +130,13 @@
                     </template>
                   </el-table-column>
 
-                  <el-table-column label="最近回复" min-width="18%">
+                  <el-table-column label="最近回复" min-width="20%">
                     <template slot-scope="scope">
                       <div class="art-date">{{scope.row.recent_comment_time}}</div>
                     </template>
                   </el-table-column>
 
-                  <el-table-column label="发表日期" min-width="18%">
+                  <el-table-column label="发表日期" min-width="20%">
                     <template slot-scope="scope">
                       <div class="art-date">{{scope.row.time}}</div>
                     </template>
@@ -203,12 +191,12 @@
 </template>
 
 <script>
-import ForumBorder from "@/components/ForumBorder";
+  import ForumBorder from "@/components/ForumBorder";
 
-import qs from "qs";
-export default {
-  components: { ForumBorder },
-  name: 'PersonCenter',
+  import qs from "qs";
+  export default {
+    components: { ForumBorder },
+    name: 'PersonCenter',
     data() {
       return {
         modify_state: 0,
@@ -229,8 +217,8 @@ export default {
     },
     methods:
     {
-      go_back(){
-          this.modify_state = 0;
+      go_back() {
+        this.modify_state = 0;
       },
 
       getSimpleText(html) {
@@ -457,8 +445,8 @@ export default {
   }
 
   .bigImg-div {
-    width: 60px;
-    height: 60px;
+    width: 180px;
+    height: 180px;
     border-radius: 20%;
     overflow: hidden;
     border: 1px solid #ddd;
@@ -466,17 +454,17 @@ export default {
 
   .bigImg {
     display: block;
-    width: 60px;
-    height: 60px;
-    border-radius: 20%;
+    width: 180px;
+    height: 180px;
+    border-radius: 15px;
   }
 
   .avatar-uploader .el-upload {
     border: 1px solid #d9d9d9;
-    border-radius: 6px;
+    border-radius: 15px;
     cursor: pointer;
-    width: 60px;
-    height: 60px;
+    width: 180px;
+    height: 180px;
     position: relative;
     overflow: hidden;
   }
@@ -488,16 +476,18 @@ export default {
   .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
-    width: 30px;
-    height: 30px;
-    line-height: 178px;
+    width: 180px;
+    height: 180px;
+    border-radius: 15px;
+    margin: 20px;
+    line-height: 190px;
     text-align: center;
   }
 
   .avatar {
-    width: 60px;
-    height: 60px;
-    display: block;
+    width: 180px;
+    height: 180px;
+    border-radius: 15px;
   }
 
   #art-title1 {
