@@ -2,10 +2,12 @@
   <el-row>
     <el-col :span="8">
       <div class="grid-content">
-        <el-menu :default-active="active_index" class="el-menu-demo" mode="horizontal">
-          <el-menu-item index="1">
-            <router-link :to="{path: '/'}">首页</router-link>
-          </el-menu-item>
+        <el-menu :default-active="active_index" class="el-menu-demo" mode="horizontal" @select="SelectIndex">
+
+            <el-menu-item index="1" >
+              首页
+            </el-menu-item>
+
           <el-submenu index="2">
             <template slot="title">论坛分区</template>
             <router-link :to="{path:'sector', query:{name:'discussion'}}">
@@ -25,7 +27,7 @@
             </router-link>
           </el-submenu>
           <el-menu-item index="3" v-show="this.$store.getters.is_admin">
-            <router-link :to="{path: '/usermanager'}">管理员界面</router-link>
+            管理员界面
           </el-menu-item>
         </el-menu>
       </div>
@@ -106,6 +108,16 @@
       Search(){
         this.$router.push({path: '/search',query:{searchContent: this.search}});
         this.search = '';
+      },
+      SelectIndex(key){
+        if(key === "1")
+        {
+          this.$router.push({path: '/'});
+        }else if(key === "3")
+        {
+          this.$router.push({path: '/usermanager'});
+        }
+
       }
     },
   }
