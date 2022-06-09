@@ -55,20 +55,6 @@
       </el-button>
             <template slot="extra">
 
-              <!-- 上传并预览头像 -->
-              <!-- 支持jpg、jpeg、png、heic等 -->
-              <!-- <div class="alert-box-item" style="position: relative;left:-370px;top:15px;">  -->
-              <!-- <div class="bigImg-div" @click="toGetImg"> -->
-              <!-- <img class="bigImg" :src=url_upload v-if="url_upload"> -->
-
-
-              <!-- <img class="bigImg" :src="url_upload" v-if="url_upload"> -->
-              <!-- <img class="bigImg" :src="url_now" v-else> -->
-              <!-- <img class="bigImg" src=".././assets/666.png" v-else> -->
-              <!-- <div v-else style="position: relative;top:19px;">上传头像</div> -->
-              <!-- </div> -->
-              <!-- </div> -->
-
               <el-upload style="position: relative; left:-970px; top:20px" class="avatar-uploader" action=""
                 :http-request="upload_file" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload"
                 :limit="1" :auto-upload="true">
@@ -243,13 +229,6 @@ export default {
     },
     methods:
     {
-      // test1(){
-      //   alert('1234');
-      // },
-      // goto_view_ifo(){
-      //     this.$router.replace('/viewifo');
-      // },
-
       go_back(){
           this.modify_state = 0;
       },
@@ -263,10 +242,7 @@ export default {
       goto_modify() {
         let user_ifo = {
           username: this.input_username,
-          // reply_id:this.reply_id,
-          // photo:this.url_upload
-        };//数据打包
-        // console.log(user_ifo);
+        };
         this.$axios.post('/user/modify_username', qs.stringify(user_ifo), {
           headers: {
             username: this.$store.state.username,
