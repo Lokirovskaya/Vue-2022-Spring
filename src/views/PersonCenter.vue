@@ -2,7 +2,7 @@
   <ForumBorder>
     <el-breadcrumb separator-class="el-icon-arrow-right" style="margin: 20px; font-size: 15px;">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>用户中心</el-breadcrumb-item>
+      <el-breadcrumb-item><el-link :underline="false" type="info" @click="go_back">用户中心</el-link></el-breadcrumb-item>
     </el-breadcrumb>
     <div>
       <div v-if="this.$store.state.login_state == 0" class="login">
@@ -40,21 +40,20 @@
           <br />
           <el-descriptions title="用户头像" :column="3" :size="size" border style="position: relative;">
 
+<el-upload
+  style="position: relative; left:-960px; top:20px"
+  class="avatar-uploader" action="" :http-request="upload_file" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload" :limit="1" :auto-upload="true">
+  <div style="position: relative;left:left:-1600%;">
+  <img v-if="url_upload" :src="'http://43.138.55.69'+url_upload" class="avatar">
+  <img v_else :src="'http://43.138.55.69'+url_now" class="avatar">
+  </div>
+</el-upload>
+
+      <el-button size="small" style="position: relative;left:-20px;top:-28px;"
+      @click="goto_modify">
+      提交
+      </el-button>
             <template slot="extra">
-
-              <!-- 上传并预览头像 -->
-              <!-- 支持jpg、jpeg、png、heic等 -->
-              <!-- <div class="alert-box-item" style="position: relative;left:-370px;top:15px;">  -->
-              <!-- <div class="bigImg-div" @click="toGetImg"> -->
-              <!-- <img class="bigImg" :src=url_upload v-if="url_upload"> -->
-
-
-              <!-- <img class="bigImg" :src="url_upload" v-if="url_upload"> -->
-              <!-- <img class="bigImg" :src="url_now" v-else> -->
-              <!-- <img class="bigImg" src=".././assets/666.png" v-else> -->
-              <!-- <div v-else style="position: relative;top:19px;">上传头像</div> -->
-              <!-- </div> -->
-              <!-- </div> -->
 
               <el-upload style="position: relative; left:-970px; top:20px" class="avatar-uploader" action=""
                 :http-request="upload_file" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload"
@@ -73,7 +72,9 @@
               <el-button size="small" style="position: relative;left:-20px;top:-28px;" @click="goto_modify">
                 提交
               </el-button>
-
+              <el-button size="small" style="position: relative;left:-20px;top:-28px;" @click="go_back">
+                返回
+              </el-button>
 
             </template>
 
@@ -203,38 +204,14 @@
 </template>
 
 <script>
-  import ForumBorder from "@/components/ForumBorder";
-  // import PostHead from "@/components/PostHead";
-  // import PostReply from "@/components/PostReply";
-  // let inputElement = null
-  import qs from "qs";
-  export default {
-    components: { ForumBorder },
-    name: 'PersonCenter',
-    //   components:{PostHead,PostReply},
-    // components:{PostHead},
+import ForumBorder from "@/components/ForumBorder";
+
+import qs from "qs";
+export default {
+  components: { ForumBorder },
+  name: 'PersonCenter',
     data() {
       return {
-        articles1: [
-          {
-            id: 1,
-            title: '本来不存希望，',
-            author: '讨论区',
-            date: '2002-02-12',
-          },
-          {
-            id: 2,
-            title: 'test',
-            author: '课程推荐',
-            date: '2002-02-12',
-          },
-          {
-            id: 2,
-            title: 'test',
-            author: '刷题板块',
-            date: '2002-02-12',
-          },
-        ],
         modify_state: 0,
         username: this.$store.state.username,
         exp_now: undefined, //当前经验值
@@ -252,24 +229,20 @@
     },
     methods:
     {
-      // test1(){
-      //   alert('1234');
-      // },
-      // goto_view_ifo(){
-      //     this.$router.replace('/viewifo');
-      // },
+      go_back(){
+          this.modify_state = 0;
+      },
+
       getSimpleText(html) {
         var re1 = new RegExp("<.+?>", "g");//匹配html标签的正则表达式，"g"是搜索匹配多个符合的内容
         var msg = html.replace(re1, '');//执行替换成空字符
         return msg;
       },
+
       goto_modify() {
         let user_ifo = {
           username: this.input_username,
-          // reply_id:this.reply_id,
-          // photo:this.url_upload
-        };//数据打包
-        // console.log(user_ifo);
+        };
         this.$axios.post('/user/modify_username', qs.stringify(user_ifo), {
           headers: {
             username: this.$store.state.username,
@@ -450,7 +423,14 @@
     mounted: function () {
       // alert('页面一加载，就会弹出此窗口')
       this.init_view();
-    }
+    },
+    watch: {//监听路由变量
+      $route(to, from) {
+        if (to.query.user !== from.query.user) {
+          this.init_view();
+        }
+      },
+    },
   };
 </script>
 
