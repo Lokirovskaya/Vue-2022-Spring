@@ -447,7 +447,14 @@ export default {
     mounted: function () {
       // alert('页面一加载，就会弹出此窗口')
       this.init_view();
-    }
+    },
+    watch: {//监听路由变量
+      $route(to, from) {
+        if (to.query.user !== from.query.user) {
+          this.init_view();
+        }
+      },
+    },
   };
 </script>
 

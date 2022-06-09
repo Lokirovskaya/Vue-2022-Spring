@@ -21,7 +21,7 @@
               @DelPost="DelPost"
               @ToComment="toComment"></PostHead>
     <br>
-    <div v-for="item in replys" :key="item.reply_id">
+    <div v-for="item in cur_replys" :key="item.reply_id">
       <PostReply
           :reply_id="item.reply_id"
           :username="item.username"
@@ -33,11 +33,16 @@
           :time="item.time"
           :like="item.like"
           :replys="item.replys"
-          :posting_id="posting_id"
-          @ToNew="toNew"></PostReply>
+          :posting_id="posting_id"></PostReply>
       <br>
     </div>
-    <MarkdownEditor ref="MarkdownEditor"></MarkdownEditor>
+    <el-pagination layout="prev, pager, next,jumper"
+                   :total="reply_count"
+                   :page-size="20"
+                   @current-change="handleCurrentChange"
+                    style="margin-bottom: 15px">
+    </el-pagination>
+    <MarkdownEditor ref="MarkdownEditor" v-model="input_html"></MarkdownEditor>
     <el-button  @click="comment" id="MComment" style="margin-top: 10px">回复</el-button> <br />
   </ForumBorder>
 
@@ -68,6 +73,8 @@ export default {
         reply_count: undefined, // 总楼层数
         like: undefined, // 用户是否给该帖子点赞（布尔型）
         replys:[],
+        cur_replys:[],
+        cur_page: undefined,
         input_html:'',
         autofocus: false,
         sector_name: '',
@@ -103,38 +110,18 @@ export default {
               this.reply_count = res.data.reply_count;
               this.like = res.data.like;
               this.replys = res.data.replys;
+              this.cur_replys = this.replys.slice((this.cur_page-1)*20,this.cur_page*20);
               this.sector_name = res.data.sector_name;
-            }
-            else {
-              this.$message.error(res.data.msg);
-            }
-          })
-          .catch(err => {
-            this.$message.error(err);
-          });
-    },
-    /*
-    Download(){
-      this.$axios.post('/posting/downloadFile', qs.stringify({posting_id: this.posting_id}), {
-        headers: {
-          username: this.$store.state.username,
-          token: this.$store.state.token,
-        }
-      })
-          .then(res => {
-            if (res.data.errno === 0) {
-              this.$message.success('成功下载！');
-            }
-            else {
-              this.$message.error(res.data.msg);
-            }
-          })
-          .catch(err => {
-            this.$message.error(err);
-          });
-    },
 
-     */
+            }
+            else {
+              this.$message.error(res.data.msg);
+            }
+          })
+          .catch(err => {
+            this.$message.error(err);
+          });
+    },
     ClickLike(){
       let like_data = {
         judge:1,
@@ -241,6 +228,14 @@ export default {
 
       });
     },
+    handleCurrentChange(currentindex){
+      this.cur_page = currentindex;
+      this.cur_replys = this.replys.slice((currentindex-1)*20,currentindex*20);
+      console.log(currentindex);
+    },
+    created() {
+      this.cur_replys = this.replys.slice(0,20);
+    },
   },
   mounted() {
     this.$axios.post('/posting/getPostingInfo', qs.stringify({posting_id: this.$route.query.id}), {
@@ -264,8 +259,10 @@ export default {
             this.reply_count = res.data.reply_count;
             this.like = res.data.like;
             this.replys = res.data.replys;
+            this.created();
             this.sector_name = res.data.sector_name;
             console.log(res);
+
           }
           else {
             this.$message.error(res.data.msg);
@@ -274,6 +271,7 @@ export default {
         .catch(err => {
           this.$message.error(err+' 登录后才能看帖子内容!');
         });
-  }
+  },
+
 }
 </script>

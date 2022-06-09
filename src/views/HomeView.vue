@@ -1,5 +1,4 @@
 <template>
-
   <div id="body">
     <div id="title">学习生活交流论坛</div>
     <div id="inner-body">
@@ -7,12 +6,13 @@
         <el-container>
           <el-header></el-header>
           <el-container>
-
             <el-container>
               <el-header>
-                <h2>当前热帖</h2>
+                <el-divider>
+                  <h2>当前热帖</h2>
+                </el-divider>
               </el-header>
-              <el-card shadow="hover">
+              <div>
                 <el-table :data="hot_posting_data" stripe>
                   <el-table-column>
                     <template slot-scope="scope">
@@ -37,14 +37,16 @@
                     </template>
                   </el-table-column>
                 </el-table>
-              </el-card>
+              </div>
             </el-container>
 
             <el-container>
               <el-header>
-                <h2>最新帖子</h2>
+                <el-divider>
+                  <h2>最新帖子</h2>
+                </el-divider>
               </el-header>
-              <el-card shadow="hover">
+              <div>
                 <el-table :data="recent_posting_data" stripe>
                   <el-table-column>
                     <template slot-scope="scope">
@@ -69,13 +71,15 @@
                     </template>
                   </el-table-column>
                 </el-table>
-              </el-card>
+              </div>
             </el-container>
           </el-container>
 
           <el-container>
-            <el-header>
-              <h2>访问板块</h2>
+            <el-header style="margin-top: 100px;">
+              <el-divider>
+                <h2>访问板块</h2>
+              </el-divider>
             </el-header>
             <el-main style="display: flex; align-items: flex-start; flex-direction: column;">
               <div v-for="item in this.sector_data" :key="item.name" style="width: 99%; margin-bottom: 20px;">
@@ -89,7 +93,7 @@
                         <div class="sector-intro">{{item.intro}}</div>
                       </div>
                       <div style="display: flex; align-items: flex-start; flex-direction: column;">
-                        <div style="margin: 8px">最新发表：</div>
+                        <div style="margin: 5px; color: gray;">最新发表：</div>
                         <div style="margin: 5px">
                           <router-link :to="{path:'/post', query:{id:item.posting_id}}">
                             <el-link class="art-title">{{item.post_title}}</el-link>
@@ -115,6 +119,11 @@
               </div>
             </el-main>
           </el-container>
+          <el-footer style="min-height: 150px; display: flex; align-items: center;">
+            <el-divider>
+              <div style="font-size: 10px; color: gray;">2022 软件工程基础 小组21</div>
+            </el-divider>
+          </el-footer>
         </el-container>
       </div>
     </div>
@@ -231,7 +240,7 @@
               if (res.data.recommendation[0]) this.set_sector_info('recommendation', res.data.recommendation[1]);
               if (res.data.exercise[0]) this.set_sector_info('exercise', res.data.exercise[1]);
               if (res.data.campus[0]) this.set_sector_info('campus', res.data.campus[1]);
-              if (res.data.resource[0]) this.set_sector_info('discussion', res.data.resource[1]);
+              if (res.data.resource[0]) this.set_sector_info('resource', res.data.resource[1]);
             }
             else {
               this.hot_posting_data = [];
@@ -296,8 +305,9 @@
 
   #inner-body {
     width: 80%;
-    border-top-left-radius: 50px;
-    border-top-right-radius: 50px;
+    /* border-top-left-radius: 50px;
+    border-top-right-radius: 50px; */
+    border-radius: 50px;
     background: #FFFFFF;
     padding-top: 50px;
     display: flex;

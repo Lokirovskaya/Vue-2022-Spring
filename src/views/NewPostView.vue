@@ -34,9 +34,6 @@
           <el-button type="success" @click="publish">发帖</el-button>
         </div>
       </div>
-
-
-
     </div>
   </ForumBorder>
 </template>
@@ -87,7 +84,11 @@
         })
           .then(res => {
             if (res.data.errno === 0) {
+              console.log(res.data);
               this.$message.success('发帖成功！');
+              setTimeout(() => {
+                this.$router.push({ path: '/sector', query: { name: this.$route.query.name } });
+              }, 1000);
             }
             else {
               this.$message.error(res.data.msg);
