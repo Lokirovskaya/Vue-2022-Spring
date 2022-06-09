@@ -69,7 +69,6 @@
             if (res.data.errno === 0) {
               this.user_info = res.data.page_data;
               this.user_sum = res.data.user_sum;
-              this.$message.success('成功！');
             }
             else {
               this.$message.error(res.data.msg);

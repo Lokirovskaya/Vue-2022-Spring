@@ -65,7 +65,8 @@ export default {
         posting_time: '', // 发布时间
         user_id: undefined, // 发布用户ID
         username: '', // 用户名
-        user_level: 0,  //用户等级,从全局变量找
+        user_level: 0,  //楼主等级
+        my_user_level: 0,  //用户等级
         user_photo: '',
         content:'', // 帖子正文内容
         like_count: undefined, // 帖子点赞数
@@ -99,11 +100,11 @@ export default {
       })
           .then(res => {
             if (res.data.errno === 0) {
-              this.user_level = res.data.user_level;
+              this.my_user_level = res.data.my_user_level;
               this.sector_name = res.data.sector_name;
               this.authority = res.data.authority;
 
-              if (this.user_level < this.authority) {
+              if (this.my_user_level < this.authority) {
                 this.$message.error('阅读权限不足！当前帖子要求权限 ' + this.authority);
                 this.$router.push({ path: '/sector', query: { name: this.sector_name } });
                 return;
@@ -115,6 +116,7 @@ export default {
               //this.username = res.data.username;
               //this.user_photo = res.data.user_photo;
               //this.content = res.data.content;
+              this.user_level = res.data.user_level;
               this.like_count = res.data.like_count;        
               //this.resource = res.data.resource;
               this.reply_count = res.data.reply_count;
@@ -258,15 +260,16 @@ export default {
         .then(res => {
           if (res.data.errno === 0) {
             this.authority = res.data.authority;
-            this.user_level = res.data.user_level;
+            this.my_user_level = res.data.my_user_level;
             this.sector_name = res.data.sector_name;
 
-            if (this.user_level < this.authority) {
+            if (this.my_user_level < this.authority) {
               this.$message.error('阅读权限不足！当前帖子要求权限 ' + this.authority);
               this.$router.push({ path: '/sector', query: { name: this.sector_name } });
               return;
             }
 
+            this.user_level = res.data.user_level;
             this.posting_title = res.data.posting_title;
             this.posting_time = res.data.posting_time;
             this.user_id = res.data.user_id;
