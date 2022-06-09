@@ -48,9 +48,14 @@
               this.$store.commit('set_username', res.data.data.username);
               this.$store.commit('set_userphoto',res.data.data.photo);
               this.$message.success(res.data.data.username + ' 登录成功！');
-              setTimeout(() => {
-                this.$router.push(this.route_from);
-              }, 1000);
+              if ( res.data.data.last_login_day === null )
+              {
+                this.$router.push({path: '/post', query:{id: 1}});
+              }else{
+                setTimeout(() => {
+                  this.$router.push(this.route_from);
+                }, 1000);
+              }
             }
             else {
               this.$message.error(res.data.msg);
