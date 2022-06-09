@@ -50,7 +50,7 @@
         <div v-else>
           <el-dropdown @command="User_Command">
             <div>
-              <img  :src="'http://43.138.55.69'+this.$store.state.user_photo"  style="height: 35px;width: 35px;position: relative;bottom: -14px">
+              <img  :src="'http://43.138.55.69'+this.$store.state.user_photo"  style="height: 35px;width: 35px;position: relative;bottom: -14px; border-radius: 3px;">
               <!--<el-avatar style="position: relative;bottom: -13.5px" shape="square" :size="35" v-bind:src="User.pho"></el-avatar>-->
               <span style="position: relative;bottom: -3px">&nbsp;{{ this.$store.state.username }}&nbsp;&nbsp;</span>
             </div>
