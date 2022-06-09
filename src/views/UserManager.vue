@@ -95,7 +95,7 @@
         this.$prompt('请输入禁言天数', '禁言用户 ' + user.username, {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-          inputPattern: /^\s*\d+\s*$/,
+          inputPattern: /^\s*[1-9][0-9]*\s*$/,
           inputErrorMessage: '禁言天数不正确'
         }).then(({ value }) => {
           this.ban_user(user, parseInt(value))
