@@ -76,9 +76,6 @@
     },
     data() {
       return {
-        pho: 'https://s2.loli.net/2022/05/06/f2Jx6BkcSLEnRtU.jpg',
-        User_Page: 'www.baidu.com',     //用户个人主页链接
-        Level: 5,                  //用户等级
       }
     },
     methods: {

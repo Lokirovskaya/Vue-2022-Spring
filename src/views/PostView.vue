@@ -138,6 +138,7 @@ export default {
             if(res.data.errno === 0)
             {
               this.toNew();
+              this.$message.success(res.data.msg);
             }else
             {
               this.$message.error(res.data.msg);
@@ -213,7 +214,7 @@ export default {
         })
             .then(res => {
               if (res.data.errno === 0) {
-                this.$message.success('成功！');
+                this.$message.success(res.data.msg);
               }
               else {
                 this.$message.error(res.data.msg);
@@ -234,6 +235,7 @@ export default {
       console.log(currentindex);
     },
     created() {
+      this.cur_page = 1;
       this.cur_replys = this.replys.slice(0,20);
     },
   },
