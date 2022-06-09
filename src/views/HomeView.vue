@@ -1,6 +1,6 @@
 <template>
 
-  <body>
+  <div id="body">
     <div id="title">BUAA<br />学习生活论坛</div>
     <div id="inner-body">
       <div style="width: 95%;">
@@ -118,7 +118,7 @@
         </el-container>
       </div>
     </div>
-  </body>
+  </div>
 </template>
 
 <script>
@@ -255,7 +255,13 @@
     },
     mounted() {
       this.get_HomePage_info();
-    }
+    },
+    watch: {
+      // eslint-disable-next-line no-unused-vars
+      '$route'(to, from) {
+        this.$router.go(0);
+      }
+    },
   }
   //#535660
 </script>
@@ -265,9 +271,9 @@
     from {}
   }
 
-  body {
+  #body {
     width: 100%;
-    background: url("../assets/bg.jpg") #061832 no-repeat;
+    background: url(../assets/bg.jpg) #061832 no-repeat;
     background-size: contain;
     display: flex;
     justify-content: center;

@@ -50,6 +50,7 @@
         file_id: -1,
       }
     },
+
     methods: {
       publish() {
         this.input_html = this.$refs.MarkdownEditor.html;
@@ -82,7 +83,6 @@
           .catch(err => {
             this.$message.error(err);
           });
-        //this.$router.push({path:'/sector',query:{name:this.$route.query.name}});
       },
 
       upload_file(e) {

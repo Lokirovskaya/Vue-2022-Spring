@@ -137,7 +137,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   #title {
     font-size: 30px;
     background-color: #f1f1f1;
