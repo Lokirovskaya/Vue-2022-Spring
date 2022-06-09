@@ -46,6 +46,7 @@
               this.$store.commit('set_token', res.data.data.authorization);
               this.$store.commit('set_userid', res.data.data.userid);
               this.$store.commit('set_username', res.data.data.username);
+              this.$store.commit('set_userphoto',res.data.data.photo);
               this.$message.success(res.data.data.username + ' 登录成功！');
               setTimeout(() => {
                 this.$router.push(this.route_from);
