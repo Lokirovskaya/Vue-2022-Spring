@@ -35,6 +35,7 @@
               
                 <!-- <el-button size="small" v-on="this.commit('change_modify_state')"> -->
                   <!-- <el-button size="small" @click="change_modify_state()"> -->
+                    <div v-if="is_visit_self === 0">
                     <el-button 
                     
                     size="small"
@@ -55,6 +56,7 @@
                     ">
                     修改信息
                     </el-button>
+                    </div>
 
             </template>
             <el-descriptions-item label="用户名">{{username}}</el-descriptions-item>
@@ -175,24 +177,123 @@
         <el-menu mode="horizontal">
 
             <el-collapse v-model="activeNames" @change="handleChange">
+
             <el-collapse-item title="我的帖子" name="1">
-          <el-table :data="articles1" stripe="true" align="left">
+
+          <el-table :data="posting_data" stripe="true" align="left">
             <el-table-column label="标题" min-width="70%">
+
               <template slot-scope="scope">
-                <div class="art-title"><u>{{scope.row.title}}</u></div>
+                
+                <div class="art-title"><u><e-link>{{scope.row.title}}</e-link></u></div>
               </template>
+
             </el-table-column>
-            <el-table-column label="板块" min-width="15%">
+
+            <el-table-column min-width="8%">
+            <template slot-scope="scope">
+              <div class="el-icon-view" style="width: 15px; height: 15px"></div>
+              {{scope.row.click_count}}
+            </template>
+          </el-table-column>
+
+          <el-table-column min-width="8%">
+            <template slot-scope="scope">
+              <img src="../assets/el-icon-like.png" style="width: 15px; height: 15px" />
+              {{scope.row.like_count}}
+            </template>
+          </el-table-column>
+
+          <el-table-column min-width="8%">
+            <template slot-scope="scope">
+              <img src="../assets/comment.png" style="width: 15px; height: 15px" />
+              {{scope.row.comment_count}}
+            </template>
+          </el-table-column>
+
+          <el-table-column label="最近回复" min-width="18%">
+            <template slot-scope="scope">
+              <div class="art-date">{{scope.row.recent_comment_time}}</div>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="发表日期" min-width="18%">
+            <template slot-scope="scope">
+              <div class="art-date">{{scope.row.posting_time}}</div>
+            </template>
+          </el-table-column>
+
+            <!-- <el-table-column label="板块" min-width="15%">
+
               <template slot-scope="scope">
                 <div class="art-author"><u>{{scope.row.author}}</u></div>
               </template>
+
             </el-table-column>
+
             <el-table-column label="发表日期" min-width="15%">
+
               <template slot-scope="scope">
                 <div class="art-date">{{scope.row.date}}</div>
               </template>
-            </el-table-column>
+
+            </el-table-column> -->
           </el-table>
+
+          <!-- <el-table :data="posting_data" stripe align="left">
+
+          <el-table-column min-width="5%"></el-table-column>
+
+          <el-table-column label="标题" min-width="45%">
+            <template slot-scope="scope">
+              <router-link :to="{path:'post', query:{id:scope.row.posting_id}}">
+                <el-link id="art-title1">
+                  {{scope.row.posting_title}}
+                </el-link>
+              </router-link>
+              <router-link :to="{path:'/personcenter', query:{user:scope.row.username}}">
+                <div id="art-author">
+                  <el-link>{{scope.row.username}}</el-link>
+                </div>
+              </router-link>
+            </template>
+          </el-table-column>
+
+          <el-table-column min-width="8%">
+            <template slot-scope="scope">
+              <div class="el-icon-view" style="width: 15px; height: 15px"></div>
+              {{scope.row.click_count}}
+            </template>
+          </el-table-column>
+
+          <el-table-column min-width="8%">
+            <template slot-scope="scope">
+              <img src="../assets/el-icon-like.png" style="width: 15px; height: 15px" />
+              {{scope.row.like_count}}
+            </template>
+          </el-table-column>
+
+          <el-table-column min-width="8%">
+            <template slot-scope="scope">
+              <img src="../assets/comment.png" style="width: 15px; height: 15px" />
+              {{scope.row.comment_count}}
+            </template>
+          </el-table-column>
+
+          <el-table-column label="最近回复" min-width="18%">
+            <template slot-scope="scope">
+              <div class="art-date">{{scope.row.recent_comment_time}}</div>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="发表日期" min-width="18%">
+            <template slot-scope="scope">
+              <div class="art-date">{{scope.row.posting_time}}</div>
+            </template>
+          </el-table-column>
+
+        </el-table> -->
+
             </el-collapse-item>
 
             <!-- <el-collapse-item title="近期点赞" name="2">
@@ -216,23 +317,75 @@
             </el-collapse-item> -->
 
             <el-collapse-item title="近期评论" name="3">
-          <!-- <el-table :data="articles1" stripe="true" align="left">
-            <el-table-column label="标题" min-width="70%">
+
+          <el-table :data="reply_data" stripe="true" align="left">
+
+<el-table-column label="标题" min-width="70%">
+
+              <template slot-scope="scope">
+                
+                <div class="art-title"><u><e-link>{{scope.row.title}}</e-link></u></div>
+              </template>
+
+            </el-table-column>
+
+            <el-table-column min-width="8%">
+            <template slot-scope="scope">
+              <div class="el-icon-view" style="width: 15px; height: 15px"></div>
+              {{scope.row.click_count}}
+            </template>
+          </el-table-column>
+
+          <el-table-column min-width="8%">
+            <template slot-scope="scope">
+              <img src="../assets/el-icon-like.png" style="width: 15px; height: 15px" />
+              {{scope.row.like_count}}
+            </template>
+          </el-table-column>
+
+          <el-table-column min-width="8%">
+            <template slot-scope="scope">
+              <img src="../assets/comment.png" style="width: 15px; height: 15px" />
+              {{scope.row.comment_count}}
+            </template>
+          </el-table-column>
+
+          <el-table-column label="最近回复" min-width="18%">
+            <template slot-scope="scope">
+              <div class="art-date">{{scope.row.recent_comment_time}}</div>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="发表日期" min-width="18%">
+            <template slot-scope="scope">
+              <div class="art-date">{{scope.row.posting_time}}</div>
+            </template>
+          </el-table-column>
+
+            <!-- <el-table-column label="标题" min-width="70%">
+
               <template slot-scope="scope">
                 <div class="art-title"><u>{{scope.row.title}}</u></div>
               </template>
+
             </el-table-column>
+
             <el-table-column label="板块" min-width="15%">
+
               <template slot-scope="scope">
                 <div class="art-author"><u>{{scope.row.author}}</u></div>
               </template>
+
             </el-table-column>
+
             <el-table-column label="发表日期" min-width="15%">
+
               <template slot-scope="scope">
                 <div class="art-date">{{scope.row.date}}</div>
               </template>
-            </el-table-column>
-          </el-table> -->
+
+            </el-table-column> -->
+          </el-table>
             </el-collapse-item>
 
 
@@ -313,12 +466,15 @@ data(){
         // input_address:"",
         input_password:undefined,
         input_password2:undefined,
-        is_visit_self:undefined, //0：访问自己主页
+        is_visit_self:0, //0：访问自己主页
 
         url_upload: undefined,
         // url_upload:".././assets/666.png",
         // url_upload:require('.././assets/logo.png'),
         url_now:undefined,
+
+        posting_data: [],
+        reply_data: [],
 
         // imageUrl: ''
 
@@ -371,7 +527,7 @@ methods:
       console.log(this.$store.state.username);
       console.log(this.$route.query.user);
       // this.username = this.$store.state.username;
-      if (this.$route.query.user) //如果是访问其他人的主页
+      if (this.$route.query.user != this.$store.state.username) //如果是访问其他人的主页
       {
         this.is_visit_self = 1;
           this.$axios.post('/user/other_space', qs.stringify({other_name:this.$route.query.user}),{
@@ -387,6 +543,8 @@ methods:
                 this.username = this.$route.query.user;
                 this.level = res.data.user_level;
                 this.exp_now = res.data.user_experience;
+                this.posting_data = res.data.postings;
+                this.reply_data = res.data.replys;
               }
               else {
                 this.$message.error(res.data.msg);
@@ -417,6 +575,8 @@ methods:
                 // this.username = this.$route.query.user;
                 this.level = res.data.user_level;
                 this.exp_now = res.data.user_experience;
+                this.posting_data = res.data.postings;
+                this.reply_data = res.data.replys;
               }
               else {
                 this.$message.error(res.data.msg);
@@ -515,6 +675,7 @@ methods:
               this.$message.success('头像修改成功！');
               this.url_now = res.data.photo;
               this.url_upload = res.data.photo;
+              this.$store.state.user_photo = res.data.photo;
               // this.file_id = res.data.file_id;
               // this.url_upload = res.data.url;
             }
@@ -705,5 +866,15 @@ methods:
     width: 60px;
     height: 60px;
     display: block;
+  }
+
+    #art-title1 {
+    font-size: 18px;
+  }
+
+  #art-author {
+    font-size: 15px;
+    margin-left: 20px;
+    color: gray;
   }
 </style>
