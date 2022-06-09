@@ -48,8 +48,8 @@
         <div v-else>
           <el-dropdown @command="User_Command">
             <div>
-              <el-avatar style="position: relative;bottom: -13.5px" shape="square" :size="35" v-bind:src="User.pho">
-              </el-avatar>
+              <img  :src="'http://43.138.55.69'+this.$store.state.user_photo"  style="height: 35px;width: 35px;position: relative;bottom: -14px">
+              <!--<el-avatar style="position: relative;bottom: -13.5px" shape="square" :size="35" v-bind:src="User.pho"></el-avatar>-->
               <span style="position: relative;bottom: -3px">&nbsp;{{ this.$store.state.username }}&nbsp;&nbsp;</span>
             </div>
             <el-dropdown-menu slot="dropdown">
@@ -76,7 +76,6 @@
         active_index: "1",
         User: {
           name: this.$store.commit.name,
-          pho: "https://s2.loli.net/2022/05/06/f2Jx6BkcSLEnRtU.jpg",
         }
       }
     },
