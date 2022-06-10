@@ -171,7 +171,7 @@
 
                   <el-table-column min-width="10%">
                     <template slot-scope="scope">
-                      <el-button round type="text" @click="Delreply(scope.row.replying_id)">
+                      <el-button round type="text" @click="Delreply(scope.row.reply_id)">
                       <div style="width: 15px; height: 15px">删除</div>
                       </el-button>
                     </template>
@@ -276,7 +276,7 @@
         type: 'warning'
       }).then(() => {
 
-        this.$axios.post('/user/delete_Comment', qs.stringify({reply_id:id}), {
+        this.$axios.post('/posting/deleteComment', qs.stringify({reply_id:id}), {
           headers: {
             username: this.$store.state.username,
             token: this.$store.state.token,
