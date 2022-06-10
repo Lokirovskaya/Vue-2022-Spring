@@ -111,8 +111,8 @@
                   <!-- <el-button>123</el-button> -->
 
                     <el-table-column min-width="10%">
-                    <template >
-                      <el-button round type="text" @click="DelPost(posting.row.posting_id)">
+                    <template slot-scope="scope">
+                      <el-button round type="text" @click="DelPost(scope.row.posting_id)">
                       <div style="width: 15px; height: 15px">删除</div>
                       </el-button>
                     </template>
@@ -168,7 +168,14 @@
                         </div>
                       </router-link>
                     </template>
+                  </el-table-column>
 
+                  <el-table-column min-width="10%">
+                    <template slot-scope="scope">
+                      <el-button round type="text" @click="Delreply(scope.row.replying_id)">
+                      <div style="width: 15px; height: 15px">删除</div>
+                      </el-button>
+                    </template>
                   </el-table-column>
 
                   <el-table-column label="获赞" min-width="8%">
@@ -236,7 +243,7 @@
         type: 'warning'
       }).then(() => {
 
-        this.$axios.post('/user/delete_posting', qs.stringify({posting_id:id}), {
+        this.$axios.post('/user/deletePosting', qs.stringify({posting_id:id}), {
           headers: {
             username: this.$store.state.username,
             token: this.$store.state.token,
@@ -258,6 +265,38 @@
       }).catch(() => {
 
       });
+    },
+
+    Delreply(id){
+      this.$confirm('此操作将删除该评论, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+
+        this.$axios.post('/user/delete_Comment', qs.stringify({reply_id:id}), {
+          headers: {
+            username: this.$store.state.username,
+            token: this.$store.state.token,
+          }
+        })
+            .then(res => {
+              if (res.data.errno === 0) {
+                this.$message.success(res.data.msg);
+              }
+              else {
+                this.$message.error(res.data.msg);
+              }
+            })
+            .catch(err => {
+              this.$message.error(err);
+            });
+
+        // this.$router.replace('/');
+      }).catch(() => {
+
+      });
+      this.init_view();
     },
 
       go_back() {
