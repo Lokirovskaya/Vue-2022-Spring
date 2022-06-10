@@ -78,6 +78,8 @@
           has_file: this.input_has_file,
         };
 
+        console.log(post_data);
+
         this.$axios.post('/posting/publish', qs.stringify(post_data), {
           headers: {
             username: this.$store.state.username,
@@ -118,7 +120,7 @@
             if (res.data.errno === 0) {
               this.$message.success('附件上传成功！');
               this.file_id = res.data.file_id;
-              this.has_file = true;
+              this.input_has_file = true;
             }
             else {
               this.$message.error(res.data.msg);
@@ -130,7 +132,7 @@
       },
 
       file_remove() {
-        this.has_file = false;
+        this.input_has_file = false;
       }
     }
   }

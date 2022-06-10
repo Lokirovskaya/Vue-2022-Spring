@@ -4,16 +4,16 @@
 
       <router-link :to="{path:'/personcenter', query:{user:username}}">
         <p>
-          <i>{{ username }}</i>
+          <el-link style="font-size: 16px;">{{ username }}</el-link>
         </p>
       </router-link>
 
         <router-link :to="{path:'/personcenter', query:{user:username}}">
-            <img  :src="'http://43.138.55.69'+user_photo"  class="qqtwo" style="height: 150px;width: 150px;position: relative;bottom: -6px">
+            <img :src="'http://43.138.55.69'+user_photo"  class="qqtwo" style="height: 150px;width: 150px;position: relative;bottom: -6px">
           </router-link>
 
 
-      <p>LV{{ user_level }}</p>
+      <p>LV {{ user_level }}</p>
     </el-aside>
     <el-container>
       <el-header height="40px">
@@ -183,5 +183,13 @@
 
   body>.el-container {
     margin-bottom: 40px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .router-link-active {
+    text-decoration: none;
   }
 </style>
