@@ -242,7 +242,7 @@
           type: 'warning'
         }).then(() => {
 
-        this.$axios.post('/user/deletePosting', qs.stringify({posting_id:id}), {
+        this.$axios.post('/posting/deletePosting', qs.stringify({posting_id:id}), {
           headers: {
             username: this.$store.state.username,
             token: this.$store.state.token,
